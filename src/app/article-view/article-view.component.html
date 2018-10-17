@@ -1,0 +1,30 @@
+<div class="uk-section uk-section-default">
+  <div class="uk-container">
+    <article class="uk-article">
+
+      <h1 class="uk-article-title">{{article.title}}</h1>
+
+      <p class="uk-article-meta">Written by {{article.authorId}} on {{article.created | date: 'short'}}</p>
+
+      <p class="uk-text-lead">{{article.subtitle}}</p>
+
+      <hr />
+
+      <div>
+        {{ article.content }}
+      </div>
+
+      <hr />
+      
+      <div class="uk-grid-small uk-child-width-auto" uk-grid>
+        <div>
+          <a class="uk-button uk-button-primary" href="#">5 Comments (to be done)</a>
+        </div>
+        <div *ngIf="article.editable">
+          <a class="uk-button uk-button-danger" routerLink="/edit/article/{{article.id}}">Edit</a>
+        </div>
+      </div>
+
+    </article>
+  </div>
+</div>

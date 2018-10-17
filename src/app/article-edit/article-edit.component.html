@@ -1,0 +1,51 @@
+<div class="uk-section uk-section-default">
+  <div class="uk-container">
+    <form class="uk-form-horizontal uk-margin-large" #articleForm="ngForm">
+
+      <div class="uk-margin" *ngIf="article.id">
+          <label class="uk-form-label" for="form-horizontal-text">Id</label>
+          <div class="uk-form-controls">
+              <input class="uk-input" id="form-horizontal-text" name="id" type="text" [(ngModel)]="article.id" disabled>
+          </div>
+      </div>
+      <div class="uk-margin">
+          <label class="uk-form-label" for="form-horizontal-text">Title</label>
+          <div class="uk-form-controls">
+              <input class="uk-input" required #title="ngModel" [ngClass]="{'uk-form-danger': title.invalid }" id="form-horizontal-text" name="title" type="text" [(ngModel)]="article.title" placeholder="Some text...">
+          </div>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Subtitle</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" required #subtitle="ngModel" [ngClass]="{'uk-form-danger': subtitle.invalid }" id="form-horizontal-text" name="subtitle" type="text" [(ngModel)]="article.subtitle" placeholder="Some text...">
+        </div>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Content</label>
+        <div class="uk-form-controls">
+            <textarea class="uk-textarea" required #content="ngModel" [ngClass]="{'uk-form-danger': content.invalid }" rows="5" [(ngModel)]="article.content" name="content" placeholder="Enter your content here..."></textarea>
+        </div>
+      </div>
+
+      <div class="uk-margin" *ngIf="canUserPublishArticles">
+          <label class="uk-form-label" for="form-horizontal-text">Published</label>
+          <div class="uk-form-controls">
+            <input class="uk-checkbox" name="published" type="checkbox" [(ngModel)]="article.published" checked>  published articles will be available to everyone
+          </div>
+      </div>
+
+      <div class="uk-margin">
+        <div class="uk-form-controls" uk-margin>
+          <button class="uk-button uk-button-default" routerLink="/">Cancel</button>
+          <button [disabled]="!articleForm.valid" class="uk-button uk-button-primary" (click)="saveArticle()">Save</button>
+        </div>
+      </div>
+
+
+
+
+    </form>
+  </div>
+</div>

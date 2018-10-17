@@ -1,20 +1,93 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!-- NAVIGATION -->
+<div class="uk-container">
+  <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left uk-visible@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
+        </li>
+        <li routerLink="/" routerLinkActive="uk-active"><a>Home</a></li>
+        <li *ngIf="showUnpublishedArticles">Articles<a href="#"></a></li>
+        <li *ngIf="canUserCreateArticles"><a routerLink="/create/article" routerLinkActive="uk-active">Create new
+            article</a></li>
+      </ul>
+    </div>
 
+    <div class="uk-navbar-right uk-visible@s">
+      <ul class="uk-navbar-nav">
+        <li *ngIf="!profile">
+          <a (click)="login()">Login</a>
+        </li>
+
+        <li *ngIf="profile">
+
+          <a>{{ profile.preferred_username }}</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a>Settings</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- Menu when display width < 640px -->
+    <div class="uk-navbar-left uk-hidden@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" alt="Logo"></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="uk-navbar-right uk-hidden@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #my-id"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Off-canvas menu when width < 640px -->
+  <div id="my-id" uk-offcanvas>
+    <div class="uk-offcanvas-bar">
+      <ul class="uk-nav uk-nav-default">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
+        </li>
+        <li routerLink="/" routerLinkActive="uk-active"><a>Home</a></li>
+        <li *ngIf="showUnpublishedArticles">Articles<a href="#"></a></li>
+        <li><a href="#">Technology</a></li>
+        <li *ngIf="canUserCreateArticles" routerLink="/create/article" routerLinkActive="uk-active"><a>Create new
+            article</a></li>
+
+        <li *ngIf="profile">
+          <a>{{ profile.preferred_username }}</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a>Settings</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+
+
+  <!--FOOTER-->
+  <footer class="uk-section uk-section-small uk-section-muted">
+    <div class="uk-container">
+      <p class="uk-text-small uk-text-center">Copyright 2018 - <a href="https://github.com/zzseba78/Kick-Off">Created
+          by KickOff</a> | Built with <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
+          data-uk-tooltip><span data-uk-icon="uikit"></span></a></p>
+    </div>
+  </footer>
+  <!--/FOOTER-->
+</div>
