@@ -6,6 +6,7 @@ export class Article {
     published: boolean;
     editable: boolean = true;
     created: Date;
+    authorId: string;
 }
 
 export class ArticleCollection {

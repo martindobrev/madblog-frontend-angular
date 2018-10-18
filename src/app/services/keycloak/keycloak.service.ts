@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { KeycloakInstance, KeycloakTokenParsed } from '../../type/keycloak';
 
 declare var Keycloak: any;
 
@@ -8,9 +9,14 @@ declare var Keycloak: any;
 })
 export class KeycloakService {
 
-  private keycloakAuth: any;
-  private profile = new BehaviorSubject<any>(null);
-  profile$ = this.profile.asObservable();
+  private keycloakAuth: KeycloakInstance;
+  
+  private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
+  private profile$ = this.profile.asObservable();
+
+  public getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed> {
+    return this.profile$;
+  }
 
   init(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -21,9 +27,18 @@ export class KeycloakService {
       };
       this.keycloakAuth = new Keycloak(config);
       
+      this.keycloakAuth.onTokenExpired = () => {
+        this.keycloakAuth.updateToken(30).success(refreshed => {
+          console.log('TOKEN SUCCESSFULLY UPDATED');
+        }).error(() => {
+          alert('Cannot update token, redirecting to homepage...');
+        });
+      };
+
       this.keycloakAuth.init({ onLoad: 'check-sso'})
         .success(() => {
           this.profile.next(this.keycloakAuth.tokenParsed);
+          console.log('TOKEN IS:', this.keycloakAuth.tokenParsed);
           resolve();
         })
         .error(() => {
@@ -32,16 +47,12 @@ export class KeycloakService {
       });
   }
 
-  getToken(): string {
-    console.log(this.keycloakAuth);
-    if (this.keycloakAuth) {
-      return this.keycloakAuth.token;
+  getCurrentToken(): string {
+    if (!this.keycloakAuth) {
+      return null;
     }
-    return null;
-  }
 
-  getProfile(): any {
-    return this.profile;
+    return this.keycloakAuth.token;
   }
 
   login() {
@@ -50,8 +61,6 @@ export class KeycloakService {
 
   logout() {
     if (this.keycloakAuth) {
-      this.keycloakAuth.loggedIn = false;
-      this.keycloakAuth.authz = null;
       this.keycloakAuth.logout();
     }
   }

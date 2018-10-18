@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from './article.service';
+import { ArticleService } from './services/article/article.service';
 import { Article, ArticleCollection } from './api/article';
-import { KeycloakService } from './keycloak.service';
+import { KeycloakService } from './services/keycloak/keycloak.service';
 import { Subscription } from 'rxjs';
+import { KeycloakProfile, KeycloakTokenParsed } from './type/keycloak';
 
 @Component({
   selector: 'app-root',
@@ -14,24 +15,20 @@ export class AppComponent implements OnInit{
   title = 'app';
 
   username: string = null;
-  profile: any = null;
-  displayNavigation: boolean = false;
-
+  profile: KeycloakTokenParsed = null;
+  
   canUserCreateArticles: boolean = false;
-
+  showOwnArticles: boolean = false;
+  
   private subscriptions: Array<Subscription> = [];
 
   constructor(private articleService: ArticleService, private keycloakService: KeycloakService) {}
 
   ngOnInit(): void {
-
-    //this.user = this.keycloakService.getToken();
-
     this.subscriptions.push(
-    this.keycloakService.profile$.subscribe((profile) => {
+    this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
       console.log('USER PROFILE', this.profile);
-      this.displayNavigation = !!profile;
     })
     );
 

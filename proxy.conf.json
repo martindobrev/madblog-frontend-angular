@@ -1,6 +1,10 @@
 {
-    "/api/v1": {
-      "target": "http://localhost:8000",
-      "secure": false
-    }
-  }
+  "/users/info/": {
+    "target": "http://localhost:8001",
+    "secure": false
+  },
+  "/api/v1/": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }  
+}

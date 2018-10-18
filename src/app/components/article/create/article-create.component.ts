@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Article } from '../api/article';
+import { Article } from '../../../api/article';
 import { Router } from '@angular/router';
-import { ArticleService } from '../article.service';
-import { KeycloakService } from '../keycloak.service';
+import { ArticleService } from '../../../services/article/article.service';
+import { KeycloakService } from '../../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-article-create',
-  templateUrl: './../article-edit/article-edit.component.html',
+  templateUrl: './../edit/article-edit.component.html',
   styleUrls: ['./article-create.component.css']
 })
 export class ArticleCreateComponent implements OnInit {

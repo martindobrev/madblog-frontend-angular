@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { ArticleCollection } from './api/article';
+import { ArticleCollection } from '../../api/article';
 import { ArticleService } from './article.service';
 import { Observable } from 'rxjs';
 
