@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { KeycloakInstance, KeycloakTokenParsed } from '../../type/keycloak';
+import { AbstractKeycloakService } from './abstract.keycloak.service';
 
 declare var Keycloak: any;
 
 @Injectable({
   providedIn: 'root'
 })
-export class KeycloakService {
-
+export class KeycloakService extends AbstractKeycloakService {
+  
   private keycloakAuth: KeycloakInstance;
   
   private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
   private profile$ = this.profile.asObservable();
+
+
+  constructor() {
+    super();
+    console.log('CREATING KEYCLOAK_SERVICE');
+  }
 
   public getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed> {
     return this.profile$;
@@ -65,15 +72,14 @@ export class KeycloakService {
     }
   }
 
-  canUserPublishArticles() {
+  canPublishArticles(): boolean {
     if (!this.profile.value) {
       return false;
     }
     let roles = this.profile.value.realm_access.roles;
     return roles.includes('publisher') || roles.includes('admin');
   }
-
-  canUserCreateArticles() {
+  canCreateArticles(): boolean {
     if (!this.profile.value) {
       return false;
     }

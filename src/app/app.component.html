@@ -10,12 +10,16 @@
         <li>
           <a routerLink="/" routerLinkActive="uk-active">Home</a>
         </li>
-        <li *ngIf="showUnpublishedArticles">
-          <a routerLink="/unpublished">Unpublished articles</a>
+        <li *ngIf="canUserPublishArticles">
+          <a routerLink="/unpublished">Unpublished</a>
         </li>
+        <li *ngIf="showOwnArticles" >
+            <a routerLink="/own-articles" routerLinkActive="uk-active">My articles</a>
+          </li>
         <li *ngIf="canUserCreateArticles" >
-          <a routerLink="/create/article" routerLinkActive="uk-active">Create new article</a>
-        </li>
+            <a routerLink="/create/article" routerLinkActive="uk-active">Create new article</a>
+          </li>
+        
       </ul>
     </div>
 
@@ -64,8 +68,10 @@
           <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
         </li>
         <li routerLink="/" routerLinkActive="uk-active"><a>Home</a></li>
-        <li *ngIf="showUnpublishedArticles">Articles<a href="#"></a></li>
-        <li><a href="#">Technology</a></li>
+        <li *ngIf="canUserPublishArticles">
+          <a routerLink="/unpublished">Unpublished</a>
+        </li>
+        
         <li *ngIf="canUserCreateArticles" routerLink="/create/article" routerLinkActive="uk-active"><a>Create new
             article</a></li>
 

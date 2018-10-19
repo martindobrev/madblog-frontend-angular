@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Article } from '../../api/article';
-import { ArticleService } from './article.service';
+import { AbstractArticleService } from './abstract.article.service';
 import { Observable, of, forkJoin } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
@@ -12,7 +12,7 @@ import { User } from '../../api/user';
 })
 export class ArticleResolveService implements Resolve<[Article, User]> {
 
-  constructor(private articleService: ArticleService, private userService: UserService) { }
+  constructor(private articleService: AbstractArticleService, private userService: UserService) { }
 
   resolve(route: ActivatedRouteSnapshot): Observable<[Article, User]> {
     const articleObservable = this.articleService.getArticle(route.paramMap.get('id'));

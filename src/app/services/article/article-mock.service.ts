@@ -2,7 +2,7 @@ import { AbstractArticleService } from "./abstract.article.service";
 import { Article, ArticleCollection } from '../../api/article';
 import { Observable, of } from 'rxjs';
 
-export class MockArticleService extends AbstractArticleService {
+export class ArticleMockService extends AbstractArticleService {
 
     constructor(private articleCollection: ArticleCollection) {
         super();

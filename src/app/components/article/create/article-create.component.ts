@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Article } from '../../../api/article';
 import { Router } from '@angular/router';
-import { ArticleService } from '../../../services/article/article.service';
-import { KeycloakService } from '../../../services/keycloak/keycloak.service';
+import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
+import { AbstractArticleService } from './../../../services/article/abstract.article.service';
 
 @Component({
   selector: 'app-article-create',
@@ -17,12 +17,12 @@ export class ArticleCreateComponent implements OnInit {
 
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private articleService: ArticleService, 
-    private keycloakService: KeycloakService, private router: Router) { 
+  constructor(private articleService: AbstractArticleService, 
+    private keycloakService: AbstractKeycloakService, private router: Router) { 
   }
 
   ngOnInit() {
-    this.canUserPublishArticles = this.keycloakService.canUserPublishArticles();
+    this.canUserPublishArticles = this.keycloakService.canPublishArticles();
   }
 
   ngOnDestroy(): void {

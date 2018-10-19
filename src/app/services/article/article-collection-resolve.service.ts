@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { ArticleCollection } from '../../api/article';
-import { ArticleService } from './article.service';
+import { AbstractArticleService } from './abstract.article.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ArticleCollectionResolveService implements Resolve<ArticleCollection> {
 
-  constructor(private articleService: ArticleService) { }
+  constructor(private articleService: AbstractArticleService) { }
 
   resolve(): Observable<ArticleCollection> {
     return this.articleService.getArticles();

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from './services/article/article.service';
+import { AbstractArticleService } from './services/article/abstract.article.service';
 import { Article, ArticleCollection } from './api/article';
-import { KeycloakService } from './services/keycloak/keycloak.service';
+import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.service';
 import { Subscription } from 'rxjs';
 import { KeycloakProfile, KeycloakTokenParsed } from './type/keycloak';
 
@@ -19,20 +19,23 @@ export class AppComponent implements OnInit{
   
   canUserCreateArticles: boolean = false;
   showOwnArticles: boolean = false;
+  canUserPublishArticles: boolean = false;
   
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private articleService: ArticleService, private keycloakService: KeycloakService) {}
+  constructor(private articleService: AbstractArticleService, private keycloakService: AbstractKeycloakService) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
     this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
       console.log('USER PROFILE', this.profile);
+      
     })
     );
-
-    this.canUserCreateArticles = this.keycloakService.canUserCreateArticles();
+    this.canUserCreateArticles = this.keycloakService.canCreateArticles();
+    this.showOwnArticles = this.canUserCreateArticles;
+    this.canUserPublishArticles = this.keycloakService.canPublishArticles();
   }
 
 
