@@ -9,7 +9,7 @@ import { KeycloakMockService } from './../../../services/keycloak/keycloak-mock.
 import { AbstractKeycloakService } from './../../../services/keycloak/abstract.keycloak.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { User } from 'src/app/api/user';
+import { User } from './../../../api/user';
 
 describe('ArticleCreateComponent', () => {
   let component: ArticleCreateComponent;

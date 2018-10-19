@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleCollection, Article } from '../api/article';
 import { ActivatedRoute } from '@angular/router';
-import { AbstractArticleService } from '../services/article/abstract.article.service';
 
 @Component({
   selector: 'app-home',
@@ -13,14 +12,12 @@ export class HomeComponent implements OnInit {
   articles: ArticleCollection;
   featuredArticle: Article;
 
-  constructor(private articleService: AbstractArticleService, private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(data => {
       this.articles = data.articles;
-      console.log(this.articles);
       this.featuredArticle = this.getFeaturedArticle(this.articles)
-      console.log(this.featuredArticle);
     });
   }
 
