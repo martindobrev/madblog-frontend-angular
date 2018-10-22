@@ -1,0 +1,20 @@
+<table class="uk-table uk-table-striped">
+  <thead>
+      <tr>
+          <th>id</th>
+          <th>title</th>
+          <th>created</th>
+          <th>options</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let article of articles">
+          <td>{{article.id}}</td>
+          <td>{{article.title}}</td>
+          <td>{{article.created | date: 'short'}}</td>
+          <td>
+            edit, delete
+          </td>
+      </tr>
+  </tbody>
+</table>

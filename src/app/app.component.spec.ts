@@ -13,6 +13,9 @@ import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.s
 import { AbstractArticleService } from './services/article/abstract.article.service';
 import { ArticleMockService } from './services/article/article-mock.service';
 import { ArticleCollection } from './api/article';
+import { OwnArticlesComponent } from './components/article/view/own-articles.component';
+import { UnpublishedArticlesComponent } from './components/article/view/unpublished-articles.component';
+import { ArticleListComponent } from './components/article/view/article-list.component';
 describe('AppComponent', () => {
 
   let permissions = {
@@ -39,10 +42,12 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         HomeComponent,
-        
         ArticleViewComponent,
         ArticleEditComponent,
-        ArticleCreateComponent
+        ArticleCreateComponent,
+        ArticleListComponent,
+        OwnArticlesComponent,
+        UnpublishedArticlesComponent
       ],
       providers: [{provide: APP_BASE_HREF, useValue : '/' },
       {provide: AbstractKeycloakService, useFactory: keycloakMockServiceFactory},

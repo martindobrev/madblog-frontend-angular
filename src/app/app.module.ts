@@ -13,6 +13,9 @@ import { ArticleCreateComponent } from './components/article/create/article-crea
 import { AbstractArticleService } from './services/article/abstract.article.service';
 import { ArticleService } from './services/article/article.service';
 import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.service';
+import { ArticleListComponent } from './components/article/view/article-list.component';
+import { OwnArticlesComponent } from './components/article/view/own-articles.component';
+import { UnpublishedArticlesComponent } from './components/article/view/unpublished-articles.component';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -25,7 +28,10 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     HomeComponent,
     ArticleViewComponent,
     ArticleEditComponent,
-    ArticleCreateComponent
+    ArticleCreateComponent,
+    ArticleListComponent,
+    OwnArticlesComponent,
+    UnpublishedArticlesComponent
   ],
   imports: [
     BrowserModule,
