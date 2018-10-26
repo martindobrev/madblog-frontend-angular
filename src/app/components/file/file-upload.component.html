@@ -1,0 +1,11 @@
+<div class="uk-grid-small uk-child-width-expand@s uk-text-center" uk-grid>
+    <div class="uk-form-custom"> 
+        <input type="file" #file (change)="onFileAdded()" />
+        <button class="uk-button uk-button-default" type="button" tabindex="-1">Select</button>
+    </div>
+    <div>
+        <div [ngClass]="{'hidden': !selectedFile}" class="Upload" role="button" aria-label="Upload file"></div>
+
+        <button (click)="resetFile()" class="ui-button ui-button-default" >reset</button>
+    </div>
+</div>

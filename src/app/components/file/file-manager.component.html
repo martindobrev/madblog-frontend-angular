@@ -1,0 +1,33 @@
+
+<div class="uk-section">
+    <div class="uk-container uk-container-primary">
+        <app-file-upload></app-file-upload>
+    </div>
+</div>
+
+<div class="uk-section">
+    <div class="uk-container">
+        <h3>Available files</h3>
+        <div class="uk-grid uk-grid-small">
+            <div *ngFor="let file of blogFiles; let index = index;" (click)="selectedIndex = index" [ngClass]="{'uk-card-primary': index == selectedIndex}"
+                class="file-manager-card uk-card uk-card-small uk-card-hover uk-margin-left uk-margin-bottom">
+                <div class="uk-card-header">
+                    <img src="/api/v1/files/{{file.id}}?size=250" alt="">
+                </div>
+                <div class="uk-card-body">
+                    <div class="uk-grid uk-grid-small">
+                        <div class="uk-width-1-4">
+                            <span class="uk-text-small uk-text-bold">name: </span>
+                        </div>
+                        <div class="uk-width-3-4">
+                            <span class="uk-text-small uk-text-break">{{ file.name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

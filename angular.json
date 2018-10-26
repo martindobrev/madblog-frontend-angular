@@ -24,7 +24,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/keycloak/keycloak.js"
+              "src/assets/keycloak/keycloak.js",
+              "src/assets/libs/elastic-progress.js"
             ]
           },
           "configurations": {
@@ -72,7 +73,9 @@
             "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "scripts": [
+              
+            ],
             "styles": [
               "src/styles.css"
             ],

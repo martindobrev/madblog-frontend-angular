@@ -8,6 +8,8 @@ import { ArticleEditComponent } from './components/article/edit/article-edit.com
 import { ArticleCreateComponent } from './components/article/create/article-create.component';
 import { OwnArticlesComponent } from './components/article/view/own-articles.component';
 import { UnpublishedArticlesComponent } from './components/article/view/unpublished-articles.component';
+import { FileManagerComponent } from './components/file/file-manager.component';
+import { BlogFileCollectionResolveService } from './services/file/blog-file-collection-resolve.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
@@ -15,7 +17,8 @@ const routes: Routes = [
   { path: 'edit/article/:id', component: ArticleEditComponent, resolve: {articleAndUserArray: ArticleResolveService}},
   { path: 'create/article', component: ArticleCreateComponent },
   { path: 'own-articles', component: OwnArticlesComponent, resolve: { articles: ArticleCollectionResolveService }},
-  { path: 'unpublished', component: UnpublishedArticlesComponent, resolve: { articles: ArticleCollectionResolveService }}
+  { path: 'unpublished', component: UnpublishedArticlesComponent, resolve: { articles: ArticleCollectionResolveService }},
+  { path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService } }
 ];
 
 @NgModule({

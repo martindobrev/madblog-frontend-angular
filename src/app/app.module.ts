@@ -16,6 +16,10 @@ import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.s
 import { ArticleListComponent } from './components/article/view/article-list.component';
 import { OwnArticlesComponent } from './components/article/view/own-articles.component';
 import { UnpublishedArticlesComponent } from './components/article/view/unpublished-articles.component';
+import { FileUploadComponent } from './components/file/file-upload.component';
+import { FileManagerComponent } from './components/file/file-manager.component';
+import { AbstractFileService } from './services/file/abstract.file.service';
+import { FileService } from './services/file/file.service';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -31,7 +35,9 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     ArticleCreateComponent,
     ArticleListComponent,
     OwnArticlesComponent,
-    UnpublishedArticlesComponent
+    UnpublishedArticlesComponent,
+    FileUploadComponent,
+    FileManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +48,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },
     { provide: AbstractKeycloakService, useClass: KeycloakService },
+    { provide: AbstractFileService, useClass: FileService },
     {
       provide: APP_INITIALIZER,
       useFactory: kcFactory,
