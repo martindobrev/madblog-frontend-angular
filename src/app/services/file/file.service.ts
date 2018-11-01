@@ -4,18 +4,17 @@ import { BlogFile, BlogFileCollection } from "../../api/blog-file";
 import { Observable, Subject, throwError } from 'rxjs';
 import { HttpClient, HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { FileUploadError } from './../../http/file-upload-error';
+import { FileUploadError, FileUploadProgress } from '../../http/file-upload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService extends AbstractFileService {
-  
 
   private fileUploaded: Subject<BlogFile> = new Subject();
   private fileUploaded$ = this.fileUploaded.asObservable();
 
-  private fileUploadProgress: Subject<number> = new Subject();
+  private fileUploadProgress: Subject<FileUploadProgress> = new Subject();
   private fileUploadProgress$ = this.fileUploadProgress.asObservable();
 
   private fileUploadError: Subject<FileUploadError> = new Subject();
@@ -29,7 +28,7 @@ export class FileService extends AbstractFileService {
     return this.fileUploaded$;
   }
 
-  getFileUploadProgress$(): Observable<number> {
+  getFileUploadProgress$(): Observable<FileUploadProgress> {
     return this.fileUploadProgress$;
   }
 
@@ -53,8 +52,8 @@ export class FileService extends AbstractFileService {
       return this.handleFileUploadError(err, file)
     }))
     .subscribe((event: HttpEvent<any>) => {
-
-      console.log('DEFINING UPLOAD ');
+      event
+      //console.log('DEFINING UPLOAD ');
       switch (event.type) {
         case HttpEventType.Sent:
           console.log('Upload started!');
@@ -64,9 +63,10 @@ export class FileService extends AbstractFileService {
           this.fileUploaded.next(blogFile);
           break;
         case HttpEventType.UploadProgress: {
-          const percentLoaded = event['loaded'] / event['total'];
-          console.log('PERCENTAGE IS ' + percentLoaded)
-          this.fileUploadProgress.next(percentLoaded);
+          const fileUploadProgress = new FileUploadProgress();
+          fileUploadProgress.file = file;
+          fileUploadProgress.percentLoaded = event['loaded'] / event['total'];
+          this.fileUploadProgress.next(fileUploadProgress);
           break;
         }
       }

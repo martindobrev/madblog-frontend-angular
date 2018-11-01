@@ -3,29 +3,41 @@
     <form class="uk-form-horizontal uk-margin-large" #articleForm="ngForm">
 
       <div class="uk-margin" *ngIf="article.id">
-          <label class="uk-form-label" for="form-horizontal-text">Id</label>
+          <label class="uk-form-label" for="form-horizontal-id">Id</label>
           <div class="uk-form-controls">
-              <input class="uk-input" id="form-horizontal-text" name="id" type="text" [(ngModel)]="article.id" disabled>
+              <input class="uk-input" id="form-horizontal-id" name="id" type="text" [(ngModel)]="article.id" disabled>
           </div>
       </div>
       <div class="uk-margin">
-          <label class="uk-form-label" for="form-horizontal-text">Title</label>
+          <label class="uk-form-label" for="form-horizontal-title">Title</label>
           <div class="uk-form-controls">
-              <input class="uk-input" required #title="ngModel" [ngClass]="{'uk-form-danger': title.invalid }" id="form-horizontal-text" name="title" type="text" [(ngModel)]="article.title" placeholder="Some text...">
+              <input class="uk-input" required #title="ngModel" [ngClass]="{'uk-form-danger': title.invalid }" id="form-horizontal-title" name="title" type="text" [(ngModel)]="article.title" placeholder="Some text...">
           </div>
       </div>
 
       <div class="uk-margin">
-        <label class="uk-form-label" for="form-horizontal-text">Subtitle</label>
+        <label class="uk-form-label" for="form-horizontal-subtitle">Subtitle</label>
         <div class="uk-form-controls">
-            <input class="uk-input" required #subtitle="ngModel" [ngClass]="{'uk-form-danger': subtitle.invalid }" id="form-horizontal-text" name="subtitle" type="text" [(ngModel)]="article.subtitle" placeholder="Some text...">
+            <input class="uk-input" required #subtitle="ngModel" [ngClass]="{'uk-form-danger': subtitle.invalid }" id="form-horizontal-subtitle" name="subtitle" type="text" [(ngModel)]="article.subtitle" placeholder="Some text...">
         </div>
       </div>
 
       <div class="uk-margin">
-        <label class="uk-form-label" for="form-horizontal-text">Content</label>
+        <label class="uk-form-label" for="form-horizontal-content">Content</label>
         <div class="uk-form-controls">
-            <textarea class="uk-textarea" required #content="ngModel" [ngClass]="{'uk-form-danger': content.invalid }" rows="5" [(ngModel)]="article.content" name="content" placeholder="Enter your content here..."></textarea>
+          <textarea class="uk-textarea" id="form-horizontal-content" required #content="ngModel" [ngClass]="{'uk-form-danger': content.invalid }" rows="5" [(ngModel)]="article.content" name="content" placeholder="Enter your content here..."></textarea>
+        </div>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-image">Background image</label>
+        <div class="uk-form-controls">
+          
+          <div *ngIf="article.image">
+            <img src="/api/v1/files/{{article.image}}"/>
+          </div>
+
+          <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #file-manager" type="button">select</button>
         </div>
       </div>
 
@@ -36,16 +48,23 @@
           </div>
       </div>
 
+      
+
       <div class="uk-margin">
         <div class="uk-form-controls" uk-margin>
           <button class="uk-button uk-button-default" routerLink="/">Cancel</button>
           <button [disabled]="!articleForm.valid" class="uk-button uk-button-primary" (click)="saveArticle()">Save</button>
         </div>
       </div>
-
-
-
-
     </form>
   </div>
+
+  <div id="file-manager" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body uk-width-auto">
+          <h3 class="uk-modal-title">Please select an image</h3>
+          <app-file-manager></app-file-manager>
+          <button class="uk-modal-close" type="button"></button>
+      </div>
+  </div>
+
 </div>

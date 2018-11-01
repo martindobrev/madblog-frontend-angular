@@ -3,3 +3,8 @@ export class FileUploadError {
     status: number;
     message: string;
 }
+
+export class FileUploadProgress {
+    file: File;
+    percentLoaded: number;
+}

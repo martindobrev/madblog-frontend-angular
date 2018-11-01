@@ -1,104 +1,122 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { AbstractFileService } from './../../../app/services/file/abstract.file.service';
-import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { BlogFile } from './../../../app/api/blog-file';
-
-declare var ElasticProgress: any;
-
+import { FileUploadProgress, FileUploadError } from './../../http/file-upload';
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css']
 })
-export class FileUploadComponent implements OnInit, AfterViewInit {
+export class FileUploadComponent implements OnInit, OnDestroy {
 
-  private progress: any;
+  selectedFiles: Array<File>;
+  filesBeingUploaded = {};
 
-  ngAfterViewInit(): void {
-  
-    var element=document.querySelector('.Upload');
-    this.progress = new ElasticProgress(element, {
-      arrowDirection: 'up',
-      background: 'red',
-      buttonSize: 50,
-      colorBg: 'red',
-      colorFg: 'pink',
-    //var progress = new ElasticProgress('.Upload', {
-      // ...
-      onClick: () => {
-
-        this.progress.open();
-        this.uploadFile();
-      },
-
-      onClose: () => {
-        this.file.nativeElement.value = '';
-        this.selectedFile = null;
-      },
-
-      onFail: () => {
-        console.log('ON FAIL');
-      }
-    });
-
-
-
-    function theFunctionYouAreUsingToCheckProgress() {
-      // ...
-      //progress.setValue(value);
-    }
-  }
-
-  selectedFile: File;
-
-  private fileUploaded: Subject<BlogFile> = new Subject();
-  fileUploaded$ = this.fileUploaded.asObservable();
+  progressSubscription: Subscription;
+  successSubscription: Subscription;
+  errorSubscription: Subscription;
 
   @ViewChild('file') file;
 
   constructor(private fileService: AbstractFileService) { }
 
   ngOnInit() {
-
-    this.fileService.getFileUploadProgress$().subscribe(fileUploadProgress => {
-      if (this.progress) {
-        this.progress.setValue(fileUploadProgress);
-      }
-    });
-
-    this.fileService.getFileUploaded$().subscribe(file => {
-      if (this.progress) {
-        this.progress.close();
-        this.selectedFile = null;
-      }
-    });
-
-    this.fileService.getFileUploadError$().subscribe(error => {
-      this.progress.fail();
-      console.error('FILE UPLOAD ERROR: ' + error.message);
-    });
-
+    //this.addSubscriptions();
   }
-  onFileAdded() {
-    const files: { [key: string]: File } = this.file.nativeElement.files;
-    if (this.file.nativeElement.files) {
-      this.selectedFile = this.file.nativeElement.files[0];
-    } else {
-      this.selectedFile = null;
+
+  ngOnDestroy() {
+    this.removeSubscriptions();
+  }
+
+  uploadFile(file: File) {
+    this.filesBeingUploaded[file.name] = {
+      size: 100,
+      progress: 0,
+      completed: false,
+      error: null
+    };
+    this.fileService.uploadFile(file);
+  }
+
+  clearAll() {
+    console.log('CLEAR ALL');
+    this.selectedFiles = null;
+    this.filesBeingUploaded = {};
+    this.removeSubscriptions();
+  }
+
+  uploadAll() {
+    this.addSubscriptions();
+    this.selectedFiles.forEach(file => {
+      console.log('UPLOADING FILE: ', file);
+
+      if (!this.fileIsBeingUploaded(file)) {
+        this.uploadFile(file);
+      }
+    });
+  }
+
+  onDrop(event) {
+    alert('FILE DROPPED');
+    this.selectedFiles = this.fileListToArray(event.dataTransfer.files);
+    console.log('ON DROP')
+    this.uploadAll();
+    event.preventDefault();
+  }
+  
+  private fileListToArray(fileList: FileList): Array<File> {
+    const fileArray = new Array();
+    for (let i = 0; i < fileList.length; i++) {
+      fileArray.push(fileList.item(i));
+    }
+    console.log('TO RETURN: ', fileArray);
+    return fileArray;
+  }
+
+  private fileIsBeingUploaded(file: File): boolean {
+    return !!this.filesBeingUploaded[file.name];
+  }
+
+  onDragOver(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+
+  fileAdded(event) {
+    alert('FILE ADDED');
+    // console.log('EVENT IS: ', event);
+    if (event.target.files) {
+      //this.file.nativeElement.value = '';
+      
+      this.selectedFiles = this.fileListToArray(event.target.files)
+      this.uploadAll();
     }
   }
 
-  uploadFile() {
-    this.fileService.uploadFile(this.selectedFile);
+  private addSubscriptions() {
+    this.progressSubscription = this.fileService.getFileUploadProgress$().subscribe((fileProgress: FileUploadProgress) => {
+      this.filesBeingUploaded[fileProgress.file.name].progress = Math.round(fileProgress.percentLoaded * 100);
+    });
+
+    this.successSubscription = this.fileService.getFileUploaded$().subscribe((file: BlogFile) => {
+      this.filesBeingUploaded[file.name].completed = true;
+    });
+
+    this.errorSubscription = this.fileService.getFileUploadError$().subscribe((error: FileUploadError ) => {
+      this.filesBeingUploaded[error.file.name].error = error;
+    });
   }
 
-  resetFile() {
-    if (this.progress) {
-      this.progress.close();
+  private removeSubscriptions() {
+    if (this.progressSubscription) {
+      this.progressSubscription.unsubscribe();
     }
 
-    this.file.value = '';
-    this.selectedFile = null;
+    if (this.successSubscription) {
+      this.progressSubscription.unsubscribe();
+    }
   }
 }

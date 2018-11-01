@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
 import { AbstractArticleService } from './../../../services/article/abstract.article.service';
 
+declare var UIkit: any;
+
 @Component({
   selector: 'app-article-create',
   templateUrl: './../edit/article-edit.component.html',
@@ -14,6 +16,7 @@ export class ArticleCreateComponent implements OnInit {
 
   article: Article = new Article();
   canUserPublishArticles: boolean = false;
+  showFileManager =  false;
 
   private subscriptions: Array<Subscription> = [];
 
@@ -36,5 +39,11 @@ export class ArticleCreateComponent implements OnInit {
       this.router.navigateByUrl(`/article/${article.id}` )
     })
     );
+  }
+
+  openFileManager() {
+    this.showFileManager = true;
+    UIkit.modal('#file-manager');
+    //UIkit.modal.dialog('<div><app-file-manager></app-file-manager></div>');
   }
 }

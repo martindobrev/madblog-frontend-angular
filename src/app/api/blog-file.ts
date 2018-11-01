@@ -6,5 +6,5 @@ export class BlogFile {
 }
 
 export class BlogFileCollection {
-    files: Array<BlogFile>;
+    blogFiles: Array<BlogFile>;
 }

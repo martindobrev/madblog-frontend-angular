@@ -1,11 +1,45 @@
-<div class="uk-grid-small uk-child-width-expand@s uk-text-center" uk-grid>
-    <div class="uk-form-custom"> 
-        <input type="file" #file (change)="onFileAdded()" />
-        <button class="uk-button uk-button-default" type="button" tabindex="-1">Select</button>
+<div>
+    <div class="uk-placeholder uk-text-center" (drop)="onDrop($event)" (dragover)="onDragOver($event)" *ngIf="!selectedFiles">
+        <span uk-icon="icon: cloud-upload"></span>
+        <span class="uk-text-middle">To upload files just drop them here or </span>
+        <div uk-form-custom>
+            <input type="file" (change)="fileAdded($event)" #file multiple>
+            <span class="uk-link">selecting one</span>
+        </div>
     </div>
-    <div>
-        <div [ngClass]="{'hidden': !selectedFile}" class="Upload" role="button" aria-label="Upload file"></div>
+    
+    <h3>Available images</h3>
+    <table class="uk-table uk-table-small uk-table-justify uk-table-divider" *ngIf="selectedFiles">
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Size</th>
+                <th class="uk-table-expand">
+                    <button class="uk-button uk-button-danger uk-button-small" type="button" (click)="clearAll()">Clear</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let file of selectedFiles">
+                <td class="uk-text-break">{{ file.name }}</td>
+                <td>{{ file.size }}</td>
+                <td class="uk-table-expand" *ngIf="file.name">
+                    
+                    <div *ngIf="filesBeingUploaded[file.name]">
+                        <progress *ngIf="!filesBeingUploaded[file.name].completed && !filesBeingUploaded[file.name].error" class="uk-progress" 
+                            value="{{filesBeingUploaded[file.name].progress}}"
+                            max="{{filesBeingUploaded[file.name].size}}"></progress>
 
-        <button (click)="resetFile()" class="ui-button ui-button-default" >reset</button>
-    </div>
+                        <span *ngIf="filesBeingUploaded[file.name].completed" class="uk-text-small">completed</span>
+                        <div *ngIf="filesBeingUploaded[file.name].error">
+                            <span class="uk-text-danger">upload failed</span>
+                            
+                            <button class="uk-button uk-button-danger uk-button-small" type="button" (click)="uploadFile(file)">retry</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
 </div>

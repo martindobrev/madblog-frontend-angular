@@ -25,7 +25,6 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +56,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
+  entryComponents: [FileManagerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
