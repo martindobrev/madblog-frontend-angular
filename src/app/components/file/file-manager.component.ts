@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { BlogFile, BlogFileCollection } from './../../api/blog-file';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
@@ -9,11 +9,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './file-manager.component.html',
   styleUrls: ['./file-manager.component.css']
 })
-export class FileManagerComponent implements OnInit {
+export class FileManagerComponent implements OnInit , OnDestroy {
+  
+  @Input() selectable = false;
 
   blogFiles: Array<BlogFile>;
-  selectedIndex: number;
+  selectedId: number;
   subscriptions: Array<Subscription> = [];
+
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
   ngOnInit() {
@@ -33,11 +36,22 @@ export class FileManagerComponent implements OnInit {
       ));
     }
 
-
-
-
     this.fileService.getFileUploaded$().subscribe(newFile => {
       this.blogFiles.unshift(newFile);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  selectItem(file: BlogFile) {
+    if (this.selectable) {
+      this.selectedId = file.id;
+    }
+  }
+
+  confirmSelection() {
+    this.fileService.selectFile(this.blogFiles.find(file => file.id === this.selectedId));
   }
 }

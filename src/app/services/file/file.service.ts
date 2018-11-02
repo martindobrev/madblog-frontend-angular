@@ -20,6 +20,16 @@ export class FileService extends AbstractFileService {
   private fileUploadError: Subject<FileUploadError> = new Subject();
   private fileUploadError$ = this.fileUploadError.asObservable();
 
+  private fileSelected: Subject<BlogFile> = new Subject();
+  private fileSelected$ = this.fileSelected.asObservable();
+
+  private fileManagerVisibility: Subject<boolean> = new Subject();
+  private fileManagerVisibility$ = this.fileManagerVisibility.asObservable();
+
+  constructor(private httpClient: HttpClient) {
+    super();
+  }
+
   getFileUploadError$(): Observable<FileUploadError> {
     return this.fileUploadError$;
   }
@@ -32,8 +42,12 @@ export class FileService extends AbstractFileService {
     return this.fileUploadProgress$;
   }
 
-  constructor(private httpClient: HttpClient) {
-    super();
+  getFileSelected$(): Observable<BlogFile> {
+    return this.fileSelected$;
+  }
+
+  getShowHideFileManager$(): Observable<boolean> {
+    return this.fileManagerVisibility$;
   }
   
   getFiles(): Observable<BlogFileCollection> {
@@ -52,7 +66,7 @@ export class FileService extends AbstractFileService {
       return this.handleFileUploadError(err, file)
     }))
     .subscribe((event: HttpEvent<any>) => {
-      event
+      //event
       //console.log('DEFINING UPLOAD ');
       switch (event.type) {
         case HttpEventType.Sent:
@@ -71,6 +85,19 @@ export class FileService extends AbstractFileService {
         }
       }
     });
+  }
+
+  selectFile(blogFile: BlogFile) {
+    console.log('SELECTING FILE: ', blogFile);
+    this.fileSelected.next(blogFile);
+  }
+
+  showFileManager(): void {
+    this.fileManagerVisibility.next(true);
+  }
+  
+  hideFileManager(): void {
+    this.fileManagerVisibility.next(false);
   }
 
   private handleFileUploadError(error: HttpErrorResponse, file: File) {

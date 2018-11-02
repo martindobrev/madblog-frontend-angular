@@ -20,6 +20,8 @@ import { FileUploadComponent } from './components/file/file-upload.component';
 import { FileManagerComponent } from './components/file/file-manager.component';
 import { AbstractFileService } from './services/file/abstract.file.service';
 import { FileService } from './services/file/file.service';
+import { ModalComponent } from './components/modal/modal.component';
+import { ModalDirective } from './directives/modal.directive';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -36,7 +38,9 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     OwnArticlesComponent,
     UnpublishedArticlesComponent,
     FileUploadComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    ModalComponent,
+    ModalDirective
   ],
   imports: [
     BrowserModule,

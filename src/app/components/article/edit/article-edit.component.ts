@@ -5,6 +5,7 @@ import { AbstractArticleService } from '../../../services/article/abstract.artic
 import { Subscription } from 'rxjs';
 import { User } from '../../../api/user';
 import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
+import { AbstractFileService } from '../../../services/file/abstract.file.service';
 
 @Component({
   selector: 'app-article-edit',
@@ -20,11 +21,18 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription> = [];
 
   constructor(private activatedRoute: ActivatedRoute, private keycloakService: AbstractKeycloakService,
-    private articleService: AbstractArticleService, private router: Router) { 
+    private articleService: AbstractArticleService, private router: Router, private fileService: AbstractFileService) { 
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
         this.article = data.articleAndUserArray[0];
         this.author = data.articleAndUserArray[1];
+      })
+    );
+
+    this.subscriptions.push(
+      this.fileService.getFileSelected$().subscribe(blogFile => {
+        this.article.imageId = blogFile.id;
+        this.fileService.hideFileManager();
       })
     );
   }
@@ -43,5 +51,9 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(`/article/${this.article.id}` )
     })
     );
+  }
+
+  openFileManager() {
+    this.fileService.showFileManager();
   }
 }

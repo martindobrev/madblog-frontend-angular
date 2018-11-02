@@ -4,6 +4,7 @@ import { Article } from '../../../api/article';
 import { Router } from '@angular/router';
 import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
 import { AbstractArticleService } from './../../../services/article/abstract.article.service';
+import { AbstractFileService } from './../../../services/file/abstract.file.service';
 
 declare var UIkit: any;
 
@@ -21,11 +22,18 @@ export class ArticleCreateComponent implements OnInit {
   private subscriptions: Array<Subscription> = [];
 
   constructor(private articleService: AbstractArticleService, 
-    private keycloakService: AbstractKeycloakService, private router: Router) { 
+    private keycloakService: AbstractKeycloakService, 
+    private router: Router, 
+    private fileService: AbstractFileService) { 
   }
 
   ngOnInit() {
     this.canUserPublishArticles = this.keycloakService.canPublishArticles();
+
+    this.fileService.getFileSelected$().subscribe(blogFile => {
+      this.article.imageId = blogFile.id;
+      this.fileService.hideFileManager();
+    });
   }
 
   ngOnDestroy(): void {
@@ -42,8 +50,6 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   openFileManager() {
-    this.showFileManager = true;
-    UIkit.modal('#file-manager');
-    //UIkit.modal.dialog('<div><app-file-manager></app-file-manager></div>');
+    this.fileService.showFileManager();
   }
 }

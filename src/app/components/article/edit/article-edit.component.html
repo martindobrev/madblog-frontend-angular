@@ -33,13 +33,15 @@
         <label class="uk-form-label" for="form-horizontal-image">Background image</label>
         <div class="uk-form-controls">
           
-          <div *ngIf="article.image">
-            <img src="/api/v1/files/{{article.image}}"/>
+          <div *ngIf="article.imageId">
+            <img src="/api/v1/files/{{article.imageId}}?size=100"/>
           </div>
 
-          <button class="uk-button uk-button-default uk-button-small" uk-toggle="target: #file-manager" type="button">select</button>
+          <button class="uk-button uk-button-default uk-button-small" (click)="openFileManager()" type="button">select</button>
         </div>
       </div>
+
+      <p>{{ article | json }}</p>
 
       <div class="uk-margin" *ngIf="canUserPublishArticles">
           <label class="uk-form-label" for="form-horizontal-text">Published</label>
@@ -57,14 +59,6 @@
         </div>
       </div>
     </form>
-  </div>
-
-  <div id="file-manager" uk-modal>
-      <div class="uk-modal-dialog uk-modal-body uk-width-auto">
-          <h3 class="uk-modal-title">Please select an image</h3>
-          <app-file-manager></app-file-manager>
-          <button class="uk-modal-close" type="button"></button>
-      </div>
   </div>
 
 </div>

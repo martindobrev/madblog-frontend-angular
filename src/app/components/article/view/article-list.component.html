@@ -13,7 +13,7 @@
           <td>{{article.title}}</td>
           <td>{{article.created | date: 'short'}}</td>
           <td>
-            edit, delete
+               <button class="uk-button uk-button-small uk-button-default" routerLink="/edit/article/{{article.id}}">edit</button> 
           </td>
       </tr>
   </tbody>
