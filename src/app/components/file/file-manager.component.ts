@@ -46,12 +46,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   selectItem(file: BlogFile) {
-    if (this.selectable) {
-      this.selectedId = file.id;
-    }
-  }
-
-  confirmSelection() {
-    this.fileService.selectFile(this.blogFiles.find(file => file.id === this.selectedId));
+    this.fileService.selectFile(file);
   }
 }

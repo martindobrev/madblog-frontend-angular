@@ -1,4 +1,9 @@
 .file-manager-card {
-    width: 280px;
+    width: 200px;
     border: 1px solid #ccc;
+}
+
+.nb-card-body {
+    max-height: 100px;
+    overflow: hidden;
 }

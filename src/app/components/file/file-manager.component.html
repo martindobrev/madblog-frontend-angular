@@ -5,28 +5,24 @@
     </div>
     <div class="uk-container">
         <div class="uk-grid uk-grid-small">
-            <div *ngFor="let file of blogFiles; let index = index;" (click)="selectItem(file)" [ngClass]="{'uk-card-primary': file.id == selectedId}"
-                class="file-manager-card uk-card uk-card-small uk-card-hover uk-margin-left uk-margin-bottom">
+            <div *ngFor="let file of blogFiles; let index = index;"
+                class="file-manager-card uk-card uk-card-small uk-margin-left uk-margin-bottom">
                 <div class="uk-card-header">
-                    <img src="/api/v1/files/{{file.id}}?size=250" alt="">
-                </div>
-                <div class="uk-card-body">
-                    <div class="uk-grid uk-grid-small">
-                        <div class="uk-width-1-4">
-                            <span class="uk-text-small uk-text-bold">name: </span>
-                        </div>
-                        <div class="uk-width-3-4">
-                            <span class="uk-text-small uk-text-break">{{ file.name }}</span>
+                    <div class="uk-inline">
+                        <div class="uk-cover-container">
+                            <canvas width="200" height="120"></canvas>
+                            <img src="/api/v1/files/{{file.id}}?size=200" alt="" uk-cover>
                         </div>
                     </div>
                 </div>
+                <div class="uk-card-body nb-card-body">
+                    <span class="uk-text-small">{{ file.name }}</span>
+                </div>
+                <div class="uk-card-footer" *ngIf="selectable">
+                    <button class="uk-button uk-button-small uk-button-default" (click)="selectItem(file)">select</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div *ngIf="selectable">
-        <button class="ui-button ui-button-small ui-button-primary" (click)="confirmSelection()" [disabled]="!selectedId">select</button>
-        <button class="ui-button ui-button-small ui-button-default" (click)="cancelSelection()">cancel</button>
     </div>
 </div>
 
