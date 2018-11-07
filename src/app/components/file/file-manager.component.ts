@@ -15,6 +15,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
 
   blogFiles: Array<BlogFile>;
   selectedId: number;
+  id: string;
   subscriptions: Array<Subscription> = [];
 
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
@@ -46,6 +47,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   selectItem(file: BlogFile) {
-    this.fileService.selectFile(file);
+    this.fileService.selectFile(this.id, file);
   }
 }

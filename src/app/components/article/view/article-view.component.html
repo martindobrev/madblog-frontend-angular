@@ -8,12 +8,7 @@
 
       <p class="uk-text-lead">{{article.subtitle}}</p>
 
-      <div *ngIf="article.imageId">
-        <img src="/api/v1/files/{{article.imageId}}"/>
-      </div>
-
-      <div>
-        {{ article.content }}
+      <div [innerHTML]="article.htmlContent">
       </div>
 
       <hr />

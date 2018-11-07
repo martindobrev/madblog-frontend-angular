@@ -25,7 +25,11 @@
       <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-content">Content</label>
         <div class="uk-form-controls">
-          <textarea class="uk-textarea" id="form-horizontal-content" required #content="ngModel" [ngClass]="{'uk-form-danger': content.invalid }" rows="5" [(ngModel)]="article.content" name="content" placeholder="Enter your content here..."></textarea>
+
+            <app-markdown-editor name="Content" [(ngModel)]="article.content" required></app-markdown-editor>
+          <!--
+            <textarea class="uk-textarea" id="form-horizontal-content" required #content="ngModel" [ngClass]="{'uk-form-danger': content.invalid }" rows="5"  name="content" placeholder="Enter your content here..."></textarea>
+            -->
         </div>
       </div>
 
@@ -48,6 +52,13 @@
           </div>
       </div>
 
+
+      <div class="uk-margin" *ngIf="canUserPublishArticles">
+          <label class="uk-form-label" for="form-horizontal-text">Featured</label>
+          <div class="uk-form-controls">
+            <input class="uk-checkbox" name="featured" type="checkbox" [(ngModel)]="article.featured" checked> Featured articles show on top of the page. If more than 1 article is featured, a random one will be displayed
+          </div>
+      </div>
       
 
       <div class="uk-margin">

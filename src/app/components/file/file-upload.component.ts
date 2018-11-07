@@ -59,7 +59,6 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   }
 
   onDrop(event) {
-    alert('FILE DROPPED');
     this.selectedFiles = this.fileListToArray(event.dataTransfer.files);
     console.log('ON DROP')
     this.uploadAll();

@@ -3,6 +3,7 @@ export class Article {
     title: string;
     subtitle: string;
     content: string;
+    htmlContent: string;
     imageId: number;
     published: boolean;
     editable: boolean = true;

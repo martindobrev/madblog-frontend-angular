@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Article } from '../../../api/article';
+import { BlogFile } from '../../../api/blog-file';
 import { Router } from '@angular/router';
 import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
 import { AbstractArticleService } from './../../../services/article/abstract.article.service';
@@ -20,6 +21,7 @@ export class ArticleCreateComponent implements OnInit {
   showFileManager =  false;
 
   private subscriptions: Array<Subscription> = [];
+  private BACKGROUND_IMAGE = 'CREATE_ARTICLE_BACKGROUND';
 
   constructor(private articleService: AbstractArticleService, 
     private keycloakService: AbstractKeycloakService, 
@@ -30,10 +32,14 @@ export class ArticleCreateComponent implements OnInit {
   ngOnInit() {
     this.canUserPublishArticles = this.keycloakService.canPublishArticles();
 
-    this.fileService.getFileSelected$().subscribe(blogFile => {
-      this.article.imageId = blogFile.id;
-      this.fileService.hideFileManager();
-    });
+    this.subscriptions.push(
+      this.fileService.getFileSelected$().subscribe((data: {id: string, file: BlogFile}) => {
+        if (data.id === this.BACKGROUND_IMAGE) {
+          this.article.imageId = data.file.id;
+          this.fileService.hideFileManager(data.id);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -50,6 +56,6 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   openFileManager() {
-    this.fileService.showFileManager();
+    this.fileService.showFileManager(this.BACKGROUND_IMAGE);
   }
 }

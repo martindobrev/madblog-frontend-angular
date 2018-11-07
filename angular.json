@@ -24,8 +24,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/keycloak/keycloak.js",
-              "src/assets/libs/elastic-progress.js"
+              "src/assets/keycloak/keycloak.js"
             ]
           },
           "configurations": {

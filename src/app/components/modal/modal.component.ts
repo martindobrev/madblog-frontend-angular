@@ -11,7 +11,7 @@ import { AbstractFileService } from './../../services/file/abstract.file.service
 })
 export class ModalComponent implements OnInit {
 
-
+  id: string;
   on = false;
 
   @ViewChild(ModalDirective) modalHost: ModalDirective;
@@ -19,9 +19,12 @@ export class ModalComponent implements OnInit {
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private fileService: AbstractFileService) { }
 
   ngOnInit() {
-    this.fileService.getShowHideFileManager$().subscribe(show => {
-      this.on = show;
-      if (show) {
+    this.fileService.getShowHideFileManager$().subscribe((data: {id: string, status: boolean}) => {
+      
+      console.log('INFO NEW STATUS ARRIVED - ', data);
+      this.id = data.id;
+      this.on = data.status;
+      if (data.status) {
         this.loadComponent('FileManagerComponent');
       } else {
         this.deleteComponent();
@@ -34,12 +37,12 @@ export class ModalComponent implements OnInit {
     let viewComponentRef = this.modalHost.viewContainerRef;
     viewComponentRef.clear();
     let componentRef = viewComponentRef.createComponent(factory);
+    componentRef.instance.id = this.id;
     componentRef.instance.selectable = true;
-    
   }
 
   closeModal() {
-    this.fileService.hideFileManager();
+    this.fileService.hideFileManager(this.id);
   }
 
   private deleteComponent() {

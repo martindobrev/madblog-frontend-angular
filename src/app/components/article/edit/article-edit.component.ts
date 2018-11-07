@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../../../api/user';
 import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
 import { AbstractFileService } from '../../../services/file/abstract.file.service';
+import { BlogFile } from '../../../api/blog-file';
 
 @Component({
   selector: 'app-article-edit',
@@ -17,6 +18,8 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   article: Article;
   author: User;
   canUserPublishArticles: boolean = false;
+  
+  private BACKGROUND_IMAGE = 'BACKGROUND';
 
   private subscriptions: Array<Subscription> = [];
 
@@ -30,9 +33,11 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.fileService.getFileSelected$().subscribe(blogFile => {
-        this.article.imageId = blogFile.id;
-        this.fileService.hideFileManager();
+      this.fileService.getFileSelected$().subscribe((data: {id: string, file: BlogFile}) => {
+        if (data.id === this.BACKGROUND_IMAGE) {
+          this.article.imageId = data.file.id;
+          this.fileService.hideFileManager(data.id);
+        }
       })
     );
   }
@@ -54,6 +59,6 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   }
 
   openFileManager() {
-    this.fileService.showFileManager();
+    this.fileService.showFileManager(this.BACKGROUND_IMAGE);
   }
 }

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
 import { KeycloakService } from './services/keycloak/keycloak.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +23,7 @@ import { AbstractFileService } from './services/file/abstract.file.service';
 import { FileService } from './services/file/file.service';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalDirective } from './directives/modal.directive';
+import { MarkdownEditorComponent } from './components/markdown/markdown-editor.component';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -40,13 +42,15 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     FileUploadComponent,
     FileManagerComponent,
     ModalComponent,
-    ModalDirective
+    ModalDirective,
+    MarkdownEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    LMarkdownEditorModule
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },
