@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractFileService } from './abstract.file.service';
 import { BlogFile, BlogFileCollection } from "../../api/blog-file";
-import { Observable, Subject, throwError } from 'rxjs';
+import { Observable, Subject, throwError, of } from 'rxjs';
 import { HttpClient, HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { FileUploadError, FileUploadProgress } from '../../http/file-upload';
@@ -90,6 +90,10 @@ export class FileService extends AbstractFileService {
   selectFile(id: string, blogFile: BlogFile) {
     console.log('SELECTING FILE: ', blogFile);
     this.fileSelected.next({id: id, file: blogFile});
+  }
+
+  deleteFile(blogFile: BlogFile): Observable<any> {
+    return this.httpClient.delete(`/api/v1/files/${blogFile.id}`);
   }
 
   showFileManager(id: string): void {

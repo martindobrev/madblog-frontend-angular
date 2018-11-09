@@ -14,7 +14,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   @Input() selectable = false;
 
   blogFiles: Array<BlogFile>;
-  selectedId: number;
   id: string;
   subscriptions: Array<Subscription> = [];
 
@@ -48,5 +47,27 @@ export class FileManagerComponent implements OnInit , OnDestroy {
 
   selectItem(file: BlogFile) {
     this.fileService.selectFile(this.id, file);
+  }
+
+  deleteFile(file: BlogFile) {
+    this.fileService.deleteFile(file).subscribe(status => {
+      if (status) {
+        console.log('FILE DELETED', file);
+        let indexToDelete = -1;
+        this.blogFiles.find((value: BlogFile, index: number) => {
+          if (value.id === file.id) {
+            indexToDelete = index;
+            return true;
+          }
+          return false;
+        });
+
+        if (indexToDelete > -1) {
+          console.log('BEFORE DELETE', this.blogFiles);
+          this.blogFiles.splice(indexToDelete, 1);
+          console.log('AFTER DELETE', this.blogFiles);
+        }
+      }
+    });
   }
 }

@@ -8,6 +8,7 @@
             <div *ngFor="let file of blogFiles; let index = index;"
                 class="file-manager-card uk-card uk-card-small uk-margin-left uk-margin-bottom">
                 <div class="uk-card-header">
+                    
                     <div class="uk-inline">
                         <div class="uk-cover-container">
                             <canvas width="200" height="120"></canvas>
@@ -18,8 +19,13 @@
                 <div class="uk-card-body nb-card-body">
                     <span class="uk-text-small">{{ file.name }}</span>
                 </div>
-                <div class="uk-card-footer" *ngIf="selectable">
-                    <button class="uk-button uk-button-small uk-button-default" (click)="selectItem(file)">select</button>
+                <div class="uk-card-footer">
+                        <div class="uk-float-right">
+                            <a class="uk-icon-link" uk-icon="trash" (click)="deleteFile(file)"></a>
+                        </div>
+                        <div class="uk-float-left">
+                            <button *ngIf="selectable" class="uk-button uk-button-small uk-button-primary" (click)="selectItem(file)">select</button>
+                        </div>
                 </div>
             </div>
         </div>

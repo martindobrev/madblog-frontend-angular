@@ -1,6 +1,6 @@
 <div class="uk-section uk-section-default">
   <div class="uk-container">
-    <article class="uk-article">
+    <article class="uk-article" *ngIf="article">
 
       <h1 class="uk-article-title">{{article.title}}</h1>
 
@@ -23,5 +23,6 @@
       </div>
 
     </article>
+    <h3 class="uk-text-warning" *ngIf="!article">Article not found!</h3>
   </div>
 </div>

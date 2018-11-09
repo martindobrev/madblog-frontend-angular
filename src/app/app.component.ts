@@ -26,6 +26,7 @@ export class AppComponent implements OnInit{
   constructor(private articleService: AbstractArticleService, private keycloakService: AbstractKeycloakService) {}
 
   ngOnInit(): void {
+    console.log('APP COMPONENT CREATED');
     this.subscriptions.push(
     this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
