@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ArticleCollection, Article } from '../../api/article';
 import { Observable } from 'rxjs';
 import { AbstractArticleService } from './abstract.article.service';
@@ -8,13 +8,17 @@ import { AbstractArticleService } from './abstract.article.service';
   providedIn: 'root'
 })
 export class ArticleService extends AbstractArticleService {
-
+  
   constructor(private httpClient: HttpClient) {
     super();
   }
 
   public getArticles(): Observable<ArticleCollection> {
     return this.httpClient.get<ArticleCollection>("/api/v1/articles");
+  }
+
+  getCompleteArticles(): Observable<ArticleCollection> {
+    return this.httpClient.get<ArticleCollection>("/api/v1/complete-articles");
   }
 
   public getArticle(id: string): Observable<Article> {
@@ -28,4 +32,5 @@ export class ArticleService extends AbstractArticleService {
   public editArticle(article: Article): Observable<Article> {
     return this.httpClient.put(`/api/v1/articles/${article.id}`, article) as Observable<Article>;
   }
+
 }

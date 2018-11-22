@@ -24,6 +24,8 @@ import { FileService } from './services/file/file.service';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalDirective } from './directives/modal.directive';
 import { MarkdownEditorComponent } from './components/markdown/markdown-editor.component';
+import { Error404Component } from './error404/error404.component';
+import { MessageService } from './services/message/message.service';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -43,7 +45,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     FileManagerComponent,
     ModalComponent,
     ModalDirective,
-    MarkdownEditorComponent
+    MarkdownEditorComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     { provide: AbstractArticleService, useClass: ArticleService },
     { provide: AbstractKeycloakService, useClass: KeycloakService },
     { provide: AbstractFileService, useClass: FileService },
+    MessageService,
     {
       provide: APP_INITIALIZER,
       useFactory: kcFactory,

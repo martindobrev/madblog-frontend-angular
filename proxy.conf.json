@@ -2,5 +2,10 @@
   "/api/v1/": {
     "target": "http://localhost:8000",
     "secure": false
-  }  
+  },
+
+  "/messages/": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }
 }

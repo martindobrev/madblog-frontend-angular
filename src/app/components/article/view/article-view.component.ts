@@ -15,8 +15,7 @@ export class ArticleViewComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute) { 
     this.activatedRoute.data.subscribe(data => {
-      this.article = data.articleAndUserArray[0];
-      this.author = data.articleAndUserArray[1];
+      this.article = data.article;
     });
   }
 

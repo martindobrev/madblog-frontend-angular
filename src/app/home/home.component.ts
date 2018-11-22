@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleCollection, Article } from '../api/article';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StringUtils } from '../util/string-utils';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +10,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  articles: ArticleCollection;
+  articleCollection: ArticleCollection;
   featuredArticle: Article;
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(data => {
-      this.articles = data.articles;
-      this.featuredArticle = this.getFeaturedArticle(this.articles)
+      this.articleCollection = data.articles;
+      this.featuredArticle = this.getFeaturedArticle(this.articleCollection)
     });
+  }
+
+  calculateArticleReadTime(article: Article) {
+    return StringUtils.countMinutesToRead(article.content);
   }
 
   private getFeaturedArticle(articleCollection: ArticleCollection): Article {
@@ -26,10 +31,23 @@ export class HomeComponent implements OnInit {
       return null;
     }
 
-    if (!articleCollection.featured) {
+    if (!articleCollection.articles) {
       return null;
     }
 
-    return articleCollection.featured[0];
+    const featuredArticleIndexes = [];
+
+    articleCollection.articles.forEach((article: Article, index: number) => {
+      if (article.featured) {
+        featuredArticleIndexes.push(index);
+      }
+    });
+    
+    if (featuredArticleIndexes) {
+      const randomIndex = Math.floor(Math.random() * featuredArticleIndexes.length);
+      return articleCollection.articles.splice(featuredArticleIndexes[randomIndex], 1)[0];
+    }
+
+    return null;
   }
 }

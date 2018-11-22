@@ -10,6 +10,7 @@ import { ArticleCollection, Article } from '../../api/article';
 @Injectable()
 export abstract class AbstractArticleService {
     abstract getArticles(): Observable<ArticleCollection>;
+    abstract getCompleteArticles(): Observable<ArticleCollection>;
     abstract getArticle(id: string): Observable<Article>;
     abstract createArticle(article: Article): Observable<Article>;
     abstract editArticle(article: Article): Observable<Article>;

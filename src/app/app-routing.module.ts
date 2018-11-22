@@ -10,15 +10,21 @@ import { OwnArticlesComponent } from './components/article/view/own-articles.com
 import { UnpublishedArticlesComponent } from './components/article/view/unpublished-articles.component';
 import { FileManagerComponent } from './components/file/file-manager.component';
 import { BlogFileCollectionResolveService } from './services/file/blog-file-collection-resolve.service';
+import { AuthGuard } from './auth/auth.guard';
+import { CanViewArticleGuard } from './auth/can-view-article.guard';
+import { OwnArticleCollectionResolveService } from './services/article/own-article-collection-resolve.service';
+import { Error404Component } from './error404/error404.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
-  { path: 'article/:id', component: ArticleViewComponent, resolve: {articleAndUserArray: ArticleResolveService}},
-  { path: 'edit/article/:id', component: ArticleEditComponent, resolve: {articleAndUserArray: ArticleResolveService}},
+  { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService}},
+  { path: 'edit/article/:id', component: ArticleEditComponent, canActivate: [AuthGuard], resolve: {article: ArticleResolveService}},
   { path: 'create/article', component: ArticleCreateComponent },
-  { path: 'own-articles', component: OwnArticlesComponent, resolve: { articles: ArticleCollectionResolveService }},
-  { path: 'unpublished', component: UnpublishedArticlesComponent, resolve: { articles: ArticleCollectionResolveService }},
-  { path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService } }
+  { path: 'administer-articles', component: OwnArticlesComponent, canActivate: [AuthGuard], resolve: { articles: OwnArticleCollectionResolveService }},
+  { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService } },
+  { path: 'error404', component: Error404Component },
+  { path: '**', component: Error404Component }
+
 ];
 
 @NgModule({

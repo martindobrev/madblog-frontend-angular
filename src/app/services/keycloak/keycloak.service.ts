@@ -49,7 +49,7 @@ export class KeycloakService extends AbstractKeycloakService {
           resolve();
         })
         .error(() => {
-          reject();
+          // resolve();
         });
       });
   }
@@ -79,6 +79,7 @@ export class KeycloakService extends AbstractKeycloakService {
     let roles = this.profile.value.realm_access.roles;
     return roles.includes('publisher') || roles.includes('admin');
   }
+  
   canCreateArticles(): boolean {
     if (!this.profile.value) {
       return false;

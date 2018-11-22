@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from '../../../api/article';
+import { Article, ArticleCollection } from '../../../api/article';
+import { AbstractKeycloakService } from './../../../services/keycloak/abstract.keycloak.service';
+import { KeycloakTokenParsed } from './../../../type/keycloak';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-own-articles',
@@ -15,9 +18,8 @@ export class OwnArticlesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe((data) => {
-      if (data.articles) {
-        this.ownArticles = data.articles.own;
-      }
+      const articleCollection = data.articles as ArticleCollection;
+      this.ownArticles = articleCollection.articles;
     });
   }
 }

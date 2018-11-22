@@ -1,5 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!-- NAVIGATION -->
+
 <div class="uk-container">
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left uk-visible@s">
@@ -7,19 +8,16 @@
         <li>
           <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
         </li>
-        <li>
+        <li [ngClass]="{'uk-active': currentUrl === '/'}">
           <a routerLink="/" routerLinkActive="uk-active">Home</a>
         </li>
-        <li *ngIf="canUserPublishArticles">
-          <a routerLink="/unpublished">Unpublished</a>
+        <li *ngIf="showOwnArticles" [ngClass]="{'uk-active': currentUrl === '/own-articles'}">
+          <a routerLink="/administer-articles" routerLinkActive="uk-active">Articles</a>
         </li>
-        <li *ngIf="showOwnArticles" >
-            <a routerLink="/own-articles" routerLinkActive="uk-active">My articles</a>
-          </li>
-        <li *ngIf="canUserCreateArticles" >
+        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/create/article'}">
           <a routerLink="/create/article" routerLinkActive="uk-active">Create new article</a>
         </li>
-        <li *ngIf="canUserCreateArticles" >
+        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/file-manager'}">
           <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
         </li>
         

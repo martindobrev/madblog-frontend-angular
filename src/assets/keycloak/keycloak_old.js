@@ -73,12 +73,6 @@
                     loginIframe.interval = initOptions.checkLoginIframeInterval;
                 }
 
-                if (initOptions.promiseType === 'native') {
-                    kc.useNativePromise = typeof Promise === "function";
-                } else {
-                    kc.useNativePromise = false;
-                }
-
                 if (initOptions.onLoad === 'login-required') {
                     kc.loginRequired = true;
                 }
@@ -125,9 +119,9 @@
                 kc.flow = 'standard';
             }
 
-            var promise = createPromise(false);
+            var promise = createPromise();
 
-            var initPromise = createPromise(true);
+            var initPromise = createPromise();
             initPromise.promise.success(function() {
                 kc.onReady && kc.onReady(kc.authenticated);
                 promise.setSuccess(kc.authenticated);
@@ -154,14 +148,10 @@
                     case 'check-sso':
                         if (loginIframe.enable) {
                             setupCheckLoginIframe().success(function() {
-                                checkLoginIframe().success(function (unchanged) {
-                                    if (!unchanged) {
-                                        doLogin(false);
-                                    } else {
-                                        initPromise.setSuccess();
-                                    }
+                                checkLoginIframe().success(function () {
+                                    doLogin(false);
                                 }).error(function () {
-                                    initPromise.setError();
+                                    initPromise.setSuccess();
                                 });
                             });
                         } else {
@@ -180,7 +170,7 @@
                 var callback = parseCallback(window.location.href);
 
                 if (callback) {
-                    window.history.replaceState(window.history.state, null, callback.newUrl);
+                    window.history.replaceState({}, null, callback.newUrl);
                 }
 
                 if (callback && callback.valid) {
@@ -195,16 +185,12 @@
 
                         if (loginIframe.enable) {
                             setupCheckLoginIframe().success(function() {
-                                checkLoginIframe().success(function (unchanged) {
-                                    if (unchanged) {
-                                        kc.onAuthSuccess && kc.onAuthSuccess();
-                                        initPromise.setSuccess();
-                                        scheduleCheckIframe();
-                                    } else {
-                                        initPromise.setSuccess();
-                                    }
+                                checkLoginIframe().success(function () {
+                                    kc.onAuthSuccess && kc.onAuthSuccess();
+                                    initPromise.setSuccess();
                                 }).error(function () {
-                                    initPromise.setError();
+                                    setToken(null, null, null);
+                                    initPromise.setSuccess();
                                 });
                             });
                         } else {
@@ -376,7 +362,7 @@
             req.setRequestHeader('Accept', 'application/json');
             req.setRequestHeader('Authorization', 'bearer ' + kc.token);
 
-            var promise = createPromise(false);
+            var promise = createPromise();
 
             req.onreadystatechange = function () {
                 if (req.readyState == 4) {
@@ -401,7 +387,7 @@
             req.setRequestHeader('Accept', 'application/json');
             req.setRequestHeader('Authorization', 'bearer ' + kc.token);
 
-            var promise = createPromise(false);
+            var promise = createPromise();
 
             req.onreadystatechange = function () {
                 if (req.readyState == 4) {
@@ -437,7 +423,7 @@
         }
 
         kc.updateToken = function(minValidity) {
-            var promise = createPromise(false);
+            var promise = createPromise();
 
             if (!kc.refreshToken) {
                 promise.setError();
@@ -601,7 +587,6 @@
 
                             var tokenResponse = JSON.parse(req.responseText);
                             authSuccess(tokenResponse['access_token'], tokenResponse['refresh_token'], tokenResponse['id_token'], kc.flow === 'standard');
-                            scheduleCheckIframe();
                         } else {
                             kc.onAuthError && kc.onAuthError();
                             promise && promise.setError();
@@ -635,7 +620,7 @@
         }
 
         function loadConfig(url) {
-            var promise = createPromise(true);
+            var promise = createPromise();
             var configUrl;
 
             if (!config) {
@@ -994,8 +979,8 @@
             return result;
         }
 
-        function createPromise(internal) {
-            if (!internal && kc.useNativePromise) {
+        function createPromise() {
+            if (typeof Promise === "function") {
                 return createNativePromise();
             } else {
                 return createLegacyPromise();
@@ -1007,10 +992,12 @@
             // interface of the custom promise type previously used by the API
             var p = {
                 setSuccess: function(result) {
+                    p.success = true;
                     p.resolve(result);
                 },
 
                 setError: function(result) {
+                    p.success = false;
                     p.reject(result);
                 }
             };
@@ -1018,6 +1005,14 @@
                 p.resolve = resolve;
                 p.reject = reject;
             });
+            p.promise.success = function(callback) {
+                p.promise.then(callback);
+                return p.promise;
+            }
+            p.promise.error = function(callback) {
+                p.promise.catch(callback);
+                return p.promise;
+            }
             return p;
         }
 
@@ -1062,7 +1057,7 @@
         }
 
         function setupCheckLoginIframe() {
-            var promise = createPromise(true);
+            var promise = createPromise();
 
             if (!loginIframe.enable) {
                 promise.setSuccess();
@@ -1085,6 +1080,8 @@
                     loginIframe.iframeOrigin = authUrl.substring(0, authUrl.indexOf('/', 8));
                 }
                 promise.setSuccess();
+
+                setTimeout(check, loginIframe.interval * 1000);
             }
 
             var src = kc.endpoints.checkSessionIframe();
@@ -1111,38 +1108,31 @@
 
                 for (var i = callbacks.length - 1; i >= 0; --i) {
                     var promise = callbacks[i];
-                    if (event.data == 'error') {
-                        promise.setError();
+                    if (event.data == 'unchanged') {
+                        promise.setSuccess();
                     } else {
-                        promise.setSuccess(event.data == 'unchanged');
+                        promise.setError();
                     }
                 }
             };
 
             window.addEventListener('message', messageCallback, false);
 
+            var check = function() {
+                checkLoginIframe();
+                if (kc.token) {
+                    setTimeout(check, loginIframe.interval * 1000);
+                }
+            };
+
             return promise.promise;
         }
 
-        function scheduleCheckIframe() {
-            if (loginIframe.enable) {
-                if (kc.token) {
-                    setTimeout(function() {
-                        checkLoginIframe().success(function(unchanged) {
-                            if (unchanged) {
-                                scheduleCheckIframe();
-                            }
-                        });
-                    }, loginIframe.interval * 1000);
-                }
-            }
-        }
-
         function checkLoginIframe() {
-            var promise = createPromise(true);
+            var promise = createPromise();
 
             if (loginIframe.iframe && loginIframe.iframeOrigin ) {
-                var msg = kc.clientId + ' ' + (kc.sessionId ? kc.sessionId : '');
+                var msg = kc.clientId + ' ' + kc.sessionId;
                 loginIframe.callbackList.push(promise);
                 var origin = loginIframe.iframeOrigin;
                 if (loginIframe.callbackList.length == 1) {
@@ -1159,17 +1149,17 @@
             if (!type || type == 'default') {
                 return {
                     login: function(options) {
-                        window.location.replace(kc.createLoginUrl(options));
+                        window.location.href = kc.createLoginUrl(options);
                         return createPromise().promise;
                     },
 
                     logout: function(options) {
-                        window.location.replace(kc.createLogoutUrl(options));
+                        window.location.href = kc.createLogoutUrl(options);
                         return createPromise().promise;
                     },
 
                     register: function(options) {
-                        window.location.replace(kc.createRegisterUrl(options));
+                        window.location.href = kc.createRegisterUrl(options);
                         return createPromise().promise;
                     },
 
@@ -1180,7 +1170,7 @@
                         } else {
                             throw "Not supported by the OIDC server";
                         }
-                        return createPromise(false).promise;
+                        return createPromise().promise;
                     },
 
                     redirectUri: function(options, encodeHash) {
@@ -1239,7 +1229,7 @@
 
                 return {
                     login: function(options) {
-                        var promise = createPromise(false);
+                        var promise = createPromise();
 
                         var cordovaOptions = createCordovaOptions(options);
                         var loginUrl = kc.createLoginUrl(options);
@@ -1287,7 +1277,7 @@
                     },
 
                     logout: function(options) {
-                        var promise = createPromise(false);
+                        var promise = createPromise();
                         
                         var logoutUrl = kc.createLogoutUrl(options);
                         var ref = cordovaOpenWindowWrapper(logoutUrl, '_blank', 'location=no,hidden=yes');
@@ -1357,7 +1347,7 @@
 
                 return {
                     login: function(options) {
-                        var promise = createPromise(false);
+                        var promise = createPromise();
                         var loginUrl = kc.createLoginUrl(options);
 
                         universalLinks.subscribe('keycloak', function(event) {
@@ -1372,7 +1362,7 @@
                     },
 
                     logout: function(options) {
-                        var promise = createPromise(false);
+                        var promise = createPromise();
                         var logoutUrl = kc.createLogoutUrl(options);
 
                         universalLinks.subscribe('keycloak', function(event) {
@@ -1387,7 +1377,7 @@
                     },
 
                     register : function(options) {
-                        var promise = createPromise(false);
+                        var promise = createPromise();
                         var registerUrl = kc.createRegisterUrl(options);
                         universalLinks.subscribe('keycloak' , function(event) {
                             universalLinks.unsubscribe('keycloak');

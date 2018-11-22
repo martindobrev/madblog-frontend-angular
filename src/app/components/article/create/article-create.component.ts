@@ -19,6 +19,7 @@ export class ArticleCreateComponent implements OnInit {
   article: Article = new Article();
   canUserPublishArticles: boolean = false;
   showFileManager =  false;
+  create = true;
 
   private subscriptions: Array<Subscription> = [];
   private BACKGROUND_IMAGE = 'CREATE_ARTICLE_BACKGROUND';

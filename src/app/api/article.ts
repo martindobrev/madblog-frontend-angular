@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class Article {
     id: string;
     title: string;
@@ -6,14 +8,13 @@ export class Article {
     htmlContent: string;
     imageId: number;
     published: boolean;
+    featured: boolean;
     editable: boolean = true;
     created: Date;
     authorId: string;
+    user: User;
 }
 
 export class ArticleCollection {
-    published: Array<Article>;
-    unpublished: Array<Article>;
-    featured: Array<Article>;
-    own: Array<Article>;
+    articles: Array<Article>;
 }

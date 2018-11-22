@@ -16,8 +16,9 @@ import { BlogFile } from '../../../api/blog-file';
 export class ArticleEditComponent implements OnInit, OnDestroy {
   
   article: Article;
-  author: User;
   canUserPublishArticles: boolean = false;
+  articleAvailable = false;
+  create = false;
   
   private BACKGROUND_IMAGE = 'BACKGROUND';
 
@@ -27,8 +28,12 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
     private articleService: AbstractArticleService, private router: Router, private fileService: AbstractFileService) { 
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
-        this.article = data.articleAndUserArray[0];
-        this.author = data.articleAndUserArray[1];
+        this.article = data.article;
+        if (this.article) {
+          if (this.article.editable) {
+            this.articleAvailable = true;
+          }
+        }
       })
     );
 
