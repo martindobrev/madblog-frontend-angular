@@ -14,6 +14,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { CanViewArticleGuard } from './auth/can-view-article.guard';
 import { OwnArticleCollectionResolveService } from './services/article/own-article-collection-resolve.service';
 import { Error404Component } from './error404/error404.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
@@ -21,14 +22,14 @@ const routes: Routes = [
   { path: 'edit/article/:id', component: ArticleEditComponent, canActivate: [AuthGuard], resolve: {article: ArticleResolveService}},
   { path: 'create/article', component: ArticleCreateComponent },
   { path: 'administer-articles', component: OwnArticlesComponent, canActivate: [AuthGuard], resolve: { articles: OwnArticleCollectionResolveService }},
-  { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService } },
+  { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService }},
   { path: 'error404', component: Error404Component },
+  { path: 'dashboard', component: DashboardComponent },
   { path: '**', component: Error404Component }
-
 ];
 
 @NgModule({
   exports: [ RouterModule ],
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})]
+  imports: [ RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})]
 })
 export class AppRoutingModule { }

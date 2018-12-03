@@ -26,6 +26,7 @@ import { ModalDirective } from './directives/modal.directive';
 import { MarkdownEditorComponent } from './components/markdown/markdown-editor.component';
 import { Error404Component } from './error404/error404.component';
 import { MessageService } from './services/message/message.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -46,7 +47,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     ModalComponent,
     ModalDirective,
     MarkdownEditorComponent,
-    Error404Component
+    Error404Component,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

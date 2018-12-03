@@ -23,6 +23,7 @@ export class AppComponent implements OnInit{
   showOwnArticles: boolean = false;
   canUserPublishArticles: boolean = false;
   currentUrl: string;
+  showMenu = true;
   
   private subscriptions: Array<Subscription> = [];
 
@@ -37,6 +38,9 @@ export class AppComponent implements OnInit{
       this.router.events.subscribe((event: RouterEvent) => {
         if (event instanceof NavigationEnd) {
           this.currentUrl = event.url;
+          if (this.currentUrl.indexOf('dashboard') > -1) {
+            this.showMenu = false;
+          }
         }
       })
     );

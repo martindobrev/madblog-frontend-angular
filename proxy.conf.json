@@ -7,5 +7,10 @@
   "/messages/": {
     "target": "http://localhost:8000",
     "secure": false
+  },
+
+  "/actuator/": {
+    "target": "http://localhost:8000",
+    "secure": false
   }
 }

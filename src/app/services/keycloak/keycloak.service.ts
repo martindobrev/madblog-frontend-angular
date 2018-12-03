@@ -15,7 +15,6 @@ export class KeycloakService extends AbstractKeycloakService {
   private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
   private profile$ = this.profile.asObservable();
 
-
   constructor() {
     super();
     console.log('CREATING KEYCLOAK_SERVICE');
@@ -39,6 +38,7 @@ export class KeycloakService extends AbstractKeycloakService {
           console.log('TOKEN SUCCESSFULLY UPDATED');
         }).error(() => {
           alert('Cannot update token, redirecting to homepage...');
+          window.location.href = '/';
         });
       };
 
