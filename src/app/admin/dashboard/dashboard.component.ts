@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActuatorService } from '../../services/actuator/actuator.service';
+import { ActuatorService } from '../../admin/actuator/actuator.service';
 
 @Component({
   selector: 'app-dashboard',
