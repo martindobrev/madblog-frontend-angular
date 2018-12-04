@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    console.log('HOME Component created!');
     this.activatedRoute.data.subscribe(data => {
       this.articleCollection = data.articles;
       this.featuredArticle = this.getFeaturedArticle(this.articleCollection)

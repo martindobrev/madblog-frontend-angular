@@ -13,11 +13,7 @@ describe('HomeComponent', () => {
 
 
   let articleCollection = new ArticleCollection();
-  articleCollection.featured = [];
-  articleCollection.own = [];
-  articleCollection.published = [];
-  articleCollection.unpublished = [];
-
+  
   let activatedRouteMock = {
     data: of({
       articles: [new Article(), new User()]

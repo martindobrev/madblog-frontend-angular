@@ -12,6 +12,7 @@ export class ArticleCollectionResolveService implements Resolve<ArticleCollectio
   constructor(private articleService: AbstractArticleService) { }
 
   resolve(): Observable<ArticleCollection> {
+    console.log('Resolving articles...');
     return this.articleService.getArticles();
   }
 }

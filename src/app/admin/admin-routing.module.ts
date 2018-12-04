@@ -7,14 +7,17 @@ import { ArticlesComponent } from './articles/articles.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard', component: DashboardComponent,
-  }, {
-    path: '', children: [
+    path: '', component: DashboardComponent,
+    children: [
       {
-        path: 'users', component: UsersComponent
-      },
-      {
-        path: 'articles', component: ArticlesComponent
+        path: '', children: [
+          {
+            path: 'users', component: UsersComponent
+          },
+          {
+            path: 'articles', component: ArticlesComponent
+          }
+        ]
       }
     ]
   }

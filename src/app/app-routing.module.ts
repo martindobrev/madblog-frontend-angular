@@ -14,18 +14,23 @@ import { OwnArticleCollectionResolveService } from './services/article/own-artic
 import { Error404Component } from './error404/error404.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
+  { path: 'home', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
   { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService}},
   { path: 'edit/article/:id', component: ArticleEditComponent, canActivate: [AuthGuard], resolve: {article: ArticleResolveService}},
   { path: 'create/article', component: ArticleCreateComponent },
   { path: 'administer-articles', component: OwnArticlesComponent, canActivate: [AuthGuard], resolve: { articles: OwnArticleCollectionResolveService }},
   { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService }},
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule',
+  },
   { path: 'error404', component: Error404Component },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: Error404Component }
 ];
 
 @NgModule({
   exports: [ RouterModule ],
-  imports: [ RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})]
+  imports: [ RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', enableTracing: true})]
 })
 export class AppRoutingModule { }

@@ -52,7 +52,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   imports: [
     BrowserModule,
     HttpClientModule,
-    AdminModule,
+    /* AdminModule, */
     AppRoutingModule,
     FormsModule,
     LMarkdownEditorModule
