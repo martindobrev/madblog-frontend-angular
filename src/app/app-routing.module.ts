@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { ArticleResolveService } from './services/article/article-resolve.service';
 import { ArticleCollectionResolveService } from './services/article/article-collection-resolve.service';
 import { ArticleViewComponent } from './components/article/view/article-view.component';
@@ -14,18 +13,11 @@ import { OwnArticleCollectionResolveService } from './services/article/own-artic
 import { Error404Component } from './error404/error404.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
-  { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService}},
-  { path: 'edit/article/:id', component: ArticleEditComponent, canActivate: [AuthGuard], resolve: {article: ArticleResolveService}},
-  { path: 'create/article', component: ArticleCreateComponent },
-  { path: 'administer-articles', component: OwnArticlesComponent, canActivate: [AuthGuard], resolve: { articles: OwnArticleCollectionResolveService }},
-  { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService }},
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
   },
   { path: 'error404', component: Error404Component },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: Error404Component }
 ];
 

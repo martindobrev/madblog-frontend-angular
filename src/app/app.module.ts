@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './http/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
 import { ArticleViewComponent } from './components/article/view/article-view.component';
 import { ArticleEditComponent } from './components/article/edit/article-edit.component';
 import { ArticleCreateComponent } from './components/article/create/article-create.component';
@@ -26,7 +25,7 @@ import { ModalDirective } from './directives/modal.directive';
 import { MarkdownEditorComponent } from './components/markdown/markdown-editor.component';
 import { Error404Component } from './error404/error404.component';
 import { MessageService } from './services/message/message.service';
-import { AdminModule } from './admin/admin.module';
+import { PublicSiteModule } from './public-site/public-site.module';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -35,7 +34,6 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     ArticleViewComponent,
     ArticleEditComponent,
     ArticleCreateComponent,
@@ -53,6 +51,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     BrowserModule,
     HttpClientModule,
     /* AdminModule, */
+    PublicSiteModule,
     AppRoutingModule,
     FormsModule,
     LMarkdownEditorModule

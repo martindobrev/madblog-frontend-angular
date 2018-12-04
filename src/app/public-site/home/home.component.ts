@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleCollection, Article } from '../api/article';
+import { ArticleCollection, Article } from '../../api/article';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StringUtils } from '../util/string-utils';
+import { StringUtils } from '../../util/string-utils';
 
 @Component({
   selector: 'app-home',
