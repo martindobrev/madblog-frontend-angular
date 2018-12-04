@@ -11,6 +11,8 @@ import { OwnArticlesComponent } from './article/view/own-articles.component';
 import { UnpublishedArticlesComponent } from './article/view/unpublished-articles.component';
 import { FormsModule } from '@angular/forms';
 import { MarkdownEditorComponent } from './markdown/markdown-editor.component';
+import { MainComponent } from './main/main.component';
+import { Error404Component } from './error404/error404.component';
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { MarkdownEditorComponent } from './markdown/markdown-editor.component';
     FormsModule
   ],
   declarations: [
+    Error404Component,
+    MainComponent,
     HomeComponent,
     ArticleViewComponent,
     ArticleEditComponent,

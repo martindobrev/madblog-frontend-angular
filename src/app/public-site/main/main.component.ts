@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractArticleService } from './services/article/abstract.article.service';
-import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.service';
+import { AbstractArticleService } from './../../services/article/abstract.article.service';
+import { Article, ArticleCollection } from './../../api/article';
+import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
 import { Subscription } from 'rxjs';
-import { KeycloakTokenParsed } from './type/keycloak';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
-import { MessageService } from './services/message/message.service';
+import { KeycloakProfile, KeycloakTokenParsed } from './../../type/keycloak';
+import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
+import { MessageService } from './../../services/message/message.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
 })
-export class AppComponent implements OnInit{
+export class MainComponent implements OnInit{
   
   title = 'app';
 
@@ -22,7 +23,6 @@ export class AppComponent implements OnInit{
   showOwnArticles: boolean = false;
   canUserPublishArticles: boolean = false;
   currentUrl: string;
-  showMenu = true;
   
   private subscriptions: Array<Subscription> = [];
 
@@ -32,21 +32,12 @@ export class AppComponent implements OnInit{
     private messageService: MessageService) {}
 
   ngOnInit(): void {
-    console.log('APP COMPONENT CREATED');
-    this.subscriptions.push(
-      this.router.events.subscribe((event: RouterEvent) => {
-        if (event instanceof NavigationEnd) {
-          this.currentUrl = event.url;
-          if (this.currentUrl.indexOf('dashboard') > -1) {
-            this.showMenu = false;
-          }
-        }
-      })
-    );
+    console.log('MAIN COMPONENT CREATED!');
     this.subscriptions.push(
     this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
       console.log('USER PROFILE', this.profile);
+      
     })
     );
 
@@ -60,6 +51,7 @@ export class AppComponent implements OnInit{
     this.canUserPublishArticles = this.keycloakService.canPublishArticles();
   }
 
+
   login() {
     this.keycloakService.login();
   }
@@ -67,4 +59,8 @@ export class AppComponent implements OnInit{
   logout() {
     this.keycloakService.logout();
   }
+
+  
+
+
 }

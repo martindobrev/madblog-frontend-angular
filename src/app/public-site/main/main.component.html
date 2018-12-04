@@ -1,0 +1,108 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!-- NAVIGATION -->
+<div class="uk-container">
+  <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left uk-visible@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
+        </li>
+        <li [ngClass]="{'uk-active': currentUrl === '/'}">
+          <a routerLink="/" routerLinkActive="uk-active">Home</a>
+        </li>
+        <li *ngIf="showOwnArticles" [ngClass]="{'uk-active': currentUrl === '/own-articles'}">
+          <a routerLink="/administer-articles" routerLinkActive="uk-active">Articles</a>
+        </li>
+        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/create/article'}">
+          <a routerLink="/create/article" routerLinkActive="uk-active">Create new article</a>
+        </li>
+        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/file-manager'}">
+          <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
+        </li>
+        
+      </ul>
+    </div>
+
+    <div class="uk-navbar-right uk-visible@s">
+      <ul class="uk-navbar-nav">
+        <li *ngIf="!profile">
+          <a (click)="login()">Login</a>
+        </li>
+
+        <li *ngIf="profile">
+          <a>{{ profile.preferred_username }}</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a routerLink="/admin">Settings</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- Menu when display width < 640px -->
+    <div class="uk-navbar-left uk-hidden@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" alt="Logo"></a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="uk-navbar-right uk-hidden@s">
+      <ul class="uk-navbar-nav">
+        <li>
+          <a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #my-id"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Off-canvas menu when width < 640px -->
+  <div id="my-id" uk-offcanvas>
+    <div class="uk-offcanvas-bar">
+      <ul class="uk-nav uk-nav-default">
+        <li>
+          <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
+        </li>
+        <li routerLink="/" routerLinkActive="uk-active"><a>Home</a></li>
+        <li *ngIf="canUserPublishArticles">
+          <a routerLink="/unpublished">Unpublished</a>
+        </li>
+        
+        <li *ngIf="canUserCreateArticles" routerLink="/create/article" routerLinkActive="uk-active">
+          <a>Create new article</a>
+        </li>
+
+        <li *ngIf="canUserCreateArticles" >
+          <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
+        </li>
+
+        <li *ngIf="profile">
+          <a>{{ profile.preferred_username }}</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li><a routerLink="/admin">Settings</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+
+
+  <!--FOOTER-->
+  <footer class="uk-section uk-section-small uk-section-muted">
+    <div class="uk-container">
+      <p class="uk-text-small uk-text-center">Copyright 2018 - <a href="https://github.com/zzseba78/Kick-Off">Created
+          by KickOff</a> | Built with <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
+          data-uk-tooltip><span data-uk-icon="uikit"></span></a></p>
+    </div>
+  </footer>
+  <!--/FOOTER-->
+</div>

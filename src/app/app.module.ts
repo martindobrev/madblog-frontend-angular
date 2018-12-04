@@ -16,7 +16,6 @@ import { AbstractFileService } from './services/file/abstract.file.service';
 import { FileService } from './services/file/file.service';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalDirective } from './directives/modal.directive';
-import { Error404Component } from './error404/error404.component';
 import { MessageService } from './services/message/message.service';
 import { PublicSiteModule } from './public-site/public-site.module';
 
@@ -30,16 +29,14 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     FileUploadComponent,
     FileManagerComponent,
     ModalComponent,
-    ModalDirective,
-    Error404Component
+    ModalDirective
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     /* AdminModule, */
-    PublicSiteModule,
     AppRoutingModule,
-    FormsModule
+    PublicSiteModule
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },
@@ -55,6 +52,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   entryComponents: [FileManagerComponent],
+  exports: [ModalComponent, ModalDirective],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

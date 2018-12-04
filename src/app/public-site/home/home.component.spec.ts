@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ArticleCollection, Article } from './../api/article';
-import { User } from './../api/user';
+import { ArticleCollection, Article } from './../../api/article';
+import { User } from './../../api/user';
 import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
