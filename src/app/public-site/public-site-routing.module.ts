@@ -13,10 +13,14 @@ import { FileManagerComponent } from '../components/file/file-manager.component'
 import { BlogFileCollectionResolveService } from '../services/file/blog-file-collection-resolve.service';
 import { Error404Component } from './error404/error404.component';
 import { MainComponent } from './main/main.component';
+import { MenuResolveService } from './menu-resolve.service';
+import { PageViewComponent } from './page-view/page-view.component';
+import { PageResolveService } from './page-resolve.service';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 const routes: Routes = [
 
-  { path: '', component: MainComponent, children: [
+  { path: '', component: MainComponent, resolve: { menu: MenuResolveService }, children: [
     { path: 'home', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService}},
@@ -25,6 +29,8 @@ const routes: Routes = [
     { path: 'administer-articles', component: OwnArticlesComponent, canActivate: [AuthGuard], resolve: { articles: OwnArticleCollectionResolveService }},
     { path: 'file-manager', component: FileManagerComponent, canActivate: [AuthGuard], resolve: { blogFileCollection: BlogFileCollectionResolveService }},
     { path: 'error404', component: Error404Component },
+    { path: 'error5xx', component: ServerErrorComponent },
+    { path: ':slug', component: PageViewComponent, resolve: { page: PageResolveService}},
     { path: '**', component: Error404Component }
   ]}
 ];

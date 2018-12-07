@@ -7,9 +7,14 @@
         <li>
           <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
         </li>
-        <li [ngClass]="{'uk-active': currentUrl === '/'}">
+        <li [ngClass]="{'uk-active': currentUrl === '/' || currentUrl === '/home'}">
           <a routerLink="/" routerLinkActive="uk-active">Home</a>
         </li>
+
+        <li *ngFor="let menuEntry of menu.menuEntries" [ngClass]="{'uk-active': currentUrl === '/' + menuEntry.slug }">
+          <a routerLink="/{{menuEntry.slug}}">{{menuEntry.name}}</a>
+        </li>
+
         <li *ngIf="showOwnArticles" [ngClass]="{'uk-active': currentUrl === '/own-articles'}">
           <a routerLink="/administer-articles" routerLinkActive="uk-active">Articles</a>
         </li>
@@ -19,7 +24,6 @@
         <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/file-manager'}">
           <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
         </li>
-        
       </ul>
     </div>
 
@@ -40,7 +44,6 @@
         </li>
       </ul>
     </div>
-
 
     <!-- Menu when display width < 640px -->
     <div class="uk-navbar-left uk-hidden@s">
@@ -67,17 +70,13 @@
         <li>
           <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
         </li>
-        <li routerLink="/" routerLinkActive="uk-active"><a>Home</a></li>
-        <li *ngIf="canUserPublishArticles">
-          <a routerLink="/unpublished">Unpublished</a>
-        </li>
         
-        <li *ngIf="canUserCreateArticles" routerLink="/create/article" routerLinkActive="uk-active">
-          <a>Create new article</a>
+        <li [ngClass]="{'uk-active': currentUrl === '/' || currentUrl === '/home'}">
+          <a routerLink="/" routerLinkActive="uk-active">Home</a>
         </li>
 
-        <li *ngIf="canUserCreateArticles" >
-          <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
+        <li *ngFor="let menuEntry of menu.menuEntries" [ngClass]="{'uk-active': currentUrl === menuEntry.slug }">
+          <a routerLink="/{{menuEntry.slug}}">{{menuEntry.name}}</a>
         </li>
 
         <li *ngIf="profile">

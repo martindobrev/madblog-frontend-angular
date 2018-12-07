@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownEditorComponent } from './markdown/markdown-editor.component';
 import { MainComponent } from './main/main.component';
 import { Error404Component } from './error404/error404.component';
+import { PageViewComponent } from './page-view/page-view.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { Error404Component } from './error404/error404.component';
     ArticleListComponent,
     OwnArticlesComponent,
     UnpublishedArticlesComponent,
-    MarkdownEditorComponent
+    MarkdownEditorComponent,
+    PageViewComponent,
+    ServerErrorComponent
   ]
 })
 export class PublicSiteModule { }

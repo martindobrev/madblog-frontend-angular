@@ -11,20 +11,23 @@ export class MessageService {
   messages$ = this.messages.asObservable();
 
   constructor() { 
-    
+    /* 
+    //DISABLED FOR NOW
     let source = new EventSource('/messages/sse');
     source.onmessage = (message: any) => {
       console.log('Message received: ', message.data);
       this.messages.next(message.data);
     };
-  /*
+    
+  
     source.addEventListener('message', (message: any) => {
       console.log('Message received: ', message.data);
       this.messages.next(message.data);
     });
-*/
+
     source.addEventListener('error', (error: any) => {
       console.log('Something went wrong: ', error);
     });
+    */
   }
 }

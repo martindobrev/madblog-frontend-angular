@@ -18,6 +18,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ModalDirective } from './directives/modal.directive';
 import { MessageService } from './services/message/message.service';
 import { PublicSiteModule } from './public-site/public-site.module';
+import { RoutingService } from './routing.service';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -49,7 +50,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
       deps: [AbstractKeycloakService],
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    RoutingService
   ],
   entryComponents: [FileManagerComponent],
   exports: [ModalComponent, ModalDirective],

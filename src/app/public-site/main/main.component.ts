@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
-import { Article, ArticleCollection } from './../../api/article';
 import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
 import { Subscription } from 'rxjs';
 import { KeycloakProfile, KeycloakTokenParsed } from './../../type/keycloak';
 import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
 import { MessageService } from './../../services/message/message.service';
+import { Menu } from './../../api/menu';
+import { RoutingService } from './../../routing.service';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit{
-  
-  title = 'app';
+export class MainComponent implements OnInit, OnDestroy {
 
   username: string = null;
   profile: KeycloakTokenParsed = null;
@@ -23,21 +22,33 @@ export class MainComponent implements OnInit{
   showOwnArticles: boolean = false;
   canUserPublishArticles: boolean = false;
   currentUrl: string;
+  menu: Menu;
   
   private subscriptions: Array<Subscription> = [];
 
   constructor(private articleService: AbstractArticleService, 
     private keycloakService: AbstractKeycloakService, 
-    private router: Router,
+    private routingService: RoutingService,
+    private activatedRoute: ActivatedRoute,
     private messageService: MessageService) {}
 
   ngOnInit(): void {
     console.log('MAIN COMPONENT CREATED!');
+
+    this.subscriptions.push(
+      this.routingService.currentUrl$.subscribe(url => {this.currentUrl = url})
+    );
+    
     this.subscriptions.push(
     this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
       console.log('USER PROFILE', this.profile);
-      
+    })
+    );
+    this.subscriptions.push(
+    this.activatedRoute.data.subscribe(data => {
+      console.log('Menu is: ', data.menu);
+      this.menu = data.menu;
     })
     );
 
@@ -51,6 +62,9 @@ export class MainComponent implements OnInit{
     this.canUserPublishArticles = this.keycloakService.canPublishArticles();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
 
   login() {
     this.keycloakService.login();
