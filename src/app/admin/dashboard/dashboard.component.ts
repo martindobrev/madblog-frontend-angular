@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActuatorService } from '../../admin/actuator/actuator.service';
+import { RoutingService } from './../../routing.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,15 +8,11 @@ import { ActuatorService } from '../../admin/actuator/actuator.service';
 })
 export class DashboardComponent implements OnInit {
 
-  totalRequests: number;
-  totalTimeSeconds: number;
+  currentUrl: string;
 
-  constructor(private actuatorService: ActuatorService) { }
+  constructor(private routingService: RoutingService) { }
 
   ngOnInit() {
-    this.actuatorService.getTotalApiRequests().subscribe(jsonData => {
-      this.totalRequests = jsonData.measurements[0].value;
-      this.totalTimeSeconds = jsonData.measurements[1].value;
-    });
+    this.routingService.currentUrl$.subscribe(url => this.currentUrl = url);
   }
 }

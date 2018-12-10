@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Article } from '../../../api/article';
-import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
-import { AbstractArticleService } from '../../../services/article/abstract.article.service';
+import { Article } from '../../api/article';
+import { AbstractKeycloakService } from '../../services/keycloak/abstract.keycloak.service';
+import { AbstractArticleService } from '../../services/article/abstract.article.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-article-list',
@@ -11,17 +12,19 @@ import { AbstractArticleService } from '../../../services/article/abstract.artic
 export class ArticleListComponent implements OnInit {
 
   @Input() title: string;
-  @Input() articles: Array<Article>;
-  @Input() canEditArticles: boolean;
+  articles: Array<Article> = [];
   
   canPublishArticles: boolean;
 
-  constructor(private keycloakService: AbstractKeycloakService, private articleService: AbstractArticleService) { 
+  constructor(private keycloakService: AbstractKeycloakService, private articleService: AbstractArticleService,
+     private activatedRoute: ActivatedRoute) { 
     this.canPublishArticles = keycloakService.canPublishArticles();
   }
 
   ngOnInit() {
-    console.log('ARTICLES ARRAY IS: ', this.articles);
+    this.activatedRoute.data.subscribe(data => {
+      this.articles = data.articleCollection.articles;
+    });
   }
 
   articlePublishedChanged(article: Article, event: any) {

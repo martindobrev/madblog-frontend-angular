@@ -10,12 +10,8 @@ import { AbstractArticleService } from './services/article/abstract.article.serv
 import { ArticleService } from './services/article/article.service';
 import { AbstractKeycloakService } from './services/keycloak/abstract.keycloak.service';
 
-import { FileUploadComponent } from './components/file/file-upload.component';
-import { FileManagerComponent } from './components/file/file-manager.component';
 import { AbstractFileService } from './services/file/abstract.file.service';
 import { FileService } from './services/file/file.service';
-import { ModalComponent } from './components/modal/modal.component';
-import { ModalDirective } from './directives/modal.directive';
 import { MessageService } from './services/message/message.service';
 import { PublicSiteModule } from './public-site/public-site.module';
 import { RoutingService } from './routing.service';
@@ -26,11 +22,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FileUploadComponent,
-    FileManagerComponent,
-    ModalComponent,
-    ModalDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -53,8 +45,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     RoutingService
   ],
-  entryComponents: [FileManagerComponent],
-  exports: [ModalComponent, ModalDirective],
+  
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

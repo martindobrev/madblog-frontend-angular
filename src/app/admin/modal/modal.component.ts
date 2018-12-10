@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular/core';
-import { ModalDirective } from './../../directives/modal.directive';
-import { FileManagerComponent } from '../file/file-manager.component';
+import { ModalDirective } from './modal.directive';
+import { FileManagerComponent } from '../../admin/file/file-manager.component';
 import { Type } from '@angular/compiler';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 

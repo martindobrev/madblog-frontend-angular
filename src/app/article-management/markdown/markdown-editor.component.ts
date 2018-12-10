@@ -25,7 +25,6 @@ declare let hljs: any;
       multi: true
     }
   ]
-  
 })
 
 export class MarkdownEditorComponent implements ControlValueAccessor, Validator {

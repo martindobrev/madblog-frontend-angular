@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Article } from '../../../api/article';
+import { Article } from '../../api/article';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractArticleService } from '../../../services/article/abstract.article.service';
+import { AbstractArticleService } from '../../services/article/abstract.article.service';
 import { Subscription } from 'rxjs';
-import { User } from '../../../api/user';
-import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
-import { AbstractFileService } from '../../../services/file/abstract.file.service';
-import { BlogFile } from '../../../api/blog-file';
+import { User } from '../../api/user';
+import { AbstractKeycloakService } from '../../services/keycloak/abstract.keycloak.service';
+import { AbstractFileService } from '../../services/file/abstract.file.service';
+import { BlogFile } from '../../api/blog-file';
 
 @Component({
   selector: 'app-article-edit',
@@ -24,8 +24,12 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private keycloakService: AbstractKeycloakService,
-    private articleService: AbstractArticleService, private router: Router, private fileService: AbstractFileService) { 
+  constructor(private activatedRoute: ActivatedRoute,
+    private keycloakService: AbstractKeycloakService,
+    private articleService: AbstractArticleService,
+    private router: Router,
+    private fileService: AbstractFileService,
+    ) { 
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
         this.article = data.article;
@@ -58,7 +62,7 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   saveArticle() {
     this.subscriptions.push(
     this.articleService.editArticle(this.article).subscribe(obj => {
-      this.router.navigateByUrl(`/article/${this.article.id}` )
+      this.router.navigate(['../../'], { relativeTo: this.activatedRoute});
     })
     );
   }

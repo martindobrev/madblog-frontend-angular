@@ -15,6 +15,15 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      console.log('AuthGuard initiaited');
+      if (next.url.find(segment => segment.path.includes('admin'))) {
+        console.log('Trying to access admin area, checking authentication...');
+        if (false == this.keycloakService.canCreateArticles()) {
+          this.keycloakService.login();
+          return false;
+        }
+      }
+
       if (next.url.find(segment => segment.path.includes('file-manager'))) {
         if (false === this.keycloakService.canCreateArticles()) {
           this.router.navigateByUrl('/');
@@ -23,6 +32,7 @@ export class AuthGuard implements CanActivate {
       }
 
       if (next.url.find(segment => segment.path.includes('edit'))) {
+        console.log('Checking if user can edit articles...');
         if (!this.keycloakService.canCreateArticles()) {
           this.router.navigateByUrl('/');
           return false;

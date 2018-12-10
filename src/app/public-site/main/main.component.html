@@ -14,16 +14,7 @@
         <li *ngFor="let menuEntry of menu.menuEntries" [ngClass]="{'uk-active': currentUrl === '/' + menuEntry.slug }">
           <a routerLink="/{{menuEntry.slug}}">{{menuEntry.name}}</a>
         </li>
-
-        <li *ngIf="showOwnArticles" [ngClass]="{'uk-active': currentUrl === '/own-articles'}">
-          <a routerLink="/administer-articles" routerLinkActive="uk-active">Articles</a>
-        </li>
-        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/create/article'}">
-          <a routerLink="/create/article" routerLinkActive="uk-active">Create new article</a>
-        </li>
-        <li *ngIf="canUserCreateArticles" [ngClass]="{'uk-active': currentUrl === '/file-manager'}">
-          <a routerLink="/file-manager" routerLinkActive="uk-active">File manager</a>
-        </li>
+        
       </ul>
     </div>
 

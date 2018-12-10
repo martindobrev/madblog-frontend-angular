@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Article } from '../../../api/article';
-import { BlogFile } from '../../../api/blog-file';
+import { Article } from '../../api/article';
+import { BlogFile } from '../../api/blog-file';
 import { Router } from '@angular/router';
-import { AbstractKeycloakService } from '../../../services/keycloak/abstract.keycloak.service';
-import { AbstractArticleService } from './../../../services/article/abstract.article.service';
-import { AbstractFileService } from './../../../services/file/abstract.file.service';
+import { AbstractKeycloakService } from '../../services/keycloak/abstract.keycloak.service';
+import { AbstractArticleService } from '../../services/article/abstract.article.service';
+import { AbstractFileService } from '../../services/file/abstract.file.service';
 
 declare var UIkit: any;
 
 @Component({
   selector: 'app-article-create',
-  templateUrl: './../edit/article-edit.component.html',
+  templateUrl: './../article-edit/article-edit.component.html',
   styleUrls: ['./article-create.component.css']
 })
 export class ArticleCreateComponent implements OnInit {

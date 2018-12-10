@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArticleEditComponent } from './article-edit.component';
 import { FormsModule } from '@angular/forms';
-import { ArticleMockService } from './../../../services/article/article-mock.service';
-import { ArticleCollection, Article } from './../../../api/article';
-import { AbstractArticleService } from './../../../services/article/abstract.article.service';
-import { KeycloakMockService } from './../../../services/keycloak/keycloak-mock.service';
-import { AbstractKeycloakService } from './../../../services/keycloak/abstract.keycloak.service';
+import { ArticleMockService } from '../../services/article/article-mock.service';
+import { ArticleCollection, Article } from '../../api/article';
+import { AbstractArticleService } from '../../services/article/abstract.article.service';
+import { KeycloakMockService } from '../../services/keycloak/keycloak-mock.service';
+import { AbstractKeycloakService } from '../../services/keycloak/abstract.keycloak.service';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { User } from './../../../api/user';
+import { User } from '../../api/user';
 import { of } from 'rxjs';
 
 
