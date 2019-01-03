@@ -13,6 +13,7 @@ export class UserService {
   }
 
   getUserInfo(id: string): Observable<User> {
+    console.log('Retrieving user with id: ', id);
     return this.httpClient.get(`/api/v1/users/${id}`) as Observable<User>;
   }
 }

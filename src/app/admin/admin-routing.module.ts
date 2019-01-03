@@ -5,10 +5,11 @@ import { UsersComponent } from './users/users.component';
 import { GlobalStatsComponent } from './global-stats/global-stats.component';
 import { FileManagerComponent } from './file/file-manager.component';
 import { BlogFileCollectionResolveService } from '../services/file/blog-file-collection-resolve.service';
+import { UserResolveService } from '../services/user/user-resolve.service';
 
 const routes: Routes = [
   {
-    path: '', component: DashboardComponent,
+    path: '', component: DashboardComponent, resolve: { userData: UserResolveService },
     children: [
         {
           path: '', component: GlobalStatsComponent

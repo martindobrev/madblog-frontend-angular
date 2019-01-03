@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { LogoutGuard } from './auth/logout.guard';
 
 const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
     loadChildren: './admin/admin.module#AdminModule',
+  },
+  {
+    path: 'logout',
+    canLoad: [LogoutGuard],
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 

@@ -37,7 +37,7 @@ export class KeycloakService extends AbstractKeycloakService {
         this.keycloakAuth.updateToken(30).success(refreshed => {
           console.log('TOKEN SUCCESSFULLY UPDATED');
         }).error(() => {
-          alert('Cannot update token, redirecting to homepage...');
+          // alert('Cannot update token, redirecting to homepage...');
           window.location.href = '/';
         });
       };
@@ -45,7 +45,7 @@ export class KeycloakService extends AbstractKeycloakService {
       this.keycloakAuth.init({ onLoad: 'check-sso'})
         .success(() => {
           this.profile.next(this.keycloakAuth.tokenParsed);
-          console.log('TOKEN IS:', this.keycloakAuth.tokenParsed);
+          console.log('PROFILE IS:', this.keycloakAuth.tokenParsed);
           resolve();
         })
         .error(() => {
@@ -76,6 +76,7 @@ export class KeycloakService extends AbstractKeycloakService {
     if (!this.profile.value) {
       return false;
     }
+    //this.profile.value.
     let roles = this.profile.value.realm_access.roles;
     return roles.includes('publisher') || roles.includes('admin');
   }

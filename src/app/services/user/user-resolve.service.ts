@@ -1,12 +1,27 @@
 import { Injectable } from '@angular/core';
-import { KeycloakService } from '../keycloak/keycloak.service';
+import { AbstractKeycloakService } from '../keycloak/abstract.keycloak.service';
+import { Resolve } from '@angular/router';
+import { User } from './../../api/user';
+import { Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserResolveService {
+export class UserResolveService implements Resolve<User> {
 
-  constructor(private keycloakService: KeycloakService) { }
+  private userId: string;
 
-  //resolve(): Observable
+  constructor(private keycloakService: AbstractKeycloakService, private userService: UserService) { }
+
+  resolve(): Observable<User> {
+    
+    this.keycloakService.getKeycloakTokenParsed$().subscribe(parsedKeycloakToken => {
+      parsedKeycloakToken.realm_access;
+      parsedKeycloakToken.resource_access;
+      this.userId = parsedKeycloakToken.sub;
+    });
+    
+    return this.userService.getUserInfo(this.userId);
+  }
 }

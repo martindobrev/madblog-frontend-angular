@@ -224,6 +224,7 @@ declare namespace Keycloak {
 		session_state?: string;
 		realm_access?: { roles: string[] };
 		resource_access?: string[];
+		preferred_username?: string;
 	}
 
 	// export interface KeycloakUserInfo {}

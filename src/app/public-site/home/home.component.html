@@ -33,7 +33,7 @@
               <a title="Fusce facilisis tempus magna ac dignissim." class="uk-link-reset" routerLink="/article/{{article.id}}">{{article.title}}</a>
             </h2>
             <p class="uk-article-meta">Written on {{article.created | date: 'short'}} | <span data-uk-icon="icon: future"></span>
-              Takes {{ calculateArticleReadTime(article) }} min reading. <span *ngIf="article.editable">| <a class="uk-text-danger" routerLink="/edit/article/{{article.id}}">EDIT</a></span></p>
+              Takes {{ calculateArticleReadTime(article) }} min reading. <span *ngIf="article.editable">| <a class="uk-text-danger" routerLink="/admin/articles/edit/{{article.id}}">EDIT</a></span></p>
           </header>
           <div class="uk-cover-container">
               <canvas width="800" height="200"></canvas>
