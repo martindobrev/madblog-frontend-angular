@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RoutingService } from './../../routing.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
 import { KeycloakTokenParsed } from './../../type/keycloak';
 import { User } from './../../api/user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DashboardMenuService, DashboardMenuItem } from '../dashboard-menu.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,13 +19,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   userId: string;
   user: User;
   role: string;
+  menuItems: Observable<Array<DashboardMenuItem>>;
 
   constructor(
     private routingService: RoutingService, 
     private keycloakService: AbstractKeycloakService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
-    ) { }
+    private router: Router,
+    private dashboardMenuService: DashboardMenuService
+    ) {
+      this.menuItems = this.dashboardMenuService.dashboadMenuItem$;
+     }
 
   ngOnInit() {
     this.subscriptions.push(

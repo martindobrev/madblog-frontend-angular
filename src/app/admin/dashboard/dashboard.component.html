@@ -6,9 +6,11 @@
 			<nav class="uk-navbar uk-light" data-uk-navbar="mode:click; duration: 250">
 
 				<div class="uk-navbar-left">
-					<ul class="uk-navbar-nav">
-						<li><button routerLink="./articles/create" class="uk-button uk-button-small uk-button-default">Create article</button></li>
-						<li><button routerLink="./articles/create" class="uk-button uk-button-small uk-button-default">Delete all articles</button></li>
+					<ul class="uk-navbar-nav" >
+						<li *ngFor="let menuItem of menuItems | async ">
+							<button routerLink="{{ menuItem.url }}" class="uk-button uk-button-small uk-button-default">{{ menuItem.label }}</button>
+						</li>
+						
 					</ul>
 				</div>
 
