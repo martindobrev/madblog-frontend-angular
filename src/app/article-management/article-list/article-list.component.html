@@ -22,7 +22,7 @@
             <td>{{article.created | date: 'short'}}</td>
             <td>
                 <button *ngIf="article.editable" class="uk-button uk-button-small uk-button-default" routerLink="./edit/{{article.id}}">edit</button>
-                <button *ngIf="article.deletable" class="uk-button uk-button-small uk-button-warn" routerLink="/adminarticle/{{article.id}}">delete</button>
+                <button *ngIf="article.deletable" class="uk-button uk-button-small uk-button-warn" routerLink="./delete/{{article.id}}">delete</button>
             </td>
         </tr>
     </tbody>

@@ -14,6 +14,9 @@ import { MarkdownEditorComponent } from './markdown/markdown-editor.component';
     ArticleManagementRoutingModule,
     FormsModule
   ],
-  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, MarkdownEditorComponent]
+  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, MarkdownEditorComponent],
+  exports: [
+    MarkdownEditorComponent
+  ]
 })
 export class ArticleManagementModule { }

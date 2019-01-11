@@ -9,3 +9,7 @@ export class Page {
 	published: boolean;
 	created: Date;
 }
+
+export class PageCollection {
+	pages: Array<Page>;
+}

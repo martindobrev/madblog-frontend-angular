@@ -1,0 +1,32 @@
+<p *ngIf="pages.length === 0" class="uk-text-warning">No pages available</p>
+
+
+<div class="uk-child-width-expand uk-grid-small nb-table-header uk-sortable-nodrag" uk-grid>
+    <div>Order</div>
+    <div>ID</div>
+    <div>Name</div>
+    <div>Slug</div>
+    <div>Published</div>
+    <div class="uk-width-1-4">Options</div>
+</div>
+
+<div *ngIf="pages.length > 0" #sortablePagesContainer>
+    <div class="uk-child-width-expand uk-grid-small" *ngFor="let page of pages" uk-grid>
+        <div class="uk-sortable-handle"><span uk-icon="menu"></span> {{page.order}}</div>
+        <div>{{page.id}}</div>
+        <div>{{page.name}}</div>
+        <div>{{page.slug}}</div>
+        <div><input class="uk-checkbox" type="checkbox" (change)="pagePublishedChanged(page, $event)" [checked]="page.published"/></div>
+        <div class="uk-width-1-4">
+            <div *ngIf="idToDelete !== page.id">
+                <button class="uk-button uk-button-small uk-button-default" routerLink="./edit/{{page.id}}">edit</button>
+                <button class="uk-button uk-button-small uk-button-danger uk-margin-left"  [disabled]="idToDelete !== null && idToDelete !== page.id" (click)="markForDeletion(page)">delete</button>
+            </div>
+            
+            <div *ngIf="idToDelete === page.id" class="uk-margin-left">
+                <label>Sure?</label>
+                <button  class="uk-button uk-button-small uk-button-primary uk-margin-left" (click)="deletePage(page)">yes</button>
+            </div>
+        </div>
+    </div>
+</div>

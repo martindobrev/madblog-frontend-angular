@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { KeycloakService } from './services/keycloak/keycloak.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './http/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,7 @@ import { FileService } from './services/file/file.service';
 import { MessageService } from './services/message/message.service';
 import { PublicSiteModule } from './public-site/public-site.module';
 import { RoutingService } from './routing.service';
+import { MenuService } from './services/page/menu.service';
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -26,6 +27,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     /* AdminModule, */
     AppRoutingModule,
@@ -43,7 +45,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
       multi: true
     },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    RoutingService
+    RoutingService,
+    MenuService
   ],
   
   exports: [],

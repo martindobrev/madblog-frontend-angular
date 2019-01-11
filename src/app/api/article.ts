@@ -10,6 +10,7 @@ export class Article {
     published: boolean;
     featured: boolean;
     editable: boolean = true;
+    deletable: boolean = false;
     created: Date;
     authorId: string;
     user: User;

@@ -1,0 +1,13 @@
+.being-dragged {
+    background-color: red;
+}
+
+.nb-table-header {
+    padding: 16px 12px;
+    text-align: left;
+    vertical-align: bottom;
+    font-size: .875rem;
+    font-weight: 400;
+    color: #999;
+    text-transform: uppercase;
+}

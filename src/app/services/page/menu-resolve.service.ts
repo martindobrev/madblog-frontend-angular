@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Menu } from '../api/menu';
+import { Menu } from '../../api/menu';
 import { Observable, of } from 'rxjs';
 import { MenuService } from './menu.service';
 import { catchError, map } from 'rxjs/operators';

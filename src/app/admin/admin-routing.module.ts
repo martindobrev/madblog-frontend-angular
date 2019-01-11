@@ -22,6 +22,9 @@ const routes: Routes = [
           path: 'articles', loadChildren: './../article-management/article-management.module#ArticleManagementModule',
         },
         {
+          path: 'pages', loadChildren: './../page-management/page-management.module#PageManagementModule',
+        },
+        {
           path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}
         }
     ]

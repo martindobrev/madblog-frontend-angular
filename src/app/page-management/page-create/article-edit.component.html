@@ -1,0 +1,54 @@
+<div class="uk-section uk-section-default">
+
+  <ng-template #editor>
+    <div class="uk-container">
+      <form class="uk-form-horizontal uk-margin-large" #pageForm="ngForm">
+        <div class="uk-margin" *ngIf="page.id">
+          <label class="uk-form-label" for="form-horizontal-id">Id</label>
+          <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-id" name="id" type="text" [(ngModel)]="page.id" disabled>
+          </div>
+        </div>
+        <div class="uk-margin" *ngIf="page.order">
+            <label class="uk-form-label" for="form-horizontal-order">Order</label>
+            <div class="uk-form-controls">
+              <input class="uk-input" id="form-horizontal-order" name="order" type="text" [(ngModel)]="page.order" disabled>
+            </div>
+          </div>
+        <div class="uk-margin">
+          <label class="uk-form-label" for="form-horizontal-name">Name</label>
+          <div class="uk-form-controls">
+            <input class="uk-input" required #name="ngModel" [ngClass]="{'uk-form-danger': name.invalid }" id="form-horizontal-name"
+              name="title" type="text" [(ngModel)]="page.name" placeholder="Some text...">
+          </div>
+        </div>
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="form-horizontal-slug">slug</label>
+          <div class="uk-form-controls">
+            <input class="uk-input" required #slug="ngModel" [ngClass]="{'uk-form-danger': slug.invalid }" id="form-horizontal-subtitle"
+              name="subtitle" type="text" [(ngModel)]="article.subtitle" placeholder="URL name to access the page here">
+          </div>
+        </div>
+
+        <div class="uk-margin">
+          <label class="uk-form-label" for="form-horizontal-content">Content</label>
+          <div class="uk-form-controls">
+            <app-markdown-editor name="Content" [(ngModel)]="page.content" required></app-markdown-editor>
+          </div>
+        </div>
+
+
+        <div class="uk-margin">
+          <div class="uk-form-controls" uk-margin>
+            <button class="uk-button uk-button-default" routerLink="./../..">Cancel</button>
+            <button [disabled]="!page.valid" class="uk-button uk-button-primary" (click)="savePage()">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </ng-template>
+
+
+</div>
