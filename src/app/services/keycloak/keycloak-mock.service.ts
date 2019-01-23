@@ -6,12 +6,18 @@ import { KeycloakTokenParsed } from "./../../type/keycloak";
 @Injectable()
 export class KeycloakMockService extends AbstractKeycloakService {
     
-    constructor(private publishArticles: boolean, private createArticles: boolean) {
+
+
+    constructor(private publishArticles: boolean, private createArticles: boolean, private tokenParsed: KeycloakTokenParsed) {
         super();
     }
     
     init(): Promise<any> {
-        return new Promise(() => {});
+        console.log(`Initiating Keycloak Mock Service`);
+        return new Promise((resolve, reject) => {
+            console.log(`Resolving promise...`);
+            resolve();
+        });
     }
     
     login() {}
@@ -26,7 +32,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
     }
 
     getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed> {
-        return of({});
+        return of(this.tokenParsed);
     }
     
     getCurrentToken(): string {

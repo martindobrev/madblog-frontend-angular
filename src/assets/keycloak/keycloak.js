@@ -1146,7 +1146,12 @@
                 loginIframe.callbackList.push(promise);
                 var origin = loginIframe.iframeOrigin;
                 if (loginIframe.callbackList.length == 1) {
-                    loginIframe.iframe.contentWindow.postMessage(msg, origin);
+                    try {
+                        loginIframe.iframe.contentWindow.postMessage(msg, origin);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                    
                 }
             } else {
                 promise.setSuccess();

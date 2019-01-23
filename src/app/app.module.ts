@@ -16,6 +16,22 @@ import { MessageService } from './services/message/message.service';
 import { PublicSiteModule } from './public-site/public-site.module';
 import { RoutingService } from './routing.service';
 import { MenuService } from './services/page/menu.service';
+import { KeycloakMockService } from './services/keycloak/keycloak-mock.service';
+import { KeycloakTokenParsed } from './type/keycloak';
+
+export function getKeycloakServiceFactory() {
+  let mockKeycloakTokenParsed: KeycloakTokenParsed = {
+    //exp?: number;
+		//iat?: number;
+		//nonce?: string;
+		//sub?: string;
+		//session_state?: string;
+		realm_access: { roles: ['admin', 'publisher'] },
+		resource_access: ['ADMIN'],
+		preferred_username: 'MOCK-ADMIN'
+  };
+  return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
+}
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
@@ -35,7 +51,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },
-    { provide: AbstractKeycloakService, useClass: KeycloakService },
+    { provide: AbstractKeycloakService, useFactory: getKeycloakServiceFactory },
     { provide: AbstractFileService, useClass: FileService },
     MessageService,
     {

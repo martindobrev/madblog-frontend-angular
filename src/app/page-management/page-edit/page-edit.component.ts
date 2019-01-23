@@ -27,14 +27,4 @@ export class PageEditComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.activatedRoute});
     });
   }
-
-  pagePublishedChanged(page: Page, event: any) {
-    const pageToBeSaved = page;
-    pageToBeSaved.published = event.target.checked;
-
-    this.menuService.editPage(pageToBeSaved).subscribe(page => {
-      console.log(`Page ${page.name} published: ${page.published}`);
-    });
-  }
-
 }

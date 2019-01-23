@@ -1,0 +1,16 @@
+{
+    "/api/v1/": {
+      "target": "http://157.230.111.161:8000",
+      "secure": false
+    },
+  
+    "/messages/": {
+      "target": "http://157.230.111.161:8000",
+      "secure": false
+    },
+  
+    "/actuator/": {
+      "target": "http://157.230.111.161:8000",
+      "secure": false
+    }
+  }
