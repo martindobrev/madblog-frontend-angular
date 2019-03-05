@@ -18,6 +18,7 @@ export class AuthGuard implements CanActivate {
       console.log('AuthGuard initiaited');
       if (next.url.find(segment => segment.path.includes('admin'))) {
         console.log('Trying to access admin area, checking authentication...');
+        alert(this.keycloakService.canCreateArticles());
         if (false == this.keycloakService.canCreateArticles()) {
           this.keycloakService.login();
           return false;

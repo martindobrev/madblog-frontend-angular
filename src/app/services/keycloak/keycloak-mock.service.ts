@@ -2,11 +2,10 @@ import { AbstractKeycloakService } from "./abstract.keycloak.service";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { KeycloakTokenParsed } from "./../../type/keycloak";
+import { User } from './../../api/user';
 
 @Injectable()
 export class KeycloakMockService extends AbstractKeycloakService {
-    
-
 
     constructor(private publishArticles: boolean, private createArticles: boolean, private tokenParsed: KeycloakTokenParsed) {
         super();
@@ -38,4 +37,43 @@ export class KeycloakMockService extends AbstractKeycloakService {
     getCurrentToken(): string {
         return '';
     }
+
+    getUserInfo(): Observable<User> {
+        const user = new User();
+        user.firstname = 'Tim';
+        user.lastname = 'Test';
+        user.roles = this.tokenParsed.realm_access.roles;
+        user.id = 'TEST_USER';
+        user.username = 'MOCK-ADMIN';
+        return of(user);
+    }
+
+    isAdmin(): boolean {
+        if (!this.tokenParsed) {
+            return false;
+        }
+
+        if (!this.tokenParsed.realm_access) {
+            return false;
+        }
+
+        if (!this.tokenParsed.realm_access.roles) {
+            return false;
+        }
+
+        return this.tokenParsed.realm_access.roles.includes('admin');
+    }
+}
+
+export function createMockServiceFactory(roles: Array<string>): AbstractKeycloakService {
+    let tokenParsed: KeycloakTokenParsed = {
+        realm_access: { roles: roles },
+        resource_access: ['TEST_ACCESS'],
+        preferred_username: 'MOCK_USER'
+    };
+
+    const isUser = tokenParsed.realm_access.roles.includes('user');
+    const isPublisher = tokenParsed.realm_access.roles.includes('publisher');
+    const isAdmin = tokenParsed.realm_access.roles.includes('admin');
+    return new KeycloakMockService(isPublisher, isUser, tokenParsed);
 }

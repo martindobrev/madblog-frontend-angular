@@ -20,18 +20,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   user: User;
   role: string;
   menuItems: Observable<Array<DashboardMenuItem>>;
+  isAdmin: boolean;
 
   constructor(
     private routingService: RoutingService, 
     private keycloakService: AbstractKeycloakService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    //private router: Router,
     private dashboardMenuService: DashboardMenuService
     ) {
       this.menuItems = this.dashboardMenuService.dashboadMenuItem$;
      }
 
   ngOnInit() {
+
+    this.isAdmin = this.keycloakService.isAdmin();
+
     this.subscriptions.push(
       this.routingService.currentUrl$.subscribe(url => this.currentUrl = url)
     );
@@ -63,8 +67,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.router.navigateByUrl('/').then(() => {
+    //this.router.navigateByUrl('/').then(() => {
       this.keycloakService.logout();
-    });
+    //});
   }
 }

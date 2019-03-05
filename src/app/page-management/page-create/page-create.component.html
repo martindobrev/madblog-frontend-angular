@@ -34,7 +34,10 @@
       <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-content">Content</label>
         <div class="uk-form-controls">
+          <app-html-editor name="content" [(ngModel)]="page.content" required></app-html-editor>
+          <!--
           <app-markdown-editor name="Content" [(ngModel)]="page.content" required></app-markdown-editor>
+          -->
         </div>
       </div>
 
@@ -44,10 +47,6 @@
           <button [disabled]="!pageForm.valid" class="uk-button uk-button-primary" (click)="savePage()">Save</button>
         </div>
       </div>
-
-      {{ pageForm.valid }}
     </form>
-
-    {{ page | json }}
   </div>
 </div>

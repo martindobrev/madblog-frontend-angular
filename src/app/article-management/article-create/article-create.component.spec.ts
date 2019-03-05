@@ -11,16 +11,19 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { User } from '../../api/user';
 
+import { createMockServiceFactory } from './../../services/keycloak/keycloak-mock.service';
+
 describe('ArticleCreateComponent', () => {
   let component: ArticleCreateComponent;
   let fixture: ComponentFixture<ArticleCreateComponent>;
+  articleAvailable = false;
 
   let articleServiceFactory = () => {
     return new ArticleMockService(new ArticleCollection());
   }
 
   let keycloakServiceFactory = () => {
-    return new KeycloakMockService(true, true);
+    return createMockServiceFactory(['user']);
   }
 
   let routerMock = {

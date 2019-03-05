@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { KeycloakService } from './services/keycloak/keycloak.service';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TokenInterceptor } from './http/token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,19 +18,27 @@ import { RoutingService } from './routing.service';
 import { MenuService } from './services/page/menu.service';
 import { KeycloakMockService } from './services/keycloak/keycloak-mock.service';
 import { KeycloakTokenParsed } from './type/keycloak';
+import { RouterLinkDirectiveStub } from './testing/router-link-directive-stub';
 
-export function getKeycloakServiceFactory() {
-  let mockKeycloakTokenParsed: KeycloakTokenParsed = {
-    //exp?: number;
-		//iat?: number;
-		//nonce?: string;
-		//sub?: string;
-		//session_state?: string;
-		realm_access: { roles: ['admin', 'publisher'] },
-		resource_access: ['ADMIN'],
-		preferred_username: 'MOCK-ADMIN'
-  };
-  return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
+import { environment } from './../environments/environment';
+  
+
+export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
+  if (environment.mockSecurity) {
+    let mockKeycloakTokenParsed: KeycloakTokenParsed = {
+      //exp?: number;
+      //iat?: number;
+      //nonce?: string;
+      //sub?: string;
+      //session_state?: string;
+      realm_access: { roles: ['user', 'publisher', 'admin'] },
+      resource_access: ['PUBLISHER'],
+      preferred_username: 'MOCK-ADMIN'
+    };
+    return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
+  } else {
+    return new KeycloakService(httpClient);
+  }
 }
 
 export function kcFactory(keycloakService: AbstractKeycloakService) {
@@ -51,7 +59,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },
-    { provide: AbstractKeycloakService, useFactory: getKeycloakServiceFactory },
+    { provide: AbstractKeycloakService, useFactory: getKeycloakServiceFactory, deps: [HttpClient] },
     { provide: AbstractFileService, useClass: FileService },
     MessageService,
     {
@@ -68,4 +76,4 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
   exports: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

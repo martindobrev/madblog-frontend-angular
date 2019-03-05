@@ -12,7 +12,7 @@ export class UserResolveService implements Resolve<User> {
 
   private userId: string;
 
-  constructor(private keycloakService: AbstractKeycloakService, private userService: UserService) { }
+  constructor(private keycloakService: AbstractKeycloakService) { }
 
   resolve(): Observable<User> {
     
@@ -22,6 +22,6 @@ export class UserResolveService implements Resolve<User> {
       this.userId = parsedKeycloakToken.sub;
     });
     
-    return this.userService.getUserInfo(this.userId);
+    return this.keycloakService.getUserInfo(this.userId);
   }
 }

@@ -6,7 +6,7 @@ import { LogoutGuard } from './auth/logout.guard';
 const routes: Routes = [
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: './admin/admin.module#AdminModule',
   },
   {

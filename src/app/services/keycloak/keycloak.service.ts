@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { KeycloakInstance, KeycloakTokenParsed } from '../../type/keycloak';
 import { AbstractKeycloakService } from './abstract.keycloak.service';
+import { HttpClient } from '@angular/common/http';
+import { User } from './../../api/user';
 
 declare var Keycloak: any;
 
@@ -15,7 +17,7 @@ export class KeycloakService extends AbstractKeycloakService {
   private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
   private profile$ = this.profile.asObservable();
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     super();
     console.log('CREATING KEYCLOAK_SERVICE');
   }
@@ -27,9 +29,9 @@ export class KeycloakService extends AbstractKeycloakService {
   init(): Promise<any> {
     return new Promise((resolve, reject) => {
       const config = {
-        'url': 'http://localhost:8080/auth',
-        'realm': 'Demo',
-        'clientId': 'angular'
+        'url': 'https://guard.maddob.com/auth',
+        'realm': 'MADDOB_SITE',
+        'clientId': 'angular_web_dev'
       };
       this.keycloakAuth = new Keycloak(config);
       
@@ -87,5 +89,22 @@ export class KeycloakService extends AbstractKeycloakService {
     }
     let roles = this.profile.value.realm_access.roles;
     return roles.includes('user') || roles.includes('publisher') || roles.includes('admin');
+  }
+
+  getUserInfo(id: string): Observable<User> {
+    console.log('Retrieving user with id: ', id);
+    const user = new User();
+    user.username = this.profile.value.preferred_username;
+    user.roles = this.profile.value.realm_access.roles;
+    return of(user); 
+  }
+
+  isAdmin(): boolean {
+    if (!this.profile.value) {
+      return false;
+    }
+    //this.profile.value.
+    let roles = this.profile.value.realm_access.roles;
+    return roles.includes('admin');
   }
 }

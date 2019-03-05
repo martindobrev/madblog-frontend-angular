@@ -8,7 +8,7 @@ export abstract class AbstractFileService {
     abstract getFiles(): Observable<BlogFileCollection>;
     abstract getFile(id: number): Observable<BlogFile>;
     abstract uploadFile(file: File): void;
-    abstract selectFile(id: string, blogFile: BlogFile);
+    abstract selectFile(id: string, blogFile: BlogFile):void;
     abstract deleteFile(blogFile: BlogFile): Observable<any>;
     abstract getFileUploaded$(): Observable<BlogFile>;
     abstract getFileUploadProgress$(): Observable<FileUploadProgress>;

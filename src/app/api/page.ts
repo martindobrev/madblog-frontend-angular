@@ -4,7 +4,6 @@ export class Page {
 	slug: string;
 	order: number;
 	content: string;
-	htmlContent: string;
 	authorId: string;
 	published: boolean;
 	created: Date;

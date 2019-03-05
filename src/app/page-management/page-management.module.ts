@@ -7,14 +7,14 @@ import { PageEditComponent } from './page-edit/page-edit.component';
 import { PageListComponent } from './page-list/page-list.component';
 import { FormsModule } from '@angular/forms';
 import { ArticleManagementModule } from '../article-management/article-management.module';
+import { HtmlEditorComponent } from './html-editor/html-editor.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PageManagementRoutingModule,
-    FormsModule,
-    ArticleManagementModule,
+    FormsModule
   ],
-  declarations: [PageCreateComponent, PageEditComponent, PageListComponent]
+  declarations: [PageCreateComponent, PageEditComponent, PageListComponent, HtmlEditorComponent]
 })
 export class PageManagementModule { }

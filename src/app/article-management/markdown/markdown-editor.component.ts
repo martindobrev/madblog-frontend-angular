@@ -162,6 +162,7 @@ export class MarkdownEditorComponent implements ControlValueAccessor, Validator 
 
     this.editor.on("change", (e: any) => {
       let val = this.editor.getValue();
+      
       this.markdownValue = val;
     });
   }

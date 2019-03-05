@@ -17,6 +17,7 @@ declare var UIkit: any;
 export class ArticleCreateComponent implements OnInit {
 
   article: Article = new Article();
+  articleAvailable = false;
   canUserPublishArticles: boolean = false;
   showFileManager =  false;
   create = true;

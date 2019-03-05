@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlobalStatsComponent } from './global-stats.component';
+import { ActuatorService } from '../actuator/actuator.service';
+import { MockActuatorService } from './../../testing/mock-actuator-service';
 
 describe('GlobalStatsComponent', () => {
   let component: GlobalStatsComponent;
@@ -8,7 +10,10 @@ describe('GlobalStatsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalStatsComponent ]
+      declarations: [ GlobalStatsComponent ],
+      providers: [
+        {provide: ActuatorService, useValue: new MockActuatorService()}
+      ]
     })
     .compileComponents();
   }));

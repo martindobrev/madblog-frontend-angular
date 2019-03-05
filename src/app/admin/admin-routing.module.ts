@@ -6,6 +6,7 @@ import { GlobalStatsComponent } from './global-stats/global-stats.component';
 import { FileManagerComponent } from './file/file-manager.component';
 import { BlogFileCollectionResolveService } from '../services/file/blog-file-collection-resolve.service';
 import { UserResolveService } from '../services/user/user-resolve.service';
+import { AccessGuard } from './access.guard';
 
 const routes: Routes = [
   {
@@ -19,10 +20,10 @@ const routes: Routes = [
           path: 'users', component: UsersComponent
         },
         {
-          path: 'articles', loadChildren: './../article-management/article-management.module#ArticleManagementModule',
+          path: 'articles', canLoad: [AccessGuard], loadChildren: './../article-management/article-management.module#ArticleManagementModule',
         },
         {
-          path: 'pages', loadChildren: './../page-management/page-management.module#PageManagementModule',
+          path: 'pages', canLoad: [AccessGuard], loadChildren: './../page-management/page-management.module#PageManagementModule',
         },
         {
           path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}

@@ -10,6 +10,7 @@ import { AbstractKeycloakService } from '../../services/keycloak/abstract.keyclo
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { User } from '../../api/user';
 import { of } from 'rxjs';
+import { createMockServiceFactory } from './../../services/keycloak/keycloak-mock.service';
 
 
 describe('ArticleEditComponent', () => {
@@ -22,7 +23,7 @@ describe('ArticleEditComponent', () => {
   }
 
   let keycloakServiceFactory = () => {
-    return new KeycloakMockService(true, true);
+    return createMockServiceFactory(['admin']);
   }
 
   let routerMock = {
