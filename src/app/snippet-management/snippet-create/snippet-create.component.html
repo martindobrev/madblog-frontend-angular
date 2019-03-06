@@ -1,0 +1,37 @@
+<div class="uk-section uk-section-default">
+  <div class="uk-container">
+    <form class="uk-form-horizontal uk-margin-large" #snippetForm="ngForm">
+      <div class="uk-margin" *ngIf="snippet.id">
+        <label class="uk-form-label" for="form-horizontal-id">Id</label>
+        <div class="uk-form-controls">
+          <input class="uk-input" id="form-horizontal-id" name="id" type="text" [(ngModel)]="snippet.id" disabled>
+        </div>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-name">Name</label>
+        <div class="uk-form-controls">
+          <input class="uk-input" required #name="ngModel" [ngClass]="{'uk-form-danger': name.invalid }" id="form-horizontal-name"
+            name="title" type="text" [(ngModel)]="snippet.name" placeholder="Snippet name...">
+        </div>
+      </div>
+
+      <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-content">Content</label>
+        <div class="uk-form-controls">
+          <app-html-editor name="content" [(ngModel)]="snippet.content" required></app-html-editor>
+          <!--
+          <app-markdown-editor name="Content" [(ngModel)]="page.content" required></app-markdown-editor>
+          -->
+        </div>
+      </div>
+
+      <div class="uk-margin">
+        <div class="uk-form-controls" uk-margin>
+          <button class="uk-button uk-button-default" routerLink="./../..">Cancel</button>
+          <button [disabled]="!snippetForm.valid" class="uk-button uk-button-primary" (click)="saveSnippet()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

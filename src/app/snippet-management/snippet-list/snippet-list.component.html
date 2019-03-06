@@ -1,0 +1,29 @@
+<p *ngIf="!snippetCollection.htmlSnippets" class="uk-text-warning">No snippets available</p>
+
+
+<table class="uk-table uk-table-divider" *ngIf="snippetCollection.htmlSnippets.length > 0">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let snippet of snippetCollection.htmlSnippets">
+            <td>{{ snippet.id }}</td>
+            <td>{{ snippet.name }}</td>
+            <td>
+                <div *ngIf="idToDelete !== snippet.id">
+                    <button class="uk-button uk-button-small uk-button-default" routerLink="./edit/{{snippet.name}}">edit</button>
+                    <button class="uk-button uk-button-small uk-button-danger uk-margin-left"  [disabled]="idToDelete !== null && idToDelete !== snippet.id" (click)="markForDeletion(snippet)">delete</button>
+                </div>
+                
+                <div *ngIf="idToDelete === snippet.id" class="uk-margin-left">
+                    <label>Sure?</label>
+                    <button  class="uk-button uk-button-small uk-button-primary uk-margin-left" (click)="deleteSnippet(snippet)">yes</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

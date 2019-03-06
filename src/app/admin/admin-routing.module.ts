@@ -27,6 +27,9 @@ const routes: Routes = [
         },
         {
           path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}
+        },
+        {
+          path: 'snippets', loadChildren: './../snippet-management/snippet-management.module#SnippetManagementModule'
         }
     ]
   }

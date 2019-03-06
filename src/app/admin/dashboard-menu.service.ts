@@ -18,9 +18,11 @@ export class DashboardMenuService {
     ],
     '/admin/pages': [
       { label: 'create new page', url: '/admin/pages/create'}
+    ],
+    '/admin/snippets': [
+      { label: 'create new snippet', url: '/admin/snippets/create'}
     ]
   }
-
 
   constructor(private routingService: RoutingService) { 
     routingService.currentUrl$.subscribe(url => {

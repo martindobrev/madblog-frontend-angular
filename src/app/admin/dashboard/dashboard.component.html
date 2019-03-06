@@ -68,6 +68,10 @@
 				<li *ngIf="isAdmin" [ngClass]="{'uk-active': currentUrl === '/admin/users'}">
 					<a routerLink="./users"><span data-uk-icon="icon: users" class="uk-margin-small-right uk-icon"></span>Users</a>
 				</li>
+
+				<li *ngIf="isAdmin" [ngClass]="{'uk-active': currentUrl === '/admin/snippets'}">
+					<a routerLink="./snippets"><span data-uk-icon="icon: code" class="uk-margin-small-right uk-icon"></span>HTML Snippets</a>
+				</li>
 				
 			</ul>
 

@@ -15,6 +15,7 @@ import { HtmlEditorComponent } from './html-editor/html-editor.component';
     PageManagementRoutingModule,
     FormsModule
   ],
-  declarations: [PageCreateComponent, PageEditComponent, PageListComponent, HtmlEditorComponent]
+  declarations: [PageCreateComponent, PageEditComponent, PageListComponent, HtmlEditorComponent],
+  exports: [HtmlEditorComponent]
 })
 export class PageManagementModule { }
