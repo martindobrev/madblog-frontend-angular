@@ -21,6 +21,7 @@ import { KeycloakTokenParsed } from './type/keycloak';
 import { RouterLinkDirectiveStub } from './testing/router-link-directive-stub';
 
 import { environment } from './../environments/environment';
+import { SharedModule } from './shared/shared.module';
   
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
@@ -55,7 +56,8 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     HttpClientModule,
     /* AdminModule, */
     AppRoutingModule,
-    PublicSiteModule
+    PublicSiteModule,
+    SharedModule
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },

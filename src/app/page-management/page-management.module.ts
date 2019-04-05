@@ -6,16 +6,15 @@ import { PageCreateComponent } from './page-create/page-create.component';
 import { PageEditComponent } from './page-edit/page-edit.component';
 import { PageListComponent } from './page-list/page-list.component';
 import { FormsModule } from '@angular/forms';
-import { ArticleManagementModule } from '../article-management/article-management.module';
-import { HtmlEditorComponent } from './html-editor/html-editor.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     PageManagementRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
-  declarations: [PageCreateComponent, PageEditComponent, PageListComponent, HtmlEditorComponent],
-  exports: [HtmlEditorComponent]
+  declarations: [PageCreateComponent, PageEditComponent, PageListComponent],
 })
 export class PageManagementModule { }

@@ -6,17 +6,15 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { ArticleCreateComponent } from './article-create/article-create.component';
 import { FormsModule } from '@angular/forms';
-import { MarkdownEditorComponent } from './markdown/markdown-editor.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ArticleManagementRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
-  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, MarkdownEditorComponent],
-  exports: [
-    MarkdownEditorComponent
-  ]
+  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent]
 })
 export class ArticleManagementModule { }

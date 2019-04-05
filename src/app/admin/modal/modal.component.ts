@@ -3,6 +3,7 @@ import { ModalDirective } from './modal.directive';
 import { FileManagerComponent } from '../../admin/file/file-manager.component';
 import { Type } from '@angular/compiler';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
+import { SnippetService } from './../../shared/snippet/snippet.service';
 
 @Component({
   selector: 'app-modal',
@@ -16,11 +17,12 @@ export class ModalComponent implements OnInit {
 
   @ViewChild(ModalDirective) modalHost: ModalDirective;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private fileService: AbstractFileService) { }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver
+    , private fileService: AbstractFileService
+    , private snippetService: SnippetService) { }
 
   ngOnInit() {
     this.fileService.getShowHideFileManager$().subscribe((data: {id: string, status: boolean}) => {
-      
       console.log('INFO NEW STATUS ARRIVED - ', data);
       this.id = data.id;
       this.on = data.status;

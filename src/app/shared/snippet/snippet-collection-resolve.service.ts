@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { SnippetCollection } from '../api/snippet';
+import { SnippetCollection } from '../../api/snippet';
 import { SnippetService } from './snippet.service';
 import { Observable } from 'rxjs';
 

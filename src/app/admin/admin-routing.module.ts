@@ -7,6 +7,7 @@ import { FileManagerComponent } from './file/file-manager.component';
 import { BlogFileCollectionResolveService } from '../services/file/blog-file-collection-resolve.service';
 import { UserResolveService } from '../services/user/user-resolve.service';
 import { AccessGuard } from './access.guard';
+import { SnippetResolveService } from '../shared/snippet/snippet-resolve.service';
 
 const routes: Routes = [
   {

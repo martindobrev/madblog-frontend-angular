@@ -23,7 +23,7 @@ export class PageCreateComponent implements OnInit {
 
   savePage() {
     this.menuService.createPage(this.page).subscribe(page => {
-
+      this.router.navigate(['./..'], {relativeTo: this.activatedRoute});
     }, error => {
       console.log('Something went wrong when creating page');
       this.error = error;

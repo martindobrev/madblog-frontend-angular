@@ -10,10 +10,12 @@ import { FileManagerComponent } from './file/file-manager.component';
 import { FileUploadComponent } from './file/file-upload.component';
 import { ModalComponent } from './modal/modal.component';
 import { ModalDirective } from './modal/modal.directive';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     AdminRoutingModule
   ],
   declarations: [

@@ -7,6 +7,7 @@ import { SnippetEditComponent } from './snippet-edit/snippet-edit.component';
 import { SnippetListComponent } from './snippet-list/snippet-list.component';
 import { FormsModule } from '@angular/forms';
 import { PageManagementModule } from '../page-management/page-management.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PageManagementModule } from '../page-management/page-management.module'
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     SnippetManagementRoutingModule,
     PageManagementModule,
   ]

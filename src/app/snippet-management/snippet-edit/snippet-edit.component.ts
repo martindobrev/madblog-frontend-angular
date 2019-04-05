@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SnippetService } from '../snippet.service';
+import { SnippetService } from '../../shared/snippet/snippet.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Snippet } from './../../api/snippet';
 

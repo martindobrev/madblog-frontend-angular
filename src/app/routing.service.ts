@@ -17,4 +17,8 @@ export class RoutingService {
       }
     });
   }
+
+  showSnippetSelect() {
+    this.router.navigate([{outlets: {popup: ['snippet-select']}}]);
+  }
 }

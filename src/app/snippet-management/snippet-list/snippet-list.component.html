@@ -1,4 +1,4 @@
-<p *ngIf="!snippetCollection.htmlSnippets" class="uk-text-warning">No snippets available</p>
+<p *ngIf="snippetCollection?.htmlSnippets.length === 0" class="uk-text-warning">No snippets available</p>
 
 
 <table class="uk-table uk-table-divider" *ngIf="snippetCollection.htmlSnippets.length > 0">

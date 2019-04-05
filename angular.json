@@ -44,11 +44,10 @@
               "./node_modules/codemirror/addon/hint/html-hint.js",
               "./node_modules/codemirror/mode/xml/xml.js",
               "./node_modules/codemirror/mode/htmlembedded/htmlembedded.js",
+              "./node_modules/codemirror/mode/markdown/markdown.js",
               "./node_modules/codemirror/mode/htmlmixed/htmlmixed.js",
               "./node_modules/codemirror/mode/javascript/javascript.js",
               "./node_modules/codemirror/mode/css/css.js"
-              
-              
             ]
           },
           "configurations": {
@@ -75,7 +74,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "keycloak-app:build",
-            "proxyConfig": "proxy.conf.json"            
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -97,7 +96,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              
+
             ],
             "styles": [
               "src/styles.css"
