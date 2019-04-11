@@ -11,12 +11,14 @@ import { FileUploadComponent } from './file/file-upload.component';
 import { ModalComponent } from './modal/modal.component';
 import { ModalDirective } from './modal/modal.directive';
 import { SharedModule } from '../shared/shared.module';
+import { MaddobLibModule } from 'maddob-lib';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MaddobLibModule
   ],
   declarations: [
     UsersComponent,

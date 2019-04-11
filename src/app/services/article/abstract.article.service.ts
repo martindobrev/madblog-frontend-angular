@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArticleCollection, Article } from '../../api/article';
+import { ArticleInfo } from '../../api/article-info';
 
 /**
  * Abstract class for article services
@@ -14,4 +15,5 @@ export abstract class AbstractArticleService {
     abstract getArticle(id: string): Observable<Article>;
     abstract createArticle(article: Article): Observable<Article>;
     abstract editArticle(article: Article): Observable<Article>;
+    abstract getArticleInfo(): Observable<ArticleInfo>;
 }

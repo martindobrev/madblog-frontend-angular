@@ -3,6 +3,7 @@ import { Menu } from '../../api/menu';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Page, PageCollection } from '../../api/page';
+import { PageInfo } from '../../api/page-info';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,9 @@ export class MenuService {
     }
 
     return of(null);
+  }
+
+  getPageInfo(): Observable<PageInfo> {
+    return this.httpClient.get('/api/v1/info/pages') as Observable<PageInfo>;
   }
 }

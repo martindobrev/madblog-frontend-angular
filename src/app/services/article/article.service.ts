@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ArticleCollection, Article } from '../../api/article';
+import { ArticleInfo } from '../../api/article-info';
 import { Observable } from 'rxjs';
 import { AbstractArticleService } from './abstract.article.service';
 
@@ -33,4 +34,8 @@ export class ArticleService extends AbstractArticleService {
     return this.httpClient.put(`/api/v1/articles/${article.id}`, article) as Observable<Article>;
   }
 
+  public getArticleInfo(): Observable<ArticleInfo> {
+    return this.httpClient.get(`/api/v1/info/articles`) as Observable<ArticleInfo>;
+  }
+  
 }

@@ -1,10 +1,9 @@
 import { AbstractArticleService } from "./abstract.article.service";
 import { Article, ArticleCollection } from '../../api/article';
+import { ArticleInfo } from '../../api/article-info';
 import { Observable, of } from 'rxjs';
 
 export class ArticleMockService extends AbstractArticleService {
-    
-    
     
     constructor(private articleCollection: ArticleCollection) {
         super();
@@ -29,6 +28,12 @@ export class ArticleMockService extends AbstractArticleService {
     editArticle(article: Article): Observable<Article> {
         throw new Error("Method not implemented.");
     }
+
+    public getArticleInfo(): Observable<ArticleInfo> {
+        // for now just an empty articleinfo object
+        return of(new ArticleInfo());
+    }
+
     private findArticleInCollection(id: string): Article {
         return this.articleCollection.articles.find((article) => {return article.id === id});
     }
