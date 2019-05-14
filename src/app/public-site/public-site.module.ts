@@ -9,6 +9,7 @@ import { MainComponent } from './main/main.component';
 import { Error404Component } from './error404/error404.component';
 import { PageViewComponent } from './page-view/page-view.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { ServerErrorComponent } from './server-error/server-error.component';
     HomeComponent,
     ArticleViewComponent,
     PageViewComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    LogoutComponent
   ]
 })
 export class PublicSiteModule { }

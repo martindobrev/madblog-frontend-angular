@@ -16,4 +16,5 @@ export abstract class AbstractArticleService {
     abstract createArticle(article: Article): Observable<Article>;
     abstract editArticle(article: Article): Observable<Article>;
     abstract getArticleInfo(): Observable<ArticleInfo>;
+    abstract deleteArticle(article: Article): Observable<boolean>;
 }

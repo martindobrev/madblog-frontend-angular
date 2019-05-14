@@ -4,6 +4,9 @@ import { ArticleInfo } from '../../api/article-info';
 import { Observable, of } from 'rxjs';
 
 export class ArticleMockService extends AbstractArticleService {
+    deleteArticle(article: Article): Observable<boolean> {
+        throw new Error("Method not implemented.");
+    }
     
     constructor(private articleCollection: ArticleCollection) {
         super();

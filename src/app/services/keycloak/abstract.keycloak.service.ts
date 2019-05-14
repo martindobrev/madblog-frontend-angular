@@ -7,7 +7,7 @@ import { User } from './../../api/user';
 export abstract class AbstractKeycloakService {
     abstract init(): Promise<any>;
     abstract login();
-    abstract logout();
+    abstract logout(redirectUri?: string);
     abstract canPublishArticles(): boolean;
     abstract canCreateArticles(): boolean;
     abstract getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed>;

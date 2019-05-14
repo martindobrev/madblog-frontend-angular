@@ -65,10 +65,4 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
-  logout(): void {
-    //this.router.navigateByUrl('/').then(() => {
-      this.keycloakService.logout();
-    //});
-  }
 }

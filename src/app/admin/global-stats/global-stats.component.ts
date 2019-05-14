@@ -5,6 +5,7 @@ import { ArticleInfo } from '../../api/article-info';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
 import { PageInfo } from '../../api/page-info';
 import { MenuService } from './../../services/page/menu.service';
+import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
 
 @Component({
   selector: 'app-global-stats',
@@ -23,20 +24,16 @@ export class GlobalStatsComponent implements OnInit, OnDestroy {
   uptime: Observable<any>;
   articleInfo: ArticleInfo;
   pageInfo: PageInfo;
+  isAdmin: boolean;
 
   subscriptions: Array<Subscription> = [];
 
   constructor(private actuatorService: ActuatorService, 
     private articleService: AbstractArticleService,
-    private menuService: MenuService) { }
+    private menuService: MenuService, private keycloakService: AbstractKeycloakService) { }
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.actuatorService.getTotalApiRequests().subscribe(jsonData => {
-        this.totalRequests = jsonData.measurements[0].value;
-        this.totalTimeSeconds = jsonData.measurements[1].value;
-      })
-    );
+    
 
     this.subscriptions.push(
       this.articleService.getArticleInfo().subscribe(articleInfo => {
@@ -50,10 +47,19 @@ export class GlobalStatsComponent implements OnInit, OnDestroy {
       })
     );
     
-
-    this.memoryUsed = this.actuatorService.getMemoryUsed();
-    this.totalMemory = this.actuatorService.getTotalMemory();
-    this.uptime = this.actuatorService.getUptime();
+    this.isAdmin = this.keycloakService.isAdmin();
+    if (this.isAdmin) {
+      this.subscriptions.push(
+        this.actuatorService.getTotalApiRequests().subscribe(jsonData => {
+          this.totalRequests = jsonData.measurements[0].value;
+          this.totalTimeSeconds = jsonData.measurements[1].value;
+        })
+      );
+  
+      this.memoryUsed = this.actuatorService.getMemoryUsed();
+      this.totalMemory = this.actuatorService.getTotalMemory();
+      this.uptime = this.actuatorService.getUptime();
+    }
   }
 
   ngOnDestroy() {

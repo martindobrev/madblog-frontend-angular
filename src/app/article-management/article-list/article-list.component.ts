@@ -16,6 +16,10 @@ export class ArticleListComponent implements OnInit {
   
   canPublishArticles: boolean;
 
+  idToDelete: string;
+
+  timer: number;
+
   constructor(private keycloakService: AbstractKeycloakService, private articleService: AbstractArticleService,
      private activatedRoute: ActivatedRoute) { 
     this.canPublishArticles = keycloakService.canPublishArticles();
@@ -31,12 +35,48 @@ export class ArticleListComponent implements OnInit {
     const articleToBeSaved = article;
     articleToBeSaved.published = event.target.checked;
 
-    this.articleService.editArticle(articleToBeSaved).subscribe(article => {
+    let subscription = this.articleService.editArticle(articleToBeSaved).subscribe(article => {
       console.log('CHANGED ARTICLE CONTENT IS: ' + article);
+      subscription.unsubscribe();
     });
-    
-
     console.log('Article ' + article.id + ' published: ' , event.target.checked);
+  }
+
+  articleFeaturedChanged(article: Article, event: any) {
+    const articleToBeSaved = article;
+    articleToBeSaved.featured = event.target.checked;
+
+    let subscription = this.articleService.editArticle(articleToBeSaved).subscribe(article => {
+      console.log('CHANGED ARTICLE CONTENT IS: ' + article);
+      subscription.unsubscribe();
+    });
+  }
+
+  deleteArticle(article: Article) {
+    this.articleService.deleteArticle(article).subscribe(result => {
+      if (this.timer) {
+        this.disableTimer();
+      }
+
+      if (result) {
+        this.articleService.getArticles().subscribe(articleCollection => {
+          this.articles = articleCollection.articles;
+        });
+      }
+    });
+  }
+
+  markForDeletion(article: Article) {
+    this.idToDelete = article.id;
+    this.timer = window.setTimeout(() => {
+      this.disableTimer();
+    }, 2000);
+  }
+
+  private disableTimer() {
+    this.idToDelete = null;
+    window.clearTimeout(this.timer);
+    this.timer = null;
   }
 
 }

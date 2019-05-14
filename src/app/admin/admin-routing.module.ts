@@ -11,14 +11,14 @@ import { SnippetResolveService } from '../shared/snippet/snippet-resolve.service
 
 const routes: Routes = [
   {
-    path: '', component: DashboardComponent, resolve: { userData: UserResolveService },
+    path: '', component: DashboardComponent, canLoad: [AccessGuard], resolve: { userData: UserResolveService },
     children: [
         {
-          path: '', component: GlobalStatsComponent
+          path: '', canLoad: [AccessGuard], component: GlobalStatsComponent
         },
 
         {
-          path: 'users', component: UsersComponent
+          path: 'users', canLoad: [AccessGuard], component: UsersComponent
         },
         {
           path: 'articles', canLoad: [AccessGuard], loadChildren: './../article-management/article-management.module#ArticleManagementModule',
@@ -27,7 +27,7 @@ const routes: Routes = [
           path: 'pages', canLoad: [AccessGuard], loadChildren: './../page-management/page-management.module#PageManagementModule',
         },
         {
-          path: 'file-manager', component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}
+          path: 'file-manager', canLoad: [AccessGuard], component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}
         },
         {
           path: 'snippets', loadChildren: './../snippet-management/snippet-management.module#SnippetManagementModule'

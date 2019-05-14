@@ -68,9 +68,13 @@ export class KeycloakService extends AbstractKeycloakService {
     this.keycloakAuth.login();
   }
 
-  logout() {
+  logout(redirectUri?: string) {
     if (this.keycloakAuth) {
-      this.keycloakAuth.logout();
+      if (redirectUri) {
+        this.keycloakAuth.logout({redirectUri: redirectUri});
+      } else {
+        this.keycloakAuth.logout();
+      }
     }
   }
 
@@ -94,8 +98,18 @@ export class KeycloakService extends AbstractKeycloakService {
   getUserInfo(id: string): Observable<User> {
     console.log('Retrieving user with id: ', id);
     const user = new User();
-    user.username = this.profile.value.preferred_username;
-    user.roles = this.profile.value.realm_access.roles;
+    if (!id) {
+      user.username = 'ANONYMOUS';
+      return of(user);
+    }
+
+    if (this.profile) {
+      user.username = this.profile.value.preferred_username;
+      user.roles = this.profile.value.realm_access.roles;
+    } else {
+      user.username = 'ANONYMOUS';
+    }
+    
     return of(user); 
   }
 

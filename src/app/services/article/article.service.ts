@@ -10,6 +10,7 @@ import { AbstractArticleService } from './abstract.article.service';
 })
 export class ArticleService extends AbstractArticleService {
   
+  
   constructor(private httpClient: HttpClient) {
     super();
   }
@@ -38,4 +39,7 @@ export class ArticleService extends AbstractArticleService {
     return this.httpClient.get(`/api/v1/info/articles`) as Observable<ArticleInfo>;
   }
   
+  public deleteArticle(article: Article): Observable<boolean> {
+    return this.httpClient.delete(`/api/v1/articles/${article.id}`) as Observable<boolean>;
+  }
 }

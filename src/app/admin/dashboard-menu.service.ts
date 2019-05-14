@@ -14,7 +14,7 @@ export class DashboardMenuService {
   private urlOptions = {
     '/admin/articles': [
       { label: 'create new article', url: '/admin/articles/create'},
-      { label: 'delete all articles', url: '/admin/articles/deleteAll'},
+      //{ label: 'delete all articles', url: '/admin/articles/deleteAll'},
     ],
     '/admin/pages': [
       { label: 'create new page', url: '/admin/pages/create'}

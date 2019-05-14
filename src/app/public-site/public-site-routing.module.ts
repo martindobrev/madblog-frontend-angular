@@ -11,12 +11,14 @@ import { MenuResolveService } from '../services/page/menu-resolve.service';
 import { PageViewComponent } from './page-view/page-view.component';
 import { PageResolveService } from '../services/page/page-resolve.service';
 import { ServerErrorComponent } from './server-error/server-error.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, resolve: { menu: MenuResolveService }, children: [
     { path: 'home', component: HomeComponent, resolve: { articles: ArticleCollectionResolveService }},
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService }},    
+    { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService }}, 
+    { path: 'logout', component: LogoutComponent },   
     { path: 'error404', component: Error404Component },
     { path: 'error5xx', component: ServerErrorComponent },
     { path: ':slug', component: PageViewComponent, resolve: { page: PageResolveService }},

@@ -17,12 +17,16 @@
                 <input class="uk-checkbox" type="checkbox" (change)="articlePublishedChanged(article, $event)" [checked]="article.published" [disabled]="!article.publishable"/>
             </td>
             <td>
-                <input class="uk-checkbox" type="checkbox" [checked]="article.featured" [disabled]="!article.publishable"/>
+                <input class="uk-checkbox" type="checkbox" (change)="articleFeaturedChanged(article, $event)" [checked]="article.featured" [disabled]="!article.publishable"/>
             </td>
             <td>{{article.created | date: 'short'}}</td>
-            <td>
+            <td *ngIf="idToDelete !== article.id">
                 <button *ngIf="article.editable" class="uk-button uk-button-small uk-button-default" routerLink="./edit/{{article.id}}">edit</button>
-                <button *ngIf="article.deletable" class="uk-button uk-button-small uk-button-warn" routerLink="./delete/{{article.id}}">delete</button>
+                <button *ngIf="article.deletable" class="uk-button uk-button-small uk-button-danger" (click)="markForDeletion(article)">delete</button>
+            </td>
+            <td *ngIf="idToDelete === article.id">
+                <label>Sure?</label>
+                <button  class="uk-button uk-button-small uk-button-primary uk-margin-left" (click)="deleteArticle(article)">yes</button>
             </td>
         </tr>
     </tbody>

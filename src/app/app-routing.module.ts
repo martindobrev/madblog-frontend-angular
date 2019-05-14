@@ -7,14 +7,8 @@ import { SnippetResolveService } from './shared/snippet/snippet-resolve.service'
 const routes: Routes = [
   {
     path: 'admin',
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: './admin/admin.module#AdminModule',
-  },
-  {
-    path: 'logout',
-    canLoad: [LogoutGuard],
-    redirectTo: '',
-    pathMatch: 'full'
   }
 ];
 

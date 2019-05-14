@@ -21,7 +21,7 @@
     <div class="uk-navbar-right uk-visible@s">
       <ul class="uk-navbar-nav">
         <li *ngIf="!profile">
-          <a (click)="login()">Login</a>
+          <a routerLink="/admin">Login</a>
         </li>
 
         <li *ngIf="profile">
@@ -29,7 +29,7 @@
           <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               <li><a routerLink="/admin">Settings</a></li>
-              <li><a (click)="logout()">Logout</a></li>
+              <li><a routerLink="/logout">Logout</a></li>
             </ul>
           </div>
         </li>
@@ -75,7 +75,7 @@
           <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               <li><a routerLink="/admin">Settings</a></li>
-              <li><a (click)="logout()">Logout</a></li>
+              <li><a routerLink="/logout">Logout</a></li>
             </ul>
           </div>
         </li>
@@ -89,9 +89,13 @@
   <!--FOOTER-->
   <footer class="uk-section uk-section-small uk-section-muted">
     <div class="uk-container">
-      <p class="uk-text-small uk-text-center">Copyright 2018 - <a href="https://github.com/zzseba78/Kick-Off">Created
-          by KickOff</a> | Built with <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
-          data-uk-tooltip><span data-uk-icon="uikit"></span></a></p>
+      <p class="uk-text-small uk-text-center">Copyright 2019 - 
+        Created by <a href="https://github.com/martindobrev">maddob</a> 
+        | Built with 
+        <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
+          data-uk-tooltip><span data-uk-icon="uikit"></span></a>
+        | based on the templates of <a href="https://github.com/zzseba78/Kick-Off" target="_blank">Kick-Off</a>
+      </p>
     </div>
   </footer>
   <!--/FOOTER-->
