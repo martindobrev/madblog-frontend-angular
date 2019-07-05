@@ -25,7 +25,8 @@ import { SharedModule } from './shared/shared.module';
   
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
-  if (!environment.mockSecurity) {
+  if (environment.mockSecurity) {
+    console.info('MOCKING SECURITY...');
     let mockKeycloakTokenParsed: KeycloakTokenParsed = {
       //exp?: number;
       //iat?: number;

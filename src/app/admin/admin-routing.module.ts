@@ -21,16 +21,16 @@ const routes: Routes = [
           path: 'users', canLoad: [AccessGuard], component: UsersComponent
         },
         {
-          path: 'articles', canLoad: [AccessGuard], loadChildren: './../article-management/article-management.module#ArticleManagementModule',
+          path: 'articles', canLoad: [AccessGuard], loadChildren: () => import('./../article-management/article-management.module').then(m => m.ArticleManagementModule),
         },
         {
-          path: 'pages', canLoad: [AccessGuard], loadChildren: './../page-management/page-management.module#PageManagementModule',
+          path: 'pages', canLoad: [AccessGuard], loadChildren: () => import('./../page-management/page-management.module').then(m => m.PageManagementModule),
         },
         {
           path: 'file-manager', canLoad: [AccessGuard], component: FileManagerComponent, resolve: { blogFileCollection: BlogFileCollectionResolveService}
         },
         {
-          path: 'snippets', loadChildren: './../snippet-management/snippet-management.module#SnippetManagementModule'
+          path: 'snippets', loadChildren: () => import('./../snippet-management/snippet-management.module').then(m => m.SnippetManagementModule)
         }
     ]
   }

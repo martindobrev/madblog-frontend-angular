@@ -15,7 +15,7 @@ export class ModalComponent implements OnInit {
   id: string;
   on = false;
 
-  @ViewChild(ModalDirective) modalHost: ModalDirective;
+  @ViewChild(ModalDirective, { static: true }) modalHost: ModalDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver
     , private fileService: AbstractFileService

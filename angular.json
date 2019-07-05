@@ -67,6 +67,14 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "nosecurity": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.nosecurity.ts"
+                }
+              ]
             }
           }
         },
@@ -79,6 +87,9 @@
           "configurations": {
             "production": {
               "browserTarget": "keycloak-app:build:production"
+            },
+            "nosecurity": {
+              "browserTarget": "keycloak-app:build:nosecurity"
             }
           }
         },
