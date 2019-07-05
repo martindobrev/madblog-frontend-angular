@@ -12,6 +12,7 @@ import { ModalComponent } from './modal/modal.component';
 import { ModalDirective } from './modal/modal.directive';
 import { SharedModule } from '../shared/shared.module';
 import { MaddobLibModule } from 'maddob-lib';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,7 @@ import { MaddobLibModule } from 'maddob-lib';
     DashboardComponent, 
     GlobalStatsComponent, 
     FileManagerComponent, 
-    FileUploadComponent
+    FileUploadComponent, SettingsComponent
   ],
   exports: [
     FileManagerComponent,
