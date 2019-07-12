@@ -1,1 +1,42 @@
-<p>settings works!</p>
+<form class="uk-form-stacked">
+    <div class="uk-margin">
+        <label class="uk-form-label" for="website_title">Website title</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="website_title" type="text" placeholder="Enter website title here"
+                [formControl]="titleFormControl">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="website_name">Website name</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="website_name" type="text" placeholder="Enter website name here"
+                [formControl]="nameFormControl">
+        </div>
+    </div>
+
+
+    <div class="uk-margin">
+        <label class="uk-form-label">Logo</label>
+        <div class="uk-inline-clip uk-transition-toggle" *ngIf="websiteProperties?.logoUrl">
+            <img src="/api/v1/files/{{websiteProperties.logoUrl}}?size=200" />
+
+            <div class="uk-transition-slide-top uk-position-top">
+                <div class="icon_delete_overlay_container">
+                    <a (click)="deleteCurrentLogo()" class="uk-icon-link" uk-icon="trash"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-margin-top">
+            <button (click)="selectFile()" class="uk-button uk-button-primary uk-button-small">select logo</button>
+        </div>
+    </div>
+
+    <button [disabled]="isLoading" class="uk-button uk-button-danger uk-button-small" (click)="saveSettings()">save</button>
+    
+    <div *ngIf="isLoading">
+        <div uk-spinner></div>
+    </div>
+
+</form>

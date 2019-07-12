@@ -21,6 +21,9 @@ export class DashboardMenuService {
     ],
     '/admin/snippets': [
       { label: 'create new snippet', url: '/admin/snippets/create'}
+    ],
+    '/admin/settings': [
+      { label: 'Settings', url: null } 
     ]
   }
 

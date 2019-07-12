@@ -8,6 +8,8 @@ import { BlogFileCollectionResolveService } from '../services/file/blog-file-col
 import { UserResolveService } from '../services/user/user-resolve.service';
 import { AccessGuard } from './access.guard';
 import { SnippetResolveService } from '../shared/snippet/snippet-resolve.service';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsResolveService } from '../services/settings/settings-resolve.service';
 
 const routes: Routes = [
   {
@@ -31,6 +33,9 @@ const routes: Routes = [
         },
         {
           path: 'snippets', loadChildren: () => import('./../snippet-management/snippet-management.module').then(m => m.SnippetManagementModule)
+        },
+        {
+          path: 'settings', canLoad: [AccessGuard], component: SettingsComponent, resolve: {websiteProperties: SettingsResolveService}
         }
     ]
   }

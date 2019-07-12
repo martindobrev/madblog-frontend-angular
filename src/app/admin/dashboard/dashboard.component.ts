@@ -6,6 +6,7 @@ import { KeycloakTokenParsed } from './../../type/keycloak';
 import { User } from './../../api/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardMenuService, DashboardMenuItem } from '../dashboard-menu.service';
+import { SettingsService } from './../../services/settings/settings.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,13 +22,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   role: string;
   menuItems: Observable<Array<DashboardMenuItem>>;
   isAdmin: boolean;
+  logoUrl$: Observable<string>;
 
   constructor(
     private routingService: RoutingService, 
     private keycloakService: AbstractKeycloakService,
     private activatedRoute: ActivatedRoute,
     //private router: Router,
-    private dashboardMenuService: DashboardMenuService
+    private dashboardMenuService: DashboardMenuService,
+    private settingsService: SettingsService
     ) {
       this.menuItems = this.dashboardMenuService.dashboadMenuItem$;
      }
@@ -60,6 +63,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    this.logoUrl$ = this.settingsService.logoImageUrl$;
   }
 
   ngOnDestroy(): void {

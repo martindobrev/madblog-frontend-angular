@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
 import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { KeycloakProfile, KeycloakTokenParsed } from './../../type/keycloak';
 import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
 import { MessageService } from './../../services/message/message.service';
 import { Menu } from './../../api/menu';
 import { RoutingService } from './../../routing.service';
+import { SettingsService } from './../../services/settings/settings.service';
 
 @Component({
   selector: 'app-main',
@@ -23,6 +24,8 @@ export class MainComponent implements OnInit, OnDestroy {
   canUserPublishArticles: boolean = false;
   currentUrl: string;
   menu: Menu;
+
+  logoUrl$: Observable<string>;
   
   private subscriptions: Array<Subscription> = [];
 
@@ -30,7 +33,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private keycloakService: AbstractKeycloakService, 
     private routingService: RoutingService,
     private activatedRoute: ActivatedRoute,
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    private settingsService: SettingsService) {}
 
   ngOnInit(): void {
     console.log('MAIN COMPONENT CREATED!');
@@ -57,6 +61,9 @@ export class MainComponent implements OnInit, OnDestroy {
         window.alert(msg);
       })
     );
+
+    this.logoUrl$ = this.settingsService.logoImageUrl$;
+
     this.canUserCreateArticles = this.keycloakService.canCreateArticles();
     this.showOwnArticles = this.canUserCreateArticles;
     this.canUserPublishArticles = this.keycloakService.canPublishArticles();
