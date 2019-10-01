@@ -1,54 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticleCollection, Article } from '../../api/article';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StringUtils } from '../../util/string-utils';
+import { ArticlePage } from '../../api/article-page';
+import { Subscription } from 'rxjs';
+import { AbstractArticleService } from './../../services/article/abstract.article.service';
+
+declare var UIkit: any;
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy  {
 
-  articleCollection: ArticleCollection;
+  articlePage: ArticlePage;
   featuredArticle: Article;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  subscriptions: Array<Subscription> = [];
+
+  constructor(private activatedRoute: ActivatedRoute, private articleService: AbstractArticleService) {}
 
   ngOnInit() {
     console.log('HOME Component created!');
     this.activatedRoute.data.subscribe(data => {
-      this.articleCollection = data.articles;
-      this.featuredArticle = this.getFeaturedArticle(this.articleCollection)
+      this.articlePage = data.articlePage;
     });
+
+    this.subscriptions.push(this.articleService.getRandomFeaturedArticle().subscribe(article => {
+      this.featuredArticle = article;
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   calculateArticleReadTime(article: Article) {
     return StringUtils.countMinutesToRead(article.content);
   }
 
-  private getFeaturedArticle(articleCollection: ArticleCollection): Article {
-    if (!articleCollection) {
-      return null;
-    }
-
-    if (!articleCollection.articles) {
-      return null;
-    }
-
-    const featuredArticleIndexes = [];
-
-    articleCollection.articles.forEach((article: Article, index: number) => {
-      if (article.featured) {
-        featuredArticleIndexes.push(index);
-      }
+  loadPage(page: number) {
+    this.articleService.getArticlePage(page).subscribe(articlePage => {
+      this.articlePage = articlePage;
     });
-    
-    if (featuredArticleIndexes) {
-      const randomIndex = Math.floor(Math.random() * featuredArticleIndexes.length);
-      return articleCollection.articles.splice(featuredArticleIndexes[randomIndex], 1)[0];
-    }
+  }
 
-    return null;
+  scroll(el: HTMLElement) {
+    UIkit.scroll(el).scrollTo(el);
   }
 }

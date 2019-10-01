@@ -1,9 +1,18 @@
 import { AbstractArticleService } from "./abstract.article.service";
 import { Article, ArticleCollection } from '../../api/article';
+import { ArticlePage } from '../../api/article-page';
 import { ArticleInfo } from '../../api/article-info';
 import { Observable, of } from 'rxjs';
 
 export class ArticleMockService extends AbstractArticleService {
+    
+    getRandomFeaturedArticle(): Observable<Article> {
+        throw new Error("Method not implemented.");
+    }
+    getArticlePage(pageNumber: number): Observable<ArticlePage> {
+        throw new Error("Method not implemented.");
+    }
+
     deleteArticle(article: Article): Observable<boolean> {
         throw new Error("Method not implemented.");
     }

@@ -18,9 +18,7 @@ export class AccessGuard implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    //console.log('CAN LOAD ROUTE: ', route, segments);
-
-    if (false == this.keycloakService.canCreateArticles()) {
+    if (false === this.keycloakService.canCreateArticles()) {
       this.keycloakService.login();
       return false;
     }
@@ -31,6 +29,4 @@ export class AccessGuard implements CanActivate, CanLoad {
 
     return true;
   }
-
-  
 }

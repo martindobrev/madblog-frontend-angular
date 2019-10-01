@@ -25,9 +25,10 @@
 <div class="uk-section uk-section-default">
   <div class="uk-container">
     <div class="uk-grid" data-ukgrid>
-      <div class="uk-width-2-3@m" *ngIf="articleCollection">
-        <h4 class="uk-heading-line uk-text-bold"><span>Latest News</span></h4>
-        <article *ngFor="let article of articleCollection.articles" class="uk-section uk-section-small uk-padding-remove-top">
+      <div class="uk-width-2-3@m" *ngIf="articlePage?.articles?.length > 0">
+        <h4 class="uk-heading-line uk-text-bold" id="article-start" #articleStart><span>Articles</span></h4>
+        <app-article-pagination  (pageRequested)="loadPage($event); scroll(articleStart);" [totalPages]="articlePage.totalPages" [currentPage]="articlePage.pageNumber"></app-article-pagination>
+        <article *ngFor="let article of articlePage.articles" class="uk-section uk-section-small uk-padding-remove-top">
           <header>
             <h2 class="uk-margin-remove-adjacent uk-text-bold uk-margin-small-bottom">
               <a title="Fusce facilisis tempus magna ac dignissim." class="uk-link-reset" routerLink="/article/{{article.id}}">{{article.title}}</a>
@@ -52,21 +53,12 @@
           <a routerLink="/article/{{article.id}}" title="Read More" class="uk-button uk-button-default uk-button-small">READ MORE</a>
           <hr>
         </article>
+
+        <app-article-pagination (pageRequested)="loadPage($event); scroll(articleStart);" [totalPages]="articlePage.totalPages" [currentPage]="articlePage.pageNumber"></app-article-pagination>
+
       </div>
       <div class="uk-width-1-3@m">
-        <!--
-        <h4 class="uk-heading-line uk-text-bold"><span>Archive</span></h4>
-        <ul class="uk-list">
-          <li><a href="">March</a></li>
-          <li><a href="">February</a></li>
-          <li><a href="">January</a></li>
-          <li><a href="">December <small>(2017)</small></a></li>
-          <li><a href="">November <small>(2017)</small></a></li>
-          <li><a href="">October <small>(2017)</small></a></li>
-          <li><a href="">September <small>(2017)</small></a></li>
-          <li><a href="">August <small>(2017)</small></a></li>
-        </ul>
-        -->
+        
         <h4 class="uk-heading-line uk-text-bold"><span>About Us</span></h4>
         <div class="uk-tile uk-tile-small uk-tile-muted uk-border-rounded">
             As the youngest member of the Swiss Holding «Noser Group», 

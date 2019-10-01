@@ -10,6 +10,7 @@ import { Error404Component } from './error404/error404.component';
 import { PageViewComponent } from './page-view/page-view.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ArticlePaginationComponent } from './article-pagination/article-pagination.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { LogoutComponent } from './logout/logout.component';
     ArticleViewComponent,
     PageViewComponent,
     ServerErrorComponent,
-    LogoutComponent
+    LogoutComponent,
+    ArticlePaginationComponent
   ]
 })
 export class PublicSiteModule { }

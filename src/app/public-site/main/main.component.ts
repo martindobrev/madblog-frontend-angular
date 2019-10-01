@@ -18,19 +18,19 @@ export class MainComponent implements OnInit, OnDestroy {
 
   username: string = null;
   profile: KeycloakTokenParsed = null;
-  
-  canUserCreateArticles: boolean = false;
-  showOwnArticles: boolean = false;
-  canUserPublishArticles: boolean = false;
+
+  canUserCreateArticles = false;
+  showOwnArticles = false;
+  canUserPublishArticles = false;
   currentUrl: string;
   menu: Menu;
 
   logoUrl$: Observable<string>;
-  
+
   private subscriptions: Array<Subscription> = [];
 
-  constructor(private articleService: AbstractArticleService, 
-    private keycloakService: AbstractKeycloakService, 
+  constructor(private articleService: AbstractArticleService,
+    private keycloakService: AbstractKeycloakService,
     private routingService: RoutingService,
     private activatedRoute: ActivatedRoute,
     private messageService: MessageService,
@@ -42,7 +42,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.routingService.currentUrl$.subscribe(url => {this.currentUrl = url})
     );
-    
+
     this.subscriptions.push(
     this.keycloakService.getKeycloakTokenParsed$().subscribe((profile) => {
       this.profile = profile;
@@ -80,8 +80,6 @@ export class MainComponent implements OnInit, OnDestroy {
   logout() {
     this.keycloakService.logout();
   }
-
-  
 
 
 }
