@@ -68,8 +68,8 @@ export class KeycloakMockService extends AbstractKeycloakService {
 export function createMockServiceFactory(roles: Array<string>): AbstractKeycloakService {
     let tokenParsed: KeycloakTokenParsed = {
         realm_access: { roles: roles },
-        resource_access: ['TEST_ACCESS'],
-        preferred_username: 'MOCK_USER'
+        resource_access: {},
+        //preferred_username: 'MOCK_USER'
     };
 
     const isUser = tokenParsed.realm_access.roles.includes('user');

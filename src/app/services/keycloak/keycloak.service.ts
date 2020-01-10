@@ -11,9 +11,9 @@ declare var Keycloak: any;
   providedIn: 'root'
 })
 export class KeycloakService extends AbstractKeycloakService {
-  
+
   private keycloakAuth: KeycloakInstance;
-  
+
   private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
   private profile$ = this.profile.asObservable();
 
@@ -28,13 +28,23 @@ export class KeycloakService extends AbstractKeycloakService {
 
   init(): Promise<any> {
     return new Promise((resolve, reject) => {
+
+/*
+{
+  "realm": "Demo",
+  "auth-server-url": "http://localhost:8080/auth",
+  "ssl-required": "external",
+  "resource": "angular",
+  "public-client": true,
+  "confidential-port": 0
+}
+*/
       const config = {
-        'url': 'https://guard.maddob.com/auth',
-        'realm': 'MADDOB_SITE',
-        'clientId': 'angular_web_dev'
+        'url': 'http://localhost:8080/auth',
+        'realm': 'Demo',
+        'clientId': 'angular'
       };
       this.keycloakAuth = new Keycloak(config);
-      
       this.keycloakAuth.onTokenExpired = () => {
         this.keycloakAuth.updateToken(30).success(refreshed => {
           console.log('TOKEN SUCCESSFULLY UPDATED');
@@ -44,8 +54,9 @@ export class KeycloakService extends AbstractKeycloakService {
         });
       };
 
-      this.keycloakAuth.init({ onLoad: 'check-sso'})
+      this.keycloakAuth.init({ onLoad: 'check-sso', promiseType: 'legacy'})
         .success(() => {
+          console.log('KEYCLOAK-AUTH IS:', this.keycloakAuth);
           this.profile.next(this.keycloakAuth.tokenParsed);
           console.log('PROFILE IS:', this.keycloakAuth.tokenParsed);
           resolve();
@@ -83,16 +94,23 @@ export class KeycloakService extends AbstractKeycloakService {
       return false;
     }
     //this.profile.value.
-    let roles = this.profile.value.realm_access.roles;
-    return roles.includes('publisher') || roles.includes('admin');
+    //const roles = this.profile.value.realm_access.roles;
+    const isPublisher = this.keycloakAuth.hasRealmRole('publisher');
+    const isAdmin = this.keycloakAuth.hasRealmRole('admin');
+
+
+    return isAdmin || isPublisher;
   }
-  
+
   canCreateArticles(): boolean {
     if (!this.profile.value) {
       return false;
     }
-    let roles = this.profile.value.realm_access.roles;
-    return roles.includes('user') || roles.includes('publisher') || roles.includes('admin');
+
+    const isPublisher = this.keycloakAuth.hasRealmRole('publisher');
+    const isAdmin = this.keycloakAuth.hasRealmRole('admin');
+    const isUser = this.keycloakAuth.hasRealmRole('user');
+    return isPublisher || isAdmin || isUser;
   }
 
   getUserInfo(id: string): Observable<User> {
@@ -104,13 +122,12 @@ export class KeycloakService extends AbstractKeycloakService {
     }
 
     if (this.profile) {
-      user.username = this.profile.value.preferred_username;
+      //user.username = this.profile.value.resource_access;
       user.roles = this.profile.value.realm_access.roles;
     } else {
       user.username = 'ANONYMOUS';
     }
-    
-    return of(user); 
+    return of(user);
   }
 
   isAdmin(): boolean {
@@ -118,7 +135,7 @@ export class KeycloakService extends AbstractKeycloakService {
       return false;
     }
     //this.profile.value.
-    let roles = this.profile.value.realm_access.roles;
+    const roles = this.profile.value.realm_access.roles;
     return roles.includes('admin');
   }
 }

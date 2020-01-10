@@ -34,8 +34,8 @@ export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycl
       //sub?: string;
       //session_state?: string;
       realm_access: { roles: ['user', 'publisher', 'admin'] },
-      resource_access: ['PUBLISHER'],
-      preferred_username: 'MOCK-ADMIN'
+      //resource_access: {'test': ['PUBLISHER']},
+      //preferred_username: 'MOCK-ADMIN'
     };
     return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
   } else {
