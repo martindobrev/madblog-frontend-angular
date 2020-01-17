@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractFileService } from './abstract.file.service';
-import { BlogFile, BlogFileCollection } from "../../api/blog-file";
+import { BlogFile, BlogFileCollection, BlogFilePage } from '../../api/blog-file';
 import { Observable, Subject, throwError, of } from 'rxjs';
 import { HttpClient, HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -49,25 +49,23 @@ export class FileService extends AbstractFileService {
   getShowHideFileManager$(): Observable<{id: string, status: boolean}> {
     return this.fileManagerVisibility$;
   }
-  
+
   getFiles(): Observable<BlogFileCollection> {
-    return this.httpClient.get("/api/v1/files") as Observable<BlogFileCollection>;
+    return this.httpClient.get('/api/v1/files') as Observable<BlogFileCollection>;
   }
-  
+
   getFile(id: number): Observable<BlogFile> {
     throw this.httpClient.get(`/api/v1/files/${id}`) as Observable<BlogFile>;
   }
-  
+
   uploadFile(file: File) {
     const fd = new FormData();
     fd.append('file', file, file.name);
     this.httpClient.post('/api/v1/files', fd, {reportProgress: true, observe: 'events'})
     .pipe(catchError(err => {
-      return this.handleFileUploadError(err, file)
+      return this.handleFileUploadError(err, file);
     }))
     .subscribe((event: HttpEvent<any>) => {
-      //event
-      //console.log('DEFINING UPLOAD ');
       switch (event.type) {
         case HttpEventType.Sent:
           console.log('Upload started!');
@@ -100,7 +98,7 @@ export class FileService extends AbstractFileService {
     console.log('SHOWING FILE MANAGER with id: ', id);
     this.fileManagerVisibility.next({id: id, status: true});
   }
-  
+
   hideFileManager(id: string): void {
     console.log('HIDING FILE MANAGER with id: ', id);
     this.fileManagerVisibility.next({id: id, status: false});
@@ -125,23 +123,27 @@ export class FileService extends AbstractFileService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
-  
+  }
+
   private getEventMessage(event: HttpEvent<any>, file: File) {
     switch (event.type) {
       case HttpEventType.Sent:
         return `Uploading file "${file.name}" of size ${file.size}.`;
-  
+
       case HttpEventType.UploadProgress:
         // Compute and show the % done:
         const percentDone = Math.round(100 * event.loaded / event.total);
         return `File "${file.name}" is ${percentDone}% uploaded.`;
-  
+
       case HttpEventType.Response:
         return `File "${file.name}" was completely uploaded!`;
-  
+
       default:
         return `File "${file.name}" surprising upload event: ${event.type}.`;
     }
+  }
+
+  getFilePage(pageNumber: number): Observable<BlogFilePage> {
+    return this.httpClient.get('/api/v1/filepage/' + pageNumber) as Observable<BlogFilePage>;
   }
 }

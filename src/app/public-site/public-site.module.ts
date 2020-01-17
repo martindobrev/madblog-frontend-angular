@@ -10,13 +10,14 @@ import { Error404Component } from './error404/error404.component';
 import { PageViewComponent } from './page-view/page-view.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LogoutComponent } from './logout/logout.component';
-import { ArticlePaginationComponent } from './article-pagination/article-pagination.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     PublicSiteRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   declarations: [
     Error404Component,
@@ -26,7 +27,6 @@ import { ArticlePaginationComponent } from './article-pagination/article-paginat
     PageViewComponent,
     ServerErrorComponent,
     LogoutComponent,
-    ArticlePaginationComponent
   ]
 })
 export class PublicSiteModule { }

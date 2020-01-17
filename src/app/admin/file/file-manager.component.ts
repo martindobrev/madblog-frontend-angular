@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { BlogFile, BlogFileCollection } from './../../api/blog-file';
+import { BlogFile, BlogFileCollection, BlogFilePage } from './../../api/blog-file';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Subscription } from 'rxjs';
@@ -10,20 +10,24 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./file-manager.component.css']
 })
 export class FileManagerComponent implements OnInit , OnDestroy {
-  
+
   @Input() selectable = false;
 
   blogFiles: Array<BlogFile>;
   id: string;
   subscriptions: Array<Subscription> = [];
+  currentPage = 0;
+  totalPages = 0;
 
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
   ngOnInit() {
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
-        if (data.blogFileCollection) {
-          this.blogFiles = data.blogFileCollection.blogFiles;
+        if (data.blogPage) {
+          this.blogFiles = data.blogPage.blogFiles;
+          this.currentPage = data.blogPage.pageNumber;
+          this.totalPages = data.blogPage.totalPages;
         }
       })
     );
@@ -68,6 +72,18 @@ export class FileManagerComponent implements OnInit , OnDestroy {
           console.log('AFTER DELETE', this.blogFiles);
         }
       }
+    });
+  }
+
+  loadPage(pageNumber: number) {
+    const s = this.fileService.getFilePage(pageNumber).subscribe((blogFilePage: BlogFilePage) => {
+      if (blogFilePage) {
+        this.blogFiles = blogFilePage.blogFiles;
+        this.currentPage = blogFilePage.pageNumber;
+        this.totalPages = blogFilePage.totalPages;
+      }
+
+      s.unsubscribe();
     });
   }
 }

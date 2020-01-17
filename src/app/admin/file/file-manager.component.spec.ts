@@ -8,8 +8,6 @@ import { AbstractFileService } from './../../services/file/abstract.file.service
 import { MockFileService } from './../../testing/mock-file-service';
 
 describe('FileManagerComponent', () => {
-
-
   @Component({
     selector: 'app-file-upload', template: ''
   })

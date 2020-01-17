@@ -8,3 +8,10 @@ export class BlogFile {
 export class BlogFileCollection {
     blogFiles: Array<BlogFile>;
 }
+
+export class BlogFilePage {
+    blogFiles: Array<BlogFile>;
+    pageNumber: number;
+    totalPages: number;
+    totalFiles: number;
+}

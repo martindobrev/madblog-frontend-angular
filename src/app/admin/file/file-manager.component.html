@@ -3,6 +3,9 @@
     <app-file-upload></app-file-upload>
 </div>
 <div class="uk-container">
+
+    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageRequested)="loadPage($event)"></app-pagination>
+
     <div class="uk-grid uk-grid-small">
         <div *ngFor="let file of blogFiles; let index = index;"
             class="file-manager-card uk-card uk-card-small uk-margin-left uk-margin-bottom">

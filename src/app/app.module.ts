@@ -18,24 +18,16 @@ import { RoutingService } from './routing.service';
 import { MenuService } from './services/page/menu.service';
 import { KeycloakMockService } from './services/keycloak/keycloak-mock.service';
 import { KeycloakTokenParsed } from './type/keycloak';
-import { RouterLinkDirectiveStub } from './testing/router-link-directive-stub';
 
 import { environment } from './../environments/environment';
 import { SharedModule } from './shared/shared.module';
-  
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
   if (environment.mockSecurity) {
-    console.info('MOCKING SECURITY...');
-    let mockKeycloakTokenParsed: KeycloakTokenParsed = {
-      //exp?: number;
-      //iat?: number;
-      //nonce?: string;
-      //sub?: string;
-      //session_state?: string;
+    console.debug('MOCKING SECURITY...');
+    const mockKeycloakTokenParsed: KeycloakTokenParsed = {
       realm_access: { roles: ['user', 'publisher', 'admin'] },
-      //resource_access: {'test': ['PUBLISHER']},
-      //preferred_username: 'MOCK-ADMIN'
+      preferred_username: 'MOCK-ADMIN'
     };
     return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
   } else {
@@ -75,7 +67,6 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     RoutingService,
     MenuService
   ],
-  
   exports: [],
   bootstrap: [AppComponent]
 })
