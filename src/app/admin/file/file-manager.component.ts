@@ -18,6 +18,8 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   subscriptions: Array<Subscription> = [];
   currentPage = 0;
   totalPages = 0;
+  idToDelete: number;
+  timer: number;
 
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
@@ -51,6 +53,19 @@ export class FileManagerComponent implements OnInit , OnDestroy {
 
   selectItem(file: BlogFile) {
     this.fileService.selectFile(this.id, file);
+  }
+
+  onTrashClick(id: string) {
+    this.idToDelete = +id;
+    this.timer = window.setTimeout(() => {
+      this.disableTimer();
+    }, 2000);
+  }
+
+  private disableTimer() {
+    this.idToDelete = null;
+    window.clearTimeout(this.timer);
+    this.timer = null;
   }
 
   deleteFile(file: BlogFile) {

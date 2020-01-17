@@ -23,8 +23,10 @@
             </div>
             <div class="uk-card-footer">
                     <div class="uk-float-right">
-                        <a class="uk-icon-link" uk-icon="trash" (click)="deleteFile(file)"></a>
-                    </div>
+                            <a class="uk-icon-link" uk-icon="trash" (click)="onTrashClick(file.id)" >
+                                    <label *ngIf="file.id===idToDelete">Sure?</label>
+                                    <button *ngIf="file.id===idToDelete" class="uk-button uk-button-small uk-button-primary uk-margin-left" (click)="deleteFile(file)"  >yes</button>
+                            </a>                    </div>
                     <div class="uk-float-left">
                         <button *ngIf="selectable" class="uk-button uk-button-small uk-button-primary" (click)="selectItem(file)">select</button>
                     </div>
