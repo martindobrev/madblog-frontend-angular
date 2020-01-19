@@ -1,5 +1,7 @@
+import { FileService } from './../services/file/file.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AbstractFileService } from './../services/file/abstract.file.service';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { UsersComponent } from './users/users.component';
@@ -13,6 +15,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MaddobLibModule } from 'maddob-lib';
 import { SettingsComponent } from './settings/settings.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SearchBarComponent } from './file/search-bar/search-bar.component';
 
 @NgModule({
   imports: [
@@ -27,10 +30,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UsersComponent,
     ModalComponent,
     ModalDirective,
-    DashboardComponent, 
-    GlobalStatsComponent, 
-    FileManagerComponent, 
-    FileUploadComponent, SettingsComponent
+    DashboardComponent,
+    GlobalStatsComponent,
+    FileManagerComponent,
+    FileUploadComponent, SettingsComponent, SearchBarComponent
   ],
   exports: [
     FileManagerComponent,
@@ -38,5 +41,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ModalComponent
   ],
   entryComponents: [FileManagerComponent, FileUploadComponent],
+
+  providers: [
+    FileService
+  ]
 })
 export class AdminModule { }

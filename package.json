@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:no-secure": "ng serve --configuration=nosecurity",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

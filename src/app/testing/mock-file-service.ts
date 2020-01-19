@@ -73,4 +73,9 @@ export class MockFileService extends AbstractFileService {
     getFilePage(pageNumber: number): Observable<BlogFilePage> {
         throw new Error('Method not implemented.');
     }
+
+    getSearchedFile(searchFileName: string): Observable<BlogFile[]> {
+      throw new Error('Method not implemented.');
+    }
+
 }

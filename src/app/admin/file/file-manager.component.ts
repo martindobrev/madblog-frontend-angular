@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { PaginationComponent } from './../../shared/article-pagination/pagination.component';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BlogFile, BlogFileCollection, BlogFilePage } from './../../api/blog-file';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Subscription } from 'rxjs';
+import { filter, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file-manager',
@@ -11,8 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class FileManagerComponent implements OnInit , OnDestroy {
 
-  @Input() selectable = false;
+  @Input() public selectable = false;
 
+  @ViewChild(SearchBarComponent, {static: true})
+  public searchChild: SearchBarComponent;
   blogFiles: Array<BlogFile>;
   id: string;
   subscriptions: Array<Subscription> = [];
@@ -24,6 +29,21 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
   ngOnInit() {
+
+    this.searchChild.onTextInserted
+    .subscribe(textWord => {
+      this.fileService.getSearchedFile(textWord)
+      .pipe(
+        filter(res => {
+          return res && res.length > 0;
+        })
+      ).subscribe(foundBlogFiles => {
+        this.blogFiles = foundBlogFiles;
+      }
+      );
+
+    });
+
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
         if (data.blogPage) {
@@ -84,6 +104,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
         if (indexToDelete > -1) {
           console.log('BEFORE DELETE', this.blogFiles);
           this.blogFiles.splice(indexToDelete, 1);
+          this.totalPages = this.blogFiles.length;
           console.log('AFTER DELETE', this.blogFiles);
         }
       }
@@ -101,4 +122,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
       s.unsubscribe();
     });
   }
+
+
+
 }

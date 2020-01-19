@@ -17,9 +17,9 @@ export class MockActivatedRoute implements ActivatedRoute {
     firstChild: ActivatedRoute;
     children: ActivatedRoute[];
     pathFromRoot: ActivatedRoute[];
-    paramMap: Observable<ParamMap>;;
-    queryParamMap: Observable<ParamMap>; 
-    
+    paramMap: Observable<ParamMap>;
+    queryParamMap: Observable<ParamMap>;
+
     toString(): string {
         return "";
     };

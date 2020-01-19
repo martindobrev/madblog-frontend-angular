@@ -1,36 +1,52 @@
-
 <div class="uk-container">
-    <app-file-upload></app-file-upload>
+  <app-file-upload></app-file-upload>
 </div>
 <div class="uk-container">
 
-    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageRequested)="loadPage($event)"></app-pagination>
-
-    <div class="uk-grid uk-grid-small">
-        <div *ngFor="let file of blogFiles; let index = index;"
-            class="file-manager-card uk-card uk-card-small uk-margin-left uk-margin-bottom">
-            <div class="uk-card-header">
-                
-                <div class="uk-inline">
-                    <div class="uk-cover-container">
-                        <canvas width="200" height="120"></canvas>
-                        <img src="/api/v1/files/{{file.id}}?size=200" alt="" uk-cover>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-card-body nb-card-body">
-                <span class="uk-text-small">{{ file.name }}</span>
-            </div>
-            <div class="uk-card-footer">
-                    <div class="uk-float-right">
-                            <a class="uk-icon-link" uk-icon="trash" (click)="onTrashClick(file.id)" >
-                                    <label *ngIf="file.id===idToDelete">Sure?</label>
-                                    <button *ngIf="file.id===idToDelete" class="uk-button uk-button-small uk-button-primary uk-margin-left" (click)="deleteFile(file)"  >yes</button>
-                            </a>                    </div>
-                    <div class="uk-float-left">
-                        <button *ngIf="selectable" class="uk-button uk-button-small uk-button-primary" (click)="selectItem(file)">select</button>
-                    </div>
-            </div>
-        </div>
+  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+      <div class="uk-card uk-card-default uk-card-body">
+        <app-search-bar #search ></app-search-bar>
+      </div>
     </div>
+    <div>
+      <div class="uk-card uk-card-default uk-card-body">
+        <app-pagination #component [currentPage]="currentPage" [totalPages]="totalPages"
+          (pageRequested)="loadPage($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="uk-grid uk-grid-small">
+    <div *ngFor="let file of blogFiles; let index = index;"
+      class="file-manager-card uk-card uk-card-small uk-margin-left uk-margin-bottom">
+      <div class="uk-card-header">
+
+        <div class="uk-inline">
+          <div class="uk-cover-container">
+            <canvas width="200" height="120"></canvas>
+            <img src="/api/v1/files/{{file.id}}?size=200" alt="" uk-cover>
+          </div>
+        </div>
+      </div>
+      <div class="uk-card-body nb-card-body">
+        <span class="uk-text-small">{{ file.name }}</span>
+      </div>
+      <div class="uk-card-footer">
+        <div class="uk-float-right">
+          <a class="uk-icon-link" uk-icon="trash" (click)="onTrashClick(file.id)">
+            <label *ngIf="file.id===idToDelete">Sure?</label>
+            <button *ngIf="file.id===idToDelete" class="uk-button uk-button-small uk-button-primary uk-margin-left"
+              (click)="deleteFile(file)">yes</button>
+          </a> </div>
+        <div class="uk-float-left">
+          <button *ngIf="selectable" class="uk-button uk-button-small uk-button-primary"
+            (click)="selectItem(file)">select</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

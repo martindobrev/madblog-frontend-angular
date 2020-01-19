@@ -10,7 +10,8 @@ export class PaginationComponent implements OnInit {
 
   @Input() currentPage: number;
   @Input() totalPages: number;
-  @Output() pageRequested = new EventEmitter<number>();
+  // tslint:disable-next-line: no-output-on-prefix
+  @Output() onPageRequested = new EventEmitter<number>();
 
   pages: Array<number>;
 
@@ -21,7 +22,7 @@ export class PaginationComponent implements OnInit {
   }
 
   loadPage(pageNumber: number) {
-    this.pageRequested.emit(pageNumber);
+    this.onPageRequested.emit(pageNumber);
   }
 
 }

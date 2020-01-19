@@ -14,7 +14,7 @@
         <li *ngFor="let menuEntry of menu.menuEntries" [ngClass]="{'uk-active': currentUrl === '/' + menuEntry.slug }">
           <a routerLink="/{{menuEntry.slug}}">{{menuEntry.name}}</a>
         </li>
-        
+
       </ul>
     </div>
 
@@ -61,7 +61,7 @@
         <li>
           <a class="uk-logo" href="#" title="Logo"><img src="assets/img/noser-logo.png" height="30px" alt="Logo"></a>
         </li>
-        
+
         <li [ngClass]="{'uk-active': currentUrl === '/' || currentUrl === '/home'}">
           <a routerLink="/" routerLinkActive="uk-active">Home</a>
         </li>
@@ -89,9 +89,9 @@
   <!--FOOTER-->
   <footer class="uk-section uk-section-small uk-section-muted">
     <div class="uk-container">
-      <p class="uk-text-small uk-text-center">Copyright 2019 - 
-        Created by <a href="https://github.com/martindobrev">maddob</a> 
-        | Built with 
+      <p class="uk-text-small uk-text-center">Copyright 2019 -
+        Created by <a href="https://github.com/martindobrev">maddob</a>
+        | Built with
         <a href="http://getuikit.com" title="Visit UIkit 3 site" target="_blank"
           data-uk-tooltip><span data-uk-icon="uikit"></span></a>
         | based on the templates of <a href="https://github.com/zzseba78/Kick-Off" target="_blank">Kick-Off</a>

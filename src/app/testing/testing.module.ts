@@ -1,3 +1,5 @@
+import { FileService } from './../services/file/file.service';
+import { AbstractFileService } from './../services/file/abstract.file.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLinkDirectiveStub } from './router-link-directive-stub';
@@ -9,6 +11,9 @@ import { RouterLinkDirectiveStub } from './router-link-directive-stub';
   ],
   exports: [
     RouterLinkDirectiveStub
+  ],
+  providers: [
+    FileService
   ]
 })
 export class TestingModule { }
