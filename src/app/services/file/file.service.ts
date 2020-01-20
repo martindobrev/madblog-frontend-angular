@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractFileService } from './abstract.file.service';
 import { BlogFile, BlogFileCollection, BlogFilePage } from '../../api/blog-file';
-import { Observable, Subject, throwError, of } from 'rxjs';
+import { Observable, Subject, throwError, of, empty } from 'rxjs';
 import { HttpClient, HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { FileUploadError, FileUploadProgress } from '../../http/file-upload';
@@ -147,8 +147,16 @@ export class FileService extends AbstractFileService {
     return this.httpClient.get('/api/v1/filepage/' + pageNumber) as Observable<BlogFilePage>;
   }
 
-  getSearchedFile(searchedFileName: string): Observable<BlogFile[]> {
-    return this.httpClient.get('/api/v1/filepage/' + searchedFileName) as Observable<BlogFile[]>;
+  getSearchedFile(searchedFileName: string): Observable<BlogFile> {
+    return this.httpClient.get('/api/v1/filepages/' + searchedFileName) as Observable<BlogFile>;
   }
 
+  getAllSearchedFiles(searchedFileName: string): Observable<BlogFile[]> {
+    console.log(searchedFileName);
+    if (!searchedFileName){
+      return this.httpClient.get('/api/v1/filepages/.g') as Observable<BlogFile[]>;
+    } else {
+    return this.httpClient.get('/api/v1/filepages/' + searchedFileName) as Observable<BlogFile[]>;
+  }
+}
 }

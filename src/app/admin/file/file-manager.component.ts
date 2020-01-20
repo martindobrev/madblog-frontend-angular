@@ -30,12 +30,26 @@ export class FileManagerComponent implements OnInit , OnDestroy {
 
   ngOnInit() {
 
+    // this.searchChild.onTextInserted
+    // .subscribe(textWord => {
+    //   this.fileService.getSearchedFile(textWord)
+    //   .pipe(
+    //     filter(res => {
+    //       return !!res;
+    //     })
+    //   ).subscribe(foundBlogFiles => {
+    //     this.blogFiles = [foundBlogFiles];
+    //   }
+    //   );
+
+    // });
+
     this.searchChild.onTextInserted
     .subscribe(textWord => {
-      this.fileService.getSearchedFile(textWord)
+      this.fileService.getAllSearchedFiles(textWord)
       .pipe(
         filter(res => {
-          return res && res.length > 0;
+          return !!res;
         })
       ).subscribe(foundBlogFiles => {
         this.blogFiles = foundBlogFiles;

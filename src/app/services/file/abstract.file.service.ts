@@ -18,5 +18,7 @@ export abstract class AbstractFileService {
     abstract showFileManager(id: string): void;
     abstract hideFileManager(id: string): void;
     abstract getFilePage(pageNumber: number): Observable<BlogFilePage>;
-    abstract getSearchedFile(searchFileName: string): Observable<BlogFile[]>;
+    abstract getSearchedFile(searchFileName: string): Observable<BlogFile>;
+    abstract getAllSearchedFiles(searchedFileName: string): Observable<BlogFile[]>;
+
 }

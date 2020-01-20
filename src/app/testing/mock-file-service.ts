@@ -74,8 +74,12 @@ export class MockFileService extends AbstractFileService {
         throw new Error('Method not implemented.');
     }
 
-    getSearchedFile(searchFileName: string): Observable<BlogFile[]> {
+    getSearchedFile(searchFileName: string): Observable<BlogFile> {
       throw new Error('Method not implemented.');
+    }
+
+    getAllSearchedFiles(searchFileName: string): Observable<BlogFile[]>{
+        throw new Error('Method not implemented');
     }
 
 }
