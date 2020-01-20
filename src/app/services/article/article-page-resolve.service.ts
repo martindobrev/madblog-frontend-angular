@@ -12,7 +12,7 @@ export class ArticlePageResolveService implements Resolve<ArticlePage> {
     constructor(private articleService: AbstractArticleService) {}
 
     resolve(): Observable<ArticlePage> {
-        return this.articleService.getArticlePage(0);
+        return this.articleService.getArticlePage(0, '');
     }
 
 }

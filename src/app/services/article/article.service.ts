@@ -43,8 +43,13 @@ export class ArticleService extends AbstractArticleService {
     return this.httpClient.delete(`/api/v1/articles/${article.id}`) as Observable<boolean>;
   }
 
-  public getArticlePage(pageNumber: number): Observable<ArticlePage> {
-    return this.httpClient.get(`/api/v1/articles/page/${pageNumber}`) as Observable<ArticlePage>;
+  public getArticlePage(pageNumber: number, searchQuery: string): Observable<ArticlePage> {
+    let url = '/api/v1/articles/page/' + pageNumber;
+    if (searchQuery) {
+      url += '?name=' + searchQuery;
+    }
+    console.log('Getting file page ' + pageNumber + ' with query: ' + searchQuery);
+    return this.httpClient.get(url) as Observable<ArticlePage>;
   }
 
   public getRandomFeaturedArticle(): Observable<Article> {

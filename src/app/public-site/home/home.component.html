@@ -11,7 +11,7 @@
           <a routerLink="/article/{{featuredArticle.id}}" class="uk-button uk-button-default uk-margin-top">GO TO ARTICLE</a>
           <br />
           <a *ngIf="featuredArticle.editable" routerLink="/admin/articles/edit/{{featuredArticle.id}}" class="uk-button uk-button-danger uk-margin-top">EDIT</a>
-          
+
           <div *ngIf="!featuredArticle.published">
             <h3 class="uk-text-danger">UNPUBLISHED</h3>
           </div>
@@ -25,15 +25,36 @@
 <div class="uk-section uk-section-default">
   <div class="uk-container">
     <div class="uk-grid" data-ukgrid>
-      <div class="uk-width-2-3@m" *ngIf="articlePage?.articles?.length > 0">
-        <h4 class="uk-heading-line uk-text-bold" id="article-start" #articleStart><span>Articles</span></h4>
-        <app-pagination  (pageRequested)="loadPage($event); scroll(articleStart);" [totalPages]="articlePage.totalPages" [currentPage]="articlePage.pageNumber"></app-pagination>
+
+
+
+
+    <div class="uk-width-2-3@m">
+      <div></div>
+      <div class="uk-grid" data-ukgrid>
+        <h4 class="uk-heading-line uk-text-bold uk-width-2-3" id="article-start" >
+          <span>Articles</span>
+        </h4>
+        <div class="uk-flex uk-flex-right uk-width-1-3">
+          <app-search (searchNameChanged)="searchNameChanged($event)"></app-search>
+        </div>
+      </div>
+
+        <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom" *ngIf="articlePage?.articles?.length > 0">
+          <div class="uk-flex uk-flex-middle" #articleStart>
+            <app-pagination  (pageRequested)="loadPage($event); scroll(articleStart);" [totalPages]="articlePage.totalPages" [currentPage]="articlePage.pageNumber"></app-pagination>
+        </div>
+
+      </div>
+
+
+
         <article *ngFor="let article of articlePage.articles" class="uk-section uk-section-small uk-padding-remove-top">
           <header>
             <h2 class="uk-margin-remove-adjacent uk-text-bold uk-margin-small-bottom">
               <a title="Fusce facilisis tempus magna ac dignissim." class="uk-link-reset" routerLink="/article/{{article.id}}">{{article.title}}</a>
             </h2>
-            <p class="uk-article-meta">Written on {{article.created | date: 'short'}} | <span data-uk-icon="icon: future"></span>
+            <p class="uk-article-meta">Written on {{article.created | date: 'short'}} | <span data-uk-icon="icon: future"></span>
               Takes {{ calculateArticleReadTime(article) }} min reading. <span *ngIf="article.editable">| <a class="uk-text-danger" routerLink="/admin/articles/edit/{{article.id}}">EDIT</a></span></p>
           </header>
           <div class="uk-cover-container">
@@ -42,9 +63,9 @@
 
               <div *ngIf="!article.published" class="uk-overlay uk-overlay-primary uk-position-cover uk-flex uk-flex-center uk-flex-middle uk-light uk-text-center">
                   <div data-uk-scrollspy="cls: uk-animation-slide-bottom-small">
-                    
+
                     <h1 class="uk-margin-top uk-margin-small-bottom uk-margin-remove-adjacent">UNPUBLISHED</h1>
-                    
+
                   </div>
                 </div>
           </div>
@@ -58,12 +79,12 @@
 
       </div>
       <div class="uk-width-1-3@m">
-        
+
         <h4 class="uk-heading-line uk-text-bold"><span>About Us</span></h4>
         <div class="uk-tile uk-tile-small uk-tile-muted uk-border-rounded">
-            As the youngest member of the Swiss Holding «Noser Group», 
+            As the youngest member of the Swiss Holding «Noser Group»,
             we have made it our task in our day-to-day work to live by Swiss values,
-             such as quality, reliability and innovative pioneer spirit. 
+             such as quality, reliability and innovative pioneer spirit.
              We offer high quality nearshoring services directly within the «Noser Group».
         </div>
       </div>

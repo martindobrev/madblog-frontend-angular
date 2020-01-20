@@ -1,8 +1,8 @@
+import { ArticlePage } from './../../api/article-page';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticleCollection, Article } from '../../api/article';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StringUtils } from '../../util/string-utils';
-import { ArticlePage } from '../../api/article-page';
 import { Subscription } from 'rxjs';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
 
@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit, OnDestroy  {
   featuredArticle: Article;
 
   subscriptions: Array<Subscription> = [];
+  searchedName = '';
+  currentPage = 0;
 
   constructor(private activatedRoute: ActivatedRoute, private articleService: AbstractArticleService) {}
 
@@ -26,12 +28,15 @@ export class HomeComponent implements OnInit, OnDestroy  {
     console.log('HOME Component created!');
     this.activatedRoute.data.subscribe(data => {
       this.articlePage = data.articlePage;
+      this.currentPage = data.articlePage.pageNumber;
     });
 
     this.subscriptions.push(this.articleService.getRandomFeaturedArticle().subscribe(article => {
       this.featuredArticle = article;
     }));
   }
+
+
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
@@ -42,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
   }
 
   loadPage(page: number) {
-    this.articleService.getArticlePage(page).subscribe(articlePage => {
+    this.articleService.getArticlePage(page, this.searchedName).subscribe(articlePage => {
       this.articlePage = articlePage;
     });
   }
@@ -50,4 +55,11 @@ export class HomeComponent implements OnInit, OnDestroy  {
   scroll(el: HTMLElement) {
     UIkit.scroll(el).scrollTo(el);
   }
+
+  searchNameChanged(name: string) {
+    console.log(name);
+    this.searchedName = name;
+    this.loadPage(this.currentPage);
+  }
+
 }
