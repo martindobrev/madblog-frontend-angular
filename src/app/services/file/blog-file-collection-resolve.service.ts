@@ -12,6 +12,6 @@ export class BlogFileCollectionResolveService implements Resolve<BlogFilePage> {
   constructor(private fileService: AbstractFileService) {}
 
   resolve(): Observable<BlogFilePage> {
-    return this.fileService.getFilePage(0);
+    return this.fileService.getFilePage(0, '');
   }
 }

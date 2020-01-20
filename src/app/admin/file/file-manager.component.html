@@ -3,21 +3,14 @@
 </div>
 <div class="uk-container">
 
-  <div class="uk-child-width-expand@s uk-text-center" uk-grid>
-    <div>
-      <div class="uk-card uk-card-default uk-card-body">
-        <app-search-bar #search ></app-search-bar>
-      </div>
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <div class="uk-flex-left uk-flex-middle">
+            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageRequested)="loadPage($event)"></app-pagination>
+        </div>
+        <div class="uk-flex-right">
+            <app-search (searchNameChanged)="searchNameChanged($event)"></app-search>
+        </div>
     </div>
-    <div>
-      <div class="uk-card uk-card-default uk-card-body">
-        <app-pagination #component [currentPage]="currentPage" [totalPages]="totalPages"
-          (pageRequested)="loadPage($event)"></app-pagination>
-      </div>
-    </div>
-  </div>
-
-
 
 
   <div class="uk-grid uk-grid-small">

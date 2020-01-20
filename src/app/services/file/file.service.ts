@@ -143,8 +143,13 @@ export class FileService extends AbstractFileService {
     }
   }
 
-  getFilePage(pageNumber: number): Observable<BlogFilePage> {
-    return this.httpClient.get('/api/v1/filepage/' + pageNumber) as Observable<BlogFilePage>;
+  getFilePage(pageNumber: number, searchQuery: string): Observable<BlogFilePage> {
+    let url = '/api/v1/filepage/' + pageNumber;
+    if (searchQuery) {
+      url += '?name=' + searchQuery;
+    }
+    console.log('Getting file page ' + pageNumber + ' with query: ' + searchQuery);
+    return this.httpClient.get(url) as Observable<BlogFilePage>;
   }
 
   getSearchedFile(searchedFileName: string): Observable<BlogFile> {

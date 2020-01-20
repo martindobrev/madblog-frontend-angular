@@ -23,8 +23,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   subscriptions: Array<Subscription> = [];
   currentPage = 0;
   totalPages = 0;
-  idToDelete: number;
-  timer: number;
+  searchedName = '';
 
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
@@ -126,7 +125,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   loadPage(pageNumber: number) {
-    const s = this.fileService.getFilePage(pageNumber).subscribe((blogFilePage: BlogFilePage) => {
+    const s = this.fileService.getFilePage(pageNumber, this.searchedName).subscribe((blogFilePage: BlogFilePage) => {
       if (blogFilePage) {
         this.blogFiles = blogFilePage.blogFiles;
         this.currentPage = blogFilePage.pageNumber;
@@ -137,6 +136,8 @@ export class FileManagerComponent implements OnInit , OnDestroy {
     });
   }
 
-
-
+  searchNameChanged(name: string) {
+    this.searchedName = name;
+    this.loadPage(this.currentPage);
+  }
 }
