@@ -1,11 +1,8 @@
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { PaginationComponent } from './../../shared/article-pagination/pagination.component';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { BlogFile, BlogFileCollection, BlogFilePage } from './../../api/blog-file';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Subscription } from 'rxjs';
-import { filter, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file-manager',
@@ -14,10 +11,8 @@ import { filter, debounceTime } from 'rxjs/operators';
 })
 export class FileManagerComponent implements OnInit , OnDestroy {
 
-  @Input() public selectable = false;
+  @Input() selectable = false;
 
-  @ViewChild(SearchBarComponent, {static: true})
-  public searchChild: SearchBarComponent;
   blogFiles: Array<BlogFile>;
   id: string;
   subscriptions: Array<Subscription> = [];
@@ -28,35 +23,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
   ngOnInit() {
-
-    // this.searchChild.onTextInserted
-    // .subscribe(textWord => {
-    //   this.fileService.getSearchedFile(textWord)
-    //   .pipe(
-    //     filter(res => {
-    //       return !!res;
-    //     })
-    //   ).subscribe(foundBlogFiles => {
-    //     this.blogFiles = [foundBlogFiles];
-    //   }
-    //   );
-
-    // });
-
-    this.searchChild.onTextInserted
-    .subscribe(textWord => {
-      this.fileService.getAllSearchedFiles(textWord)
-      .pipe(
-        filter(res => {
-          return !!res;
-        })
-      ).subscribe(foundBlogFiles => {
-        this.blogFiles = foundBlogFiles;
-      }
-      );
-
-    });
-
     this.subscriptions.push(
       this.activatedRoute.data.subscribe(data => {
         if (data.blogPage) {
@@ -88,19 +54,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
     this.fileService.selectFile(this.id, file);
   }
 
-  onTrashClick(id: string) {
-    this.idToDelete = +id;
-    this.timer = window.setTimeout(() => {
-      this.disableTimer();
-    }, 2000);
-  }
-
-  private disableTimer() {
-    this.idToDelete = null;
-    window.clearTimeout(this.timer);
-    this.timer = null;
-  }
-
   deleteFile(file: BlogFile) {
     this.fileService.deleteFile(file).subscribe(status => {
       if (status) {
@@ -117,7 +70,6 @@ export class FileManagerComponent implements OnInit , OnDestroy {
         if (indexToDelete > -1) {
           console.log('BEFORE DELETE', this.blogFiles);
           this.blogFiles.splice(indexToDelete, 1);
-          this.totalPages = this.blogFiles.length;
           console.log('AFTER DELETE', this.blogFiles);
         }
       }
