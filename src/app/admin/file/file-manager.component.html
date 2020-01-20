@@ -4,7 +4,14 @@
 </div>
 <div class="uk-container">
 
-    <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageRequested)="loadPage($event)"></app-pagination>
+    <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-bottom">
+        <div class="uk-flex-left uk-flex-middle">
+            <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageRequested)="loadPage($event)"></app-pagination>
+        </div>
+        <div class="uk-flex-right">
+            <app-search (searchNameChanged)="searchNameChanged($event)"></app-search>
+        </div>
+    </div>
 
     <div class="uk-grid uk-grid-small">
         <div *ngFor="let file of blogFiles; let index = index;"
