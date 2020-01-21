@@ -20,4 +20,5 @@ export abstract class AbstractArticleService {
     abstract deleteArticle(article: Article): Observable<boolean>;
     abstract getArticlePage(pageNumber: number, searchQuery: string): Observable<ArticlePage>;
     abstract getRandomFeaturedArticle(): Observable<Article>;
+    abstract getArticleSearch(searchQuery: string): Observable<ArticleCollection>;
 }

@@ -56,4 +56,14 @@ export class ArticleService extends AbstractArticleService {
     return this.httpClient.get('/api/v1/random-featured-article') as Observable<Article>;
   }
 
+  public getArticleSearch(searchQuery: string): Observable<ArticleCollection> {
+    if (searchQuery) {
+      console.log('Getting articles with query: ' + searchQuery);
+      const url = '/api/v1/listSearchedArticles/' + searchQuery;
+      return this.httpClient.get(url) as Observable<ArticleCollection>;
+    }
+    return this.getArticles();
+  }
+
+
 }

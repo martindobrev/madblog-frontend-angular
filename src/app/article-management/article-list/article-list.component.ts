@@ -3,6 +3,8 @@ import { Article } from '../../api/article';
 import { AbstractKeycloakService } from '../../services/keycloak/abstract.keycloak.service';
 import { AbstractArticleService } from '../../services/article/abstract.article.service';
 import { ActivatedRoute } from '@angular/router';
+import { ArticlePage } from './../../api/article-page';
+
 
 @Component({
   selector: 'app-article-list',
@@ -19,6 +21,11 @@ export class ArticleListComponent implements OnInit {
   idToDelete: string;
 
   timer: number;
+
+  searchedName = '';
+  // currentPage = 0;
+  // articlePage: ArticlePage;
+
 
   constructor(private keycloakService: AbstractKeycloakService, private articleService: AbstractArticleService,
      private activatedRoute: ActivatedRoute) { 
@@ -77,6 +84,20 @@ export class ArticleListComponent implements OnInit {
     this.idToDelete = null;
     window.clearTimeout(this.timer);
     this.timer = null;
+  }
+
+  // loadPage(page: number) {
+  //   this.articleService.getArticlePage(page, this.searchedName).subscribe(articlePage => {
+  //     this.articlePage = articlePage;
+  //   });
+  // }
+
+  searchNameChanged(name: string) {
+    console.log(name);
+    this.searchedName = name;
+    this.articleService.getArticleSearch(name).subscribe(data => {
+      this.articles = data.articles;
+    });
   }
 
 }
