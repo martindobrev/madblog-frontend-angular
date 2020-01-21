@@ -36,8 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy  {
     }));
   }
 
-
-
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
@@ -49,11 +47,12 @@ export class HomeComponent implements OnInit, OnDestroy  {
   loadPage(page: number) {
     this.articleService.getArticlePage(page, this.searchedName).subscribe(articlePage => {
       this.articlePage = articlePage;
+      this.scroll();
     });
   }
 
-  scroll(el: HTMLElement) {
-    UIkit.scroll(el).scrollTo(el);
+  scroll() {
+    UIkit.scroll().scrollTo(document.getElementById('pagination'), {offset: 200});
   }
 
   searchNameChanged(name: string) {
