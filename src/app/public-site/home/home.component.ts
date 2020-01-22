@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
   subscriptions: Array<Subscription> = [];
   searchedName = '';
   currentPage = 0;
+  filter: any;
 
   constructor(private activatedRoute: ActivatedRoute, private articleService: AbstractArticleService) {}
 
@@ -57,8 +58,11 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   searchNameChanged(name: string) {
     console.log(name);
+    this.filter = name;
+    console.log(this.filter);
     this.searchedName = name;
     this.loadPage(this.currentPage);
+    
   }
 
 }
