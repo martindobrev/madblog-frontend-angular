@@ -19,6 +19,8 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   currentPage = 0;
   totalPages = 0;
   searchedName = '';
+  idToDelete: number;
+  timer: number;
 
   constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
 
@@ -92,4 +94,18 @@ export class FileManagerComponent implements OnInit , OnDestroy {
     this.searchedName = name;
     this.loadPage(this.currentPage);
   }
+
+  onTrashClick(id: string) {
+    this.idToDelete = +id;
+    this.timer = window.setTimeout(() => {
+      this.disableTimer();
+    }, 2000);
+  }
+
+  private disableTimer() {
+    this.idToDelete = null;
+    window.clearTimeout(this.timer);
+    this.timer = null;
+  }
+
 }
