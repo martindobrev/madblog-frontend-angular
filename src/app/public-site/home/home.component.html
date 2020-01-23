@@ -67,7 +67,7 @@
                 </div>
           </div>
 
-          <p>{{ article.subtitle }}</p>
+          <p [innerHTML] = "article?.subtitle | highlight: filter">{{ article.subtitle }}</p>
           <a routerLink="/article/{{article.id}}" title="Read More" class="uk-button uk-button-default uk-button-small">READ MORE</a>
           <hr>
         </article>
