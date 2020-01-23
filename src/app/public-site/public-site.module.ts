@@ -11,7 +11,7 @@ import { PageViewComponent } from './page-view/page-view.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LogoutComponent } from './logout/logout.component';
 import { SharedModule } from '../shared/shared.module';
-import {MainPipe} from '../main-pipe.module';
+// import {MainPipe} from '../main-pipe.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import {MainPipe} from '../main-pipe.module';
     PublicSiteRoutingModule,
     FormsModule,
     SharedModule,
-    MainPipe
+    // MainPipe
 
   ],
   declarations: [

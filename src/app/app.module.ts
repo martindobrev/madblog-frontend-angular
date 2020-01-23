@@ -21,7 +21,7 @@ import { KeycloakTokenParsed } from './type/keycloak';
 
 import { environment } from './../environments/environment';
 import { SharedModule } from './shared/shared.module';
-import { MainPipe } from './main-pipe.module';
+// import { MainPipe } from './main-pipe.module';
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
   if (environment.mockSecurity) {
@@ -52,7 +52,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     AppRoutingModule,
     PublicSiteModule,
     SharedModule,
-    MainPipe
+    // MainPipe
   ],
   providers: [
     { provide: AbstractArticleService, useClass: ArticleService },

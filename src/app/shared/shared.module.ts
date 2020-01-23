@@ -8,9 +8,10 @@ import { RouterModule } from '@angular/router';
 import { MaddobLibModule } from 'maddob-lib';
 import { PaginationComponent } from './article-pagination/pagination.component';
 import { SearchComponent } from './search/search.component';
+import { HighLightPipe } from './highlight.pipe';
 
 @NgModule({
-  declarations: [HtmlEditorComponent, PaginationComponent, SearchComponent],
+  declarations: [HtmlEditorComponent, PaginationComponent, SearchComponent, HighLightPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -21,6 +22,6 @@ import { SearchComponent } from './search/search.component';
     SnippetResolveService,
     SnippetCollectionResolveService
   ],
-  exports: [HtmlEditorComponent, PaginationComponent, SearchComponent]
+  exports: [HtmlEditorComponent, PaginationComponent, SearchComponent, HighLightPipe]
 })
 export class SharedModule { }
