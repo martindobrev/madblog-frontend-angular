@@ -53,6 +53,7 @@
               <a title="Fusce facilisis tempus magna ac dignissim." class="uk-link-reset" routerLink="/article/{{article.id}}">
               <div [innerHTML] = "article?.title | highlight: filter"></div></a>
             </h2>
+            <div class="uk-article-meta">Author <div class="uk-article-meta" [innerHTML] = "article?.authorId | highlight: filter"></div></div>
             <p class="uk-article-meta">Written on {{article.created | date: 'short'}} | <span data-uk-icon="icon: future"></span>
               Takes {{ calculateArticleReadTime(article) }} min reading. <span *ngIf="article.editable">| <a class="uk-text-danger" routerLink="/admin/articles/edit/{{article.id}}">EDIT</a></span></p>
           </header>
