@@ -35,13 +35,19 @@ export class FileManagerComponent implements OnInit , OnDestroy {
       })
     );
 
+    // Necessary to load file data when accessing manager without routing
+    // Used when file manager appears in modal windows (select file from Markdown editor)
     if (this.blogFiles === null || this.blogFiles === undefined) {
       this.subscriptions.push(
-        this.fileService.getFiles().subscribe((blogFilesCollection: BlogFileCollection) => {
-          this.blogFiles = blogFilesCollection.blogFiles;
+        this.fileService.getFilePage(0, '').subscribe((blogFilePage: BlogFilePage) => {
+          console.log('LOADED page 0');
+          this.blogFiles = blogFilePage.blogFiles;
+          this.currentPage = blogFilePage.pageNumber;
+          this.totalPages = blogFilePage.totalPages;
         }
       ));
     }
+    
 
     this.fileService.getFileUploaded$().subscribe(newFile => {
       this.blogFiles.unshift(newFile);
@@ -53,7 +59,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   selectItem(file: BlogFile) {
-    this.fileService.selectFile(this.id, file);
+    this.fileService.selectFile(file.id.toString(), file);
   }
 
   deleteFile(file: BlogFile) {

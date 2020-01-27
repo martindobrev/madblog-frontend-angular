@@ -12,23 +12,26 @@ import { of } from 'rxjs';
 import { User } from '../../api/user';
 
 import { createMockServiceFactory } from './../../services/keycloak/keycloak-mock.service';
+import { element } from 'protractor';
 
 describe('ArticleCreateComponent', () => {
   let component: ArticleCreateComponent;
   let fixture: ComponentFixture<ArticleCreateComponent>;
-  articleAvailable = false;
+  const articleAvailable = false;
+  // tslint:disable-next-line: no-shadowed-variable
+  let element: HTMLElement;
 
-  let articleServiceFactory = () => {
+  const articleServiceFactory = () => {
     return new ArticleMockService(new ArticleCollection());
-  }
+  };
 
-  let keycloakServiceFactory = () => {
+  const keycloakServiceFactory = () => {
     return createMockServiceFactory(['user']);
-  }
+  };
 
-  let routerMock = {
+  const routerMock = {
     navigateByUrl: function() {}
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,10 +49,8 @@ describe('ArticleCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ArticleCreateComponent);
     component = fixture.componentInstance;
+    element = fixture.nativeElement;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

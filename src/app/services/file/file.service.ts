@@ -55,7 +55,7 @@ export class FileService extends AbstractFileService {
   }
 
   getFile(id: number): Observable<BlogFile> {
-    throw this.httpClient.get(`/api/v1/files/${id}`) as Observable<BlogFile>;
+    return this.httpClient.get(`/api/v1/files/${id}`) as Observable<BlogFile>;
   }
 
   uploadFile(file: File) {

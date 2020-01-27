@@ -37,27 +37,27 @@ describe('AccessGuard', () => {
     });
   });
   
-  fit('should not let pages route to be loaded with access role user', () => {
+  it('should not let pages route to be loaded with access role user', () => {
     roles = ['user'];
     guard = new AccessGuard(TestBed.get(AbstractKeycloakService));
     expect(guard.canLoad(pageRoute, [])).toBeFalsy();
   });
 
   
-  fit('should not let pages route to be loaded with access roles user and publisher', () => {
+  it('should not let pages route to be loaded with access roles user and publisher', () => {
     roles = ['user', 'publisher'];
     guard = new AccessGuard(TestBed.get(AbstractKeycloakService));
     expect(guard.canLoad(pageRoute, [])).toBeFalsy();
   });
 
   
-  fit('should let pages to be loaded with access role admin', () => {
+  it('should let pages to be loaded with access role admin', () => {
     roles = ['user', 'admin'];
     guard = new AccessGuard(TestBed.get(AbstractKeycloakService));
     expect(guard.canLoad(pageRoute, [])).toBeTruthy();
   });
 
-  fit('should let articles to be loaded with access role user', () => {
+  it('should let articles to be loaded with access role user', () => {
     roles = ['user'];
     guard = new AccessGuard(TestBed.get(AbstractKeycloakService));
     expect(guard.canLoad(articlesRoute, [])).toBeTruthy();

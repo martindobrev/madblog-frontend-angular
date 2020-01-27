@@ -5,8 +5,4 @@ import { OwnArticleCollectionResolveService } from './own-article-collection-res
 describe('OwnArticleCollectionResolveService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: OwnArticleCollectionResolveService = TestBed.get(OwnArticleCollectionResolveService);
-    expect(service).toBeTruthy();
-  });
 });

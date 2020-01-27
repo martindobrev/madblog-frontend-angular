@@ -14,14 +14,12 @@ export class UserResolveService implements Resolve<User> {
 
   constructor(private keycloakService: AbstractKeycloakService) { }
 
-  resolve(): Observable<User> {
-    
+  resolve(): Observable<User> { 
     this.keycloakService.getKeycloakTokenParsed$().subscribe(parsedKeycloakToken => {
       parsedKeycloakToken.realm_access;
       parsedKeycloakToken.resource_access;
       this.userId = parsedKeycloakToken.sub;
     });
-    
     return this.keycloakService.getUserInfo(this.userId);
   }
 }

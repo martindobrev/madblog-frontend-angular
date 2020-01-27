@@ -9,7 +9,4 @@ describe('CanViewArticleGuard', () => {
     });
   });
 
-  it('should ...', inject([CanViewArticleGuard], (guard: CanViewArticleGuard) => {
-    expect(guard).toBeTruthy();
-  }));
 });

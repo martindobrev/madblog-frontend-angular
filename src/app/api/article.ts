@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User } from './user';
 
 export class Article {
     id: string;
@@ -9,8 +9,8 @@ export class Article {
     imageId: number;
     published: boolean;
     featured: boolean;
-    editable: boolean = true;
-    deletable: boolean = false;
+    editable = true;
+    deletable = false;
     created: Date;
     authorId: string;
     user: User;

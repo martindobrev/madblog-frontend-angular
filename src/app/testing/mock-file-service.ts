@@ -25,7 +25,8 @@ export class MockFileService extends AbstractFileService {
     }
 
     getFiles(): Observable<BlogFileCollection> {
-        throw new Error('Method not implemented.');
+        //this.fileCollection.blogFiles)
+       return of(this.fileCollection);
     }
     getFile(id: number): Observable<BlogFile> {
         throw new Error('Method not implemented.');
@@ -35,15 +36,19 @@ export class MockFileService extends AbstractFileService {
     }
 
     selectFile(id: string, blogFile: BlogFile): void {
-        throw new Error('Method not implemented.');
+        if (undefined === this.fileCollection.blogFiles.find(element => element.id === +id)) {
+            throw new Error('No such a file');
+        }
+        //throw new Error('No such a file');
+        // throw new Error('Method not implemented.');
     }
 
     deleteFile(blogFile: BlogFile): Observable<any> {
-        return of({});
+        return of(blogFile);
     }
 
     getFileUploaded$(): Observable<BlogFile> {
-        return of(new BlogFile());
+        return of();
     }
 
     getFileUploadProgress$(): Observable<FileUploadProgress> {

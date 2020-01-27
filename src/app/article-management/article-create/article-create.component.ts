@@ -18,17 +18,17 @@ export class ArticleCreateComponent implements OnInit {
 
   article: Article = new Article();
   articleAvailable = false;
-  canUserPublishArticles: boolean = false;
+  canUserPublishArticles = false;
   showFileManager =  false;
   create = true;
 
   private subscriptions: Array<Subscription> = [];
   private BACKGROUND_IMAGE = 'CREATE_ARTICLE_BACKGROUND';
 
-  constructor(private articleService: AbstractArticleService, 
-    private keycloakService: AbstractKeycloakService, 
-    private router: Router, 
-    private fileService: AbstractFileService) { 
+  constructor(private articleService: AbstractArticleService,
+    private keycloakService: AbstractKeycloakService,
+    private router: Router,
+    private fileService: AbstractFileService) {
   }
 
   ngOnInit() {
@@ -44,6 +44,7 @@ export class ArticleCreateComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
@@ -51,8 +52,8 @@ export class ArticleCreateComponent implements OnInit {
   saveArticle() {
     this.subscriptions.push(
     this.articleService.createArticle(this.article).subscribe(obj => {
-      let article = obj as Article;
-      this.router.navigateByUrl(`/article/${article.id}` )
+      const article = obj as Article;
+      this.router.navigateByUrl(`/article/${article.id}` );
     })
     );
   }

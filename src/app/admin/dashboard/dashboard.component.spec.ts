@@ -21,7 +21,7 @@ describe('DashboardComponent', () => {
 
   @Component({selector: 'router-outlet', template: ''})
   class RouterOutletStubComponent { }
-  
+
 
   @Component({selector: 'app-modal', template: ''})
   class StubModalComponent { }
@@ -38,8 +38,7 @@ describe('DashboardComponent', () => {
 
   const activatedRouteMock = new MockActivatedRoute({userData: TEST_USER});
   const routerMock = jasmine.createSpyObj('Router', ['navigateByUrl']);
-  //routerMock.
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DashboardComponent, StubModalComponent, RouterOutletStubComponent ],
@@ -62,7 +61,4 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });
