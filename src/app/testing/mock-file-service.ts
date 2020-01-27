@@ -25,6 +25,7 @@ export class MockFileService extends AbstractFileService {
     }
 
     getFiles(): Observable<BlogFileCollection> {
+        // tslint:disable-next-line: comment-format
         //this.fileCollection.blogFiles)
        return of(this.fileCollection);
     }
@@ -39,6 +40,7 @@ export class MockFileService extends AbstractFileService {
         if (undefined === this.fileCollection.blogFiles.find(element => element.id === +id)) {
             throw new Error('No such a file');
         }
+        // tslint:disable-next-line: comment-format
         //throw new Error('No such a file');
         // throw new Error('Method not implemented.');
     }

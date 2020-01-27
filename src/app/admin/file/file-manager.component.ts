@@ -47,7 +47,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
         }
       ));
     }
-    
+
 
     this.fileService.getFileUploaded$().subscribe(newFile => {
       this.blogFiles.unshift(newFile);
@@ -59,7 +59,7 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   selectItem(file: BlogFile) {
-    this.fileService.selectFile(file.id.toString(), file);
+    this.fileService.selectFile(this.id, file);
   }
 
   deleteFile(file: BlogFile) {
