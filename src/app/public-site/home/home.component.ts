@@ -3,8 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticleCollection, Article } from '../../api/article';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StringUtils } from '../../util/string-utils';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
+import { SettingsService } from '../../services/settings/settings.service';
+import { async } from '@angular/core/testing';
 
 declare var UIkit: any;
 
@@ -23,7 +25,11 @@ export class HomeComponent implements OnInit, OnDestroy  {
   currentPage = 0;
   filter: any;
 
-  constructor(private activatedRoute: ActivatedRoute, private articleService: AbstractArticleService) {}
+  aboutUs$: Observable<string>;
+
+  constructor(private activatedRoute: ActivatedRoute,
+     private articleService: AbstractArticleService,
+     private settingsService: SettingsService) {}
 
   ngOnInit() {
     console.log('HOME Component created!');
@@ -35,6 +41,10 @@ export class HomeComponent implements OnInit, OnDestroy  {
     this.subscriptions.push(this.articleService.getRandomFeaturedArticle().subscribe(article => {
       this.featuredArticle = article;
     }));
+
+    this.aboutUs$ = this.settingsService.aboutUs$;
+    console.log('This is about us: ' + this.aboutUs$);
+
   }
 
   ngOnDestroy() {
@@ -62,7 +72,6 @@ export class HomeComponent implements OnInit, OnDestroy  {
     console.log(this.filter);
     this.searchedName = name;
     this.loadPage(this.currentPage);
-    
   }
 
 }

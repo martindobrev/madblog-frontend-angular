@@ -1,5 +1,16 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { BlogFile, BlogFileCollection, BlogFilePage } from './../../api/blog-file';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import {
+  BlogFile,
+  BlogFileCollection,
+  BlogFilePage
+} from './../../api/blog-file';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Subscription } from 'rxjs';
@@ -9,8 +20,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './file-manager.component.html',
   styleUrls: ['./file-manager.component.css']
 })
-export class FileManagerComponent implements OnInit , OnDestroy {
-
+export class FileManagerComponent implements OnInit, OnDestroy {
   @Input() selectable = false;
 
   blogFiles: Array<BlogFile>;
@@ -22,7 +32,10 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   idToDelete: number;
   timer: number;
 
-  constructor(private activatedRoute: ActivatedRoute, private fileService: AbstractFileService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private fileService: AbstractFileService
+  ) {}
 
   ngOnInit() {
     this.subscriptions.push(
@@ -31,24 +44,23 @@ export class FileManagerComponent implements OnInit , OnDestroy {
           this.blogFiles = data.blogPage.blogFiles;
           this.currentPage = data.blogPage.pageNumber;
           this.totalPages = data.blogPage.totalPages;
+
+          // Necessary to load file data when accessing manager without routing
+          // Used when file manager appears in modal windows (select file from Markdown editor)
+        } else if (this.blogFiles === null || this.blogFiles === undefined) {
+          this.subscriptions.push(
+            this.fileService
+              .getFilePage(0, '')
+              .subscribe((blogFilePage: BlogFilePage) => {
+                console.log('LOADED page 0');
+                this.blogFiles = blogFilePage.blogFiles;
+                this.currentPage = blogFilePage.pageNumber;
+                this.totalPages = blogFilePage.totalPages;
+              })
+          );
         }
       })
     );
-
-    // Necessary to load file data when accessing manager without routing
-    // Used when file manager appears in modal windows (select file from Markdown editor)
-    if (this.blogFiles === null || this.blogFiles === undefined) {
-      this.subscriptions.push(
-        this.fileService.getFilePage(0, '').subscribe((blogFilePage: BlogFilePage) => {
-          console.log('LOADED page 0');
-          this.blogFiles = blogFilePage.blogFiles;
-          this.currentPage = blogFilePage.pageNumber;
-          this.totalPages = blogFilePage.totalPages;
-        }
-      ));
-    }
-
-
     this.fileService.getFileUploaded$().subscribe(newFile => {
       this.blogFiles.unshift(newFile);
     });
@@ -85,15 +97,17 @@ export class FileManagerComponent implements OnInit , OnDestroy {
   }
 
   loadPage(pageNumber: number) {
-    const s = this.fileService.getFilePage(pageNumber, this.searchedName).subscribe((blogFilePage: BlogFilePage) => {
-      if (blogFilePage) {
-        this.blogFiles = blogFilePage.blogFiles;
-        this.currentPage = blogFilePage.pageNumber;
-        this.totalPages = blogFilePage.totalPages;
-      }
+    const s = this.fileService
+      .getFilePage(pageNumber, this.searchedName)
+      .subscribe((blogFilePage: BlogFilePage) => {
+        if (blogFilePage) {
+          this.blogFiles = blogFilePage.blogFiles;
+          this.currentPage = blogFilePage.pageNumber;
+          this.totalPages = blogFilePage.totalPages;
+        }
 
-      s.unsubscribe();
-    });
+        s.unsubscribe();
+      });
   }
 
   searchNameChanged(name: string) {
@@ -113,5 +127,4 @@ export class FileManagerComponent implements OnInit , OnDestroy {
     window.clearTimeout(this.timer);
     this.timer = null;
   }
-
 }

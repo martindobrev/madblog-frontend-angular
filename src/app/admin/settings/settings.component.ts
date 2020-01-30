@@ -22,8 +22,10 @@ export class SettingsComponent extends AbstractSubscriptionDestroyer implements 
   nameFormControl: FormControl;
   logoFormControl: FormControl;
   versionFormControl: FormControl;
+  aboutFormControl: FormControl;
 
   logoUrl$: Observable<string>;
+  aboutUs$: Observable<string>;
 
   isLoading = false;
 
@@ -38,6 +40,7 @@ export class SettingsComponent extends AbstractSubscriptionDestroyer implements 
 
     this.titleFormControl = new FormControl(this.websiteProperties.title, Validators.required);
     this.nameFormControl = new FormControl(this.websiteProperties.name, Validators.required);
+    this.aboutFormControl = new FormControl(this.websiteProperties.aboutUs, Validators.required);
 
     this.markForUnsubscription(this.fileService.getFileSelected$().subscribe(data => {
       if (data.id === this.WEBSITE_LOGO_ID) {
@@ -53,6 +56,11 @@ export class SettingsComponent extends AbstractSubscriptionDestroyer implements 
     this.markForUnsubscription(this.nameFormControl.valueChanges.subscribe((newName: string) => {
       this.websiteProperties.name = newName;
     }));
+
+    this.markForUnsubscription(this.aboutFormControl.valueChanges.subscribe((newAbout: string) => {
+      this.websiteProperties.aboutUs = newAbout;
+    }));
+
   }
 
   selectFile() {

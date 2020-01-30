@@ -3,4 +3,5 @@ export class WebsiteProperties {
     title?: string;
     logoUrl?: string;
     version?: string;
+    aboutUs?: string;
 }

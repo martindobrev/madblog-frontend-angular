@@ -18,10 +18,14 @@ export class SettingsService {
   private title: BehaviorSubject<string> = new BehaviorSubject(null);
   title$ = this.title.asObservable();
 
+  private aboutUs: BehaviorSubject<string> = new BehaviorSubject(null);
+  aboutUs$ = this.aboutUs.asObservable();
+
   constructor(private httpClient: HttpClient) { 
     this.httpClient.get('/api/v1/settings').subscribe((webProperties: WebsiteProperties) => {
       this.logoImageUrl.next(this.getFileUrl(webProperties ? webProperties.logoUrl : null));
       this.title.next(webProperties.title);
+      this.aboutUs.next(webProperties.aboutUs);
     });
   }
 
@@ -36,6 +40,7 @@ export class SettingsService {
   saveProperties(webProperties: WebsiteProperties): Observable<WebsiteProperties> {
     this.logoImageUrl.next(this.getFileUrl(webProperties.logoUrl));
     this.title.next(webProperties.title);
+    this.aboutUs.next(webProperties.aboutUs);
     return this.httpClient.post('/api/v1/settings', webProperties) as Observable<WebsiteProperties>;
   }
 }

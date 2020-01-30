@@ -15,6 +15,14 @@
         </div>
     </div>
 
+    <div class="uk-margin">
+        <label class="uk-form-label" for="website_about">Website about</label>
+        <div class="uk-form-controls">
+            <textarea class="uk-textarea" rows="5" id="website_about" type="text" placeholder="Enter about us text here"
+                [formControl]="aboutFormControl"></textarea>
+        </div>
+    </div>
+
 
     <div class="uk-margin">
         <label class="uk-form-label">Logo</label>
@@ -37,6 +45,10 @@
     
     <div *ngIf="isLoading">
         <div uk-spinner></div>
+    </div>
+
+    <div>
+        <app-about-us></app-about-us>
     </div>
 
 </form>
