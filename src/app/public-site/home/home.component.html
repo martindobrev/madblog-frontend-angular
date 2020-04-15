@@ -1,4 +1,4 @@
-<!-- HERO -->
+<!-- HERO --> 
 <section *ngIf="featuredArticle" class="uk-section uk-section-small">
   <div class="uk-container">
     <div class="uk-height-large uk-cover-container uk-border-rounded">
@@ -8,6 +8,7 @@
           <span style="letter-spacing: 0.2em; font-size: 0.725rem">FEATURED ARTICLE</span>
           <h1 class="uk-margin-top uk-margin-small-bottom uk-margin-remove-adjacent">{{featuredArticle.title}}</h1>
           <p>{{featuredArticle.subtitle}}</p>
+          
           <a routerLink="/article/{{featuredArticle.id}}" class="uk-button uk-button-default uk-margin-top">GO TO ARTICLE</a>
           <br />
           <a *ngIf="featuredArticle.editable" routerLink="/admin/articles/edit/{{featuredArticle.id}}" class="uk-button uk-button-danger uk-margin-top">EDIT</a>
@@ -15,6 +16,7 @@
           <div *ngIf="!featuredArticle.published">
             <h3 class="uk-text-danger">UNPUBLISHED</h3>
           </div>
+          
         </div>
       </div>
 

@@ -20,7 +20,7 @@ export class PageListComponent implements OnInit, AfterViewInit {
   idToDelete: number = null;
   timer: number = null;
 
-  @ViewChild('sortablePagesContainer', { static: false }) sortablePagesContainer: ElementRef; 
+  @ViewChild('sortablePagesContainer') sortablePagesContainer: ElementRef; 
 
   constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService) { 
 

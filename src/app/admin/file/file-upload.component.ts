@@ -18,7 +18,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   successSubscription: Subscription;
   errorSubscription: Subscription;
 
-  @ViewChild('file', { static: false }) file;
+  @ViewChild('file') file;
 
   constructor(private fileService: AbstractFileService) { }
 

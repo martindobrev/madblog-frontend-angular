@@ -16,7 +16,7 @@ import { createMockServiceFactory } from './../../services/keycloak/keycloak-moc
 describe('ArticleCreateComponent', () => {
   let component: ArticleCreateComponent;
   let fixture: ComponentFixture<ArticleCreateComponent>;
-  articleAvailable = false;
+  let articleAvailable = false;
 
   let articleServiceFactory = () => {
     return new ArticleMockService(new ArticleCollection());
