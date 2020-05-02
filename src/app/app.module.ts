@@ -24,7 +24,7 @@ import { SharedModule } from './shared/shared.module';
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
   if (environment.mockSecurity) {
-    console.debug('MOCKING SECURITY...');
+    console.log('MOCKING SECURITY...');
     const mockKeycloakTokenParsed: KeycloakTokenParsed = {
       realm_access: { roles: ['user', 'publisher', 'admin'] },
       preferred_username: 'MOCK-ADMIN'

@@ -1,7 +1,7 @@
-import { AbstractKeycloakService } from "./abstract.keycloak.service";
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { KeycloakTokenParsed } from "./../../type/keycloak";
+import { AbstractKeycloakService } from './abstract.keycloak.service';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { KeycloakTokenParsed } from './../../type/keycloak';
 import { User } from './../../api/user';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
     constructor(private publishArticles: boolean, private createArticles: boolean, private tokenParsed: KeycloakTokenParsed) {
         super();
     }
-    
+
     init(): Promise<any> {
         console.log(`Initiating Keycloak Mock Service`);
         return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
             resolve();
         });
     }
-    
+
     login() {}
 
     logout() {}
@@ -33,7 +33,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
     getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed> {
         return of(this.tokenParsed);
     }
-    
+
     getCurrentToken(): string {
         return '';
     }
@@ -66,7 +66,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
 }
 
 export function createMockServiceFactory(roles: Array<string>): AbstractKeycloakService {
-    let tokenParsed: KeycloakTokenParsed = {
+    const tokenParsed: KeycloakTokenParsed = {
         realm_access: { roles: roles },
         resource_access: {},
         //preferred_username: 'MOCK_USER'

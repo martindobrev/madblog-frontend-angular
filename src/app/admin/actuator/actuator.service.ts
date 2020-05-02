@@ -18,10 +18,10 @@ export class ActuatorService {
   }
 
   getTotalMemory(): Observable<any> {
-    return this.httpClient.get('/actuator/metrics/jvm.memory.max')
+    return this.httpClient.get('/actuator/metrics/jvm.memory.max');
   }
 
   getUptime(): Observable<any> {
-    return this.httpClient.get('/actuator/metrics/process.uptime')
+    return this.httpClient.get('/actuator/metrics/process.uptime');
   }
 }

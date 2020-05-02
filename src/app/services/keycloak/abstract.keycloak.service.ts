@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { KeycloakTokenParsed } from "./../../type/keycloak";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { KeycloakTokenParsed } from './../../type/keycloak';
 import { User } from './../../api/user';
 
 @Injectable()
