@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
 import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
 import { Subscription, Observable } from 'rxjs';
-import { KeycloakProfile, KeycloakTokenParsed } from './../../type/keycloak';
+import { KeycloakProfile, KeycloakTokenParsed } from 'keycloak-js';
 import { Router, ActivatedRoute, RouterEvent, NavigationEnd } from '@angular/router';
 import { MessageService } from './../../services/message/message.service';
 import { Menu } from './../../api/menu';
@@ -40,7 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
     console.log('MAIN COMPONENT CREATED!');
 
     this.subscriptions.push(
-      this.routingService.currentUrl$.subscribe(url => {this.currentUrl = url})
+      this.routingService.currentUrl$.subscribe(url => { this.currentUrl = url; })
     );
 
     this.subscriptions.push(
@@ -80,6 +80,4 @@ export class MainComponent implements OnInit, OnDestroy {
   logout() {
     this.keycloakService.logout();
   }
-
-
 }

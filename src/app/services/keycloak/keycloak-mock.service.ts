@@ -1,7 +1,7 @@
 import { AbstractKeycloakService } from './abstract.keycloak.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { KeycloakTokenParsed } from './../../type/keycloak';
+import { KeycloakTokenParsed } from 'keycloak-js';
 import { User } from './../../api/user';
 
 @Injectable()

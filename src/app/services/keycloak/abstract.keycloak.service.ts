@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { KeycloakTokenParsed } from './../../type/keycloak';
+import { KeycloakTokenParsed } from 'keycloak-js';
 import { User } from './../../api/user';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export abstract class AbstractKeycloakService {
     abstract init(): Promise<any>;
     abstract login();

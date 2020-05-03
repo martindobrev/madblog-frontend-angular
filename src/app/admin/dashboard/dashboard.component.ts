@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RoutingService } from './../../routing.service';
 import { Subscription, Observable } from 'rxjs';
 import { AbstractKeycloakService } from './../../services/keycloak/abstract.keycloak.service';
-import { KeycloakTokenParsed } from './../../type/keycloak';
+import { KeycloakTokenParsed } from '../../type/keycloak';
 import { User } from './../../api/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardMenuService, DashboardMenuItem } from '../dashboard-menu.service';

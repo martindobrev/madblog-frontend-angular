@@ -20,9 +20,9 @@ export class PageListComponent implements OnInit, AfterViewInit {
   idToDelete: number = null;
   timer: number = null;
 
-  @ViewChild('sortablePagesContainer') sortablePagesContainer: ElementRef; 
+  @ViewChild('sortablePagesContainer', {static: false}) sortablePagesContainer: ElementRef;
 
-  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService) { 
+  constructor(private activatedRoute: ActivatedRoute, private menuService: MenuService) {
 
   }
 
@@ -40,7 +40,7 @@ export class PageListComponent implements OnInit, AfterViewInit {
     this.sortablePagesContainer.nativeElement.addEventListener('stop', (event) => {
       this.reorderPages();
     });
-    
+
     UIkit.sortable(this.sortablePagesContainer.nativeElement, {
       'handle'    : '.uk-sortable-handle',
       'cls-drag'  : '.uk-sortable-handle'
@@ -58,36 +58,33 @@ export class PageListComponent implements OnInit, AfterViewInit {
 
 
   private reorderPages() {
-    
-    let pageCollection = new PageCollection();
-    let newOrderedPages = [];
-    var pageDivs = this.sortablePagesContainer.nativeElement.children;
-    for (var i = 0; i < pageDivs.length; i++) {
-      let pageEl = pageDivs[i];
-      let id = parseInt(pageEl.children[1].innerText);
+    const pageCollection = new PageCollection();
+    const newOrderedPages = [];
+    const pageDivs = this.sortablePagesContainer.nativeElement.children;
+    for (let i = 0; i < pageDivs.length; i++) {
+      const pageEl = pageDivs[i];
+      const id = parseInt(pageEl.children[1].innerText, 10);
       console.log(`ID is: ${id}`);
-      let pageWithNewOrder = this.getPageById(id);
+      const pageWithNewOrder = this.getPageById(id);
       pageWithNewOrder.order = i + 1;
       newOrderedPages.push(pageWithNewOrder);
     }
-  
+
     this.pages = newOrderedPages;
     pageCollection.pages = newOrderedPages;
-    this.menuService.reorderPages(pageCollection).subscribe(pageCollection => {
-      this.pages = pageCollection.pages;
+    this.menuService.reorderPages(pageCollection).subscribe(collection => {
+      this.pages = collection.pages;
     });
-    
   }
 
   private getPageById(id: number) {
     return this.pages.find(page => {
-      return page.id === id;  
+      return page.id === id;
     });
   }
 
   deletePage(page: Page) {
-    this.menuService.deletePage(page).subscribe(page => {
-
+    this.menuService.deletePage(page).subscribe(() => {
       if (this.timer) {
         this.disableTimer();
       }

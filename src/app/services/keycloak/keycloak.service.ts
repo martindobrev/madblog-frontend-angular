@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { KeycloakInstance, KeycloakTokenParsed } from '../../type/keycloak';
+import { KeycloakInstance, KeycloakTokenParsed } from 'keycloak-js';
 import { AbstractKeycloakService } from './abstract.keycloak.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from './../../api/user';

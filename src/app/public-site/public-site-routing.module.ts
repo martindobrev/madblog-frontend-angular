@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ArticleCollectionResolveService } from '../services/article/article-collection-resolve.service';
 import { ArticleViewComponent } from './article/view/article-view.component';
 import { ArticleResolveService } from '../services/article/article-resolve.service';
 
@@ -18,8 +17,8 @@ const routes: Routes = [
   { path: '', component: MainComponent, resolve: { menu: MenuResolveService }, children: [
     { path: 'home', component: HomeComponent, resolve: { articlePage: ArticlePageResolveService }},
     { path: '', redirectTo: '/home', pathMatch: 'full' },
-    { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService }}, 
-    { path: 'logout', component: LogoutComponent },   
+    { path: 'article/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService }},
+    { path: 'logout', component: LogoutComponent },
     { path: 'error404', component: Error404Component },
     { path: 'error5xx', component: ServerErrorComponent },
     { path: ':slug', component: PageViewComponent, resolve: { page: PageResolveService }},
