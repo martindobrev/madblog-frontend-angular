@@ -17,9 +17,8 @@ export class KeycloakService extends AbstractKeycloakService {
   private profile = new BehaviorSubject<KeycloakTokenParsed>(null);
   private profile$ = this.profile.asObservable();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private config: any) {
     super();
-    console.log('CREATING KEYCLOAK_SERVICE');
   }
 
   public getKeycloakTokenParsed$(): Observable<KeycloakTokenParsed> {
@@ -29,27 +28,11 @@ export class KeycloakService extends AbstractKeycloakService {
   init(): Promise<any> {
     return new Promise((resolve, reject) => {
 
-/*
-{
-  "realm": "Demo",
-  "auth-server-url": "http://localhost:8080/auth",
-  "ssl-required": "external",
-  "resource": "angular",
-  "public-client": true,
-  "confidential-port": 0
-}
-*/
-      const config = {
-        'url': 'http://localhost:8080/auth',
-        'realm': 'Demo',
-        'clientId': 'angular'
-      };
-      this.keycloakAuth = new Keycloak(config);
+      this.keycloakAuth = new Keycloak(this.config);
       this.keycloakAuth.onTokenExpired = () => {
         this.keycloakAuth.updateToken(30).success(refreshed => {
           console.log('TOKEN SUCCESSFULLY UPDATED');
         }).error(() => {
-          // alert('Cannot update token, redirecting to homepage...');
           window.location.href = '/';
         });
       };
@@ -93,12 +76,8 @@ export class KeycloakService extends AbstractKeycloakService {
     if (!this.profile.value) {
       return false;
     }
-    //this.profile.value.
-    //const roles = this.profile.value.realm_access.roles;
     const isPublisher = this.keycloakAuth.hasRealmRole('publisher');
     const isAdmin = this.keycloakAuth.hasRealmRole('admin');
-
-
     return isAdmin || isPublisher;
   }
 
@@ -122,7 +101,6 @@ export class KeycloakService extends AbstractKeycloakService {
     }
 
     if (this.profile) {
-      //user.username = this.profile.value.resource_access;
       user.roles = this.profile.value.realm_access.roles;
     } else {
       user.username = 'ANONYMOUS';
@@ -134,7 +112,6 @@ export class KeycloakService extends AbstractKeycloakService {
     if (!this.profile.value) {
       return false;
     }
-    //this.profile.value.
     const roles = this.profile.value.realm_access.roles;
     return roles.includes('admin');
   }

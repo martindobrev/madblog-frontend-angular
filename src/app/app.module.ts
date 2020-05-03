@@ -24,18 +24,17 @@ import { SharedModule } from './shared/shared.module';
 
 export function getKeycloakServiceFactory(httpClient: HttpClient): AbstractKeycloakService {
   if (environment.mockSecurity) {
-    console.log('MOCKING SECURITY...');
     const mockKeycloakTokenParsed: KeycloakTokenParsed = {
       realm_access: { roles: ['user', 'publisher', 'admin'] },
       preferred_username: 'MOCK-ADMIN'
     };
     return new KeycloakMockService(true, true, mockKeycloakTokenParsed);
   } else {
-    return new KeycloakService(httpClient);
+    return new KeycloakService(httpClient, environment.keycloakConfig);
   }
 }
 
-export function kcFactory(keycloakService: AbstractKeycloakService) {
+export function initKeycloak(keycloakService: AbstractKeycloakService) {
   return () => keycloakService.init();
 }
 
@@ -59,7 +58,7 @@ export function kcFactory(keycloakService: AbstractKeycloakService) {
     MessageService,
     {
       provide: APP_INITIALIZER,
-      useFactory: kcFactory,
+      useFactory: initKeycloak,
       deps: [AbstractKeycloakService],
       multi: true
     },

@@ -1,5 +1,5 @@
 {
-  "name": "keycloak-app",
+  "name": "madblog-angular-frontend",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -33,7 +33,7 @@
     "marked": "^0.6.3",
     "rxjs": "^6.5.5",
     "tslib": "^1.11.1",
-    "uikit": "^3.4.0",
+    "uikit": "^3.4.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

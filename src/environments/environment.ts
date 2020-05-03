@@ -6,4 +6,9 @@
 export const environment = {
   production: false,
   mockSecurity: false,
+  keycloakConfig: {
+    'url': 'http://localhost:8080/auth',
+    'realm': 'Demo',
+    'clientId': 'angular'
+  }
 };
