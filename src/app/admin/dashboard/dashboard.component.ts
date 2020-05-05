@@ -25,10 +25,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   logoUrl$: Observable<string>;
 
   constructor(
-    private routingService: RoutingService, 
+    private routingService: RoutingService,
     private keycloakService: AbstractKeycloakService,
     private activatedRoute: ActivatedRoute,
-    //private router: Router,
     private dashboardMenuService: DashboardMenuService,
     private settingsService: SettingsService
     ) {

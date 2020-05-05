@@ -56,10 +56,10 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumError": "6kb"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
@@ -88,6 +88,14 @@
                   "with": "src/environments/environment.nosecurity.ts"
                 }
               ]
+            },
+            "publicbackend": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.nosecurity.ts"
+                }
+              ]
             }
           }
         },
@@ -103,9 +111,14 @@
             },
             "nosecurity": {
               "browserTarget": "keycloak-app:build:nosecurity"
+            },
+            "publicbackend": {
+              "browserTarget": "keycloak-app:build:publicbackend",
+              "proxyConfig": "proxy-public-backend.conf.json"
             }
           }
         },
+        
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {

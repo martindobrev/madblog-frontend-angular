@@ -1,0 +1,16 @@
+{
+    "/api/v1/": {
+      "target": "http://78.83.86.98:8010",
+      "secure": false
+    },
+  
+    "/messages/": {
+      "target": "http://78.83.86.98:8010",
+      "secure": false
+    },
+  
+    "/actuator/": {
+      "target": "http://78.83.86.98:8010",
+      "secure": false
+    }
+  }
