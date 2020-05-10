@@ -19,7 +19,7 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
   canUserPublishArticles: boolean = false;
   articleAvailable = false;
   create = false;
-  
+
   private BACKGROUND_IMAGE = 'BACKGROUND';
 
   private subscriptions: Array<Subscription> = [];

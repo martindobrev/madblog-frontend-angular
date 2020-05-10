@@ -7,12 +7,13 @@ import { ArticleResolveService } from '../services/article/article-resolve.servi
 import { AuthGuard } from '../auth/auth.guard';
 import { ArticleCreateComponent } from './article-create/article-create.component';
 import { OwnArticleCollectionResolveService } from '../services/article/own-article-collection-resolve.service';
+import { ArticleCreateReactiveComponent } from './article-create-reactive/article-create-reactive.component';
 
 const routes: Routes = [
   { path: '', component: ArticleListComponent, resolve: {articleCollection: OwnArticleCollectionResolveService}},
 /*  { path: 'view/:id', component: ArticleViewComponent, resolve: {article: ArticleResolveService}}, */
   { path: 'edit/:id', component: ArticleEditComponent, canActivate: [AuthGuard], resolve: {article: ArticleResolveService}},
-  { path: 'create', component: ArticleCreateComponent },
+  { path: 'create', component: ArticleCreateReactiveComponent },
 ];
 
 @NgModule({

@@ -5,16 +5,18 @@ import { ArticleManagementRoutingModule } from './article-management-routing.mod
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ArticleEditComponent } from './article-edit/article-edit.component';
 import { ArticleCreateComponent } from './article-create/article-create.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ArticleCreateReactiveComponent } from './article-create-reactive/article-create-reactive.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ArticleManagementRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent]
+  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, ArticleCreateReactiveComponent]
 })
 export class ArticleManagementModule { }

@@ -1,0 +1,66 @@
+
+
+<div class="uk-container">
+    <form class="uk-form-horizontal uk-margin-large" [formGroup]="articleFormGroup" (ngSubmit)="onSubmit()">
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-title">Title</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" required formControlName="title" id="form-horizontal-title" type="text"
+                    placeholder="Some text...">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-subtitle">Subtitle</label>
+            <div class="uk-form-controls">
+                <input class="uk-input" required id="form-horizontal-subtitle" name="subtitle" type="text"
+                    formControlName="subtitle" placeholder="Some text...">
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-content">Content</label>
+            <div class="uk-form-controls">
+                <app-html-editor name="Content" formControlName="content"></app-html-editor>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-image">Background image</label>
+            <div class="uk-form-controls">
+
+                <div *ngIf="articleFormGroup.get('background-image').value">
+                    <img src="/api/v1/files/{{articleFormGroup.get('background-image')}}?size=100" />
+                </div>
+
+                <button class="uk-button uk-button-default uk-button-small" (click)="openFileManager()"
+                    type="button">select</button>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">Published</label>
+            <div class="uk-form-controls">
+                <input class="uk-checkbox" name="published" type="checkbox" formControlName="published" checked>
+                published articles will be available to everyone
+            </div>
+        </div>
+
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-horizontal-text">Featured</label>
+            <div class="uk-form-controls">
+                <input class="uk-checkbox" name="featured" type="checkbox" formControlName="featured" checked>
+                Featured
+                articles show on top of the page. If more than 1 article is featured, a random one will be displayed
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-form-controls" uk-margin>
+                <button type="button" class="uk-button uk-button-default" routerLink="./../..">Cancel</button>
+                <button [disabled]="articleFormGroup.invalid" class="uk-button uk-button-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

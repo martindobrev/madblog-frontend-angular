@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, forwardRef, At
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { BlogFile } from './../../api/blog-file';
-import { MarkdownEditorComponent, UikitMarkdownEditorComponent } from 'maddob-lib';
+import { UikitMarkdownEditorComponent } from 'maddob-lib';
 
 @Component({
   selector: 'app-html-editor',
@@ -25,8 +25,8 @@ export class HtmlEditorComponent extends UikitMarkdownEditorComponent {
 
 
   constructor(
-    @Attribute('required') required: boolean = false, 
-    @Attribute('maxlength') maxlength: number = -1, 
+    @Attribute('required') required: boolean = false,
+    @Attribute('maxlength') maxlength: number = -1,
     private fileService: AbstractFileService) {
     super(required, maxlength);
   }
@@ -45,6 +45,4 @@ export class HtmlEditorComponent extends UikitMarkdownEditorComponent {
   chooseImage() {
     this.fileService.showFileManager('pageEditor');
   }
-
- 
 }

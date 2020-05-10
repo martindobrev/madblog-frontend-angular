@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Article } from '../../api/article';
 import { BlogFile } from '../../api/blog-file';
@@ -7,28 +7,26 @@ import { AbstractKeycloakService } from '../../services/keycloak/abstract.keyclo
 import { AbstractArticleService } from '../../services/article/abstract.article.service';
 import { AbstractFileService } from '../../services/file/abstract.file.service';
 
-declare var UIkit: any;
-
 @Component({
   selector: 'app-article-create',
   templateUrl: './../article-edit/article-edit.component.html',
   styleUrls: ['./article-create.component.css']
 })
-export class ArticleCreateComponent implements OnInit {
+export class ArticleCreateComponent implements OnInit, OnDestroy {
 
   article: Article = new Article();
   articleAvailable = false;
-  canUserPublishArticles: boolean = false;
+  canUserPublishArticles = false;
   showFileManager =  false;
   create = true;
 
   private subscriptions: Array<Subscription> = [];
   private BACKGROUND_IMAGE = 'CREATE_ARTICLE_BACKGROUND';
 
-  constructor(private articleService: AbstractArticleService, 
-    private keycloakService: AbstractKeycloakService, 
-    private router: Router, 
-    private fileService: AbstractFileService) { 
+  constructor(private articleService: AbstractArticleService,
+    private keycloakService: AbstractKeycloakService,
+    private router: Router,
+    private fileService: AbstractFileService) {
   }
 
   ngOnInit() {
@@ -51,8 +49,8 @@ export class ArticleCreateComponent implements OnInit {
   saveArticle() {
     this.subscriptions.push(
     this.articleService.createArticle(this.article).subscribe(obj => {
-      let article = obj as Article;
-      this.router.navigateByUrl(`/article/${article.id}` )
+      const article = obj as Article;
+      this.router.navigateByUrl(`/article/${article.id}`);
     })
     );
   }
