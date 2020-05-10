@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Observable } from 'rxjs';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
-import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, map, distinctUntilChanged, switchMap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-create-reactive',
@@ -21,6 +21,8 @@ export class ArticleCreateReactiveComponent implements OnInit {
     'featured': new FormControl(false)
   });
 
+  titleControl = this.articleFormGroup.get('title');
+
   constructor(private fileService: AbstractFileService, private articleService: AbstractArticleService) { }
 
   ngOnInit(): void {
@@ -36,20 +38,20 @@ export class ArticleCreateReactiveComponent implements OnInit {
   }
 
 
-  validateNameAsync({value}: AbstractControl): Observable<ValidationErrors | null> {
-    console.log('checking name ' + value);
-    return this.articleService.isNameTaken(value)
-      .pipe(
-        debounceTime(500),
-        map((nameExists: boolean) => {
-          if (nameExists) {
-              return {
-                  isExists: true
-              };
-          }
-          return null;
-        })
+  validateNameAsync(control: AbstractControl): Observable<ValidationErrors | null> {
+    return control.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap(value => this.articleService.isNameTaken(value)),
+      map((isNameTaken: boolean) => {
+        if (isNameTaken) {
+            return {
+                isTaken: true
+            };
+        }
+        return null;
+      }),
+      first()
     );
   }
-
 }

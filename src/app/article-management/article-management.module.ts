@@ -8,6 +8,7 @@ import { ArticleCreateComponent } from './article-create/article-create.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ArticleCreateReactiveComponent } from './article-create-reactive/article-create-reactive.component';
+import { ForbiddenTitleDirective } from './forbidden-title.directive';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { ArticleCreateReactiveComponent } from './article-create-reactive/articl
     ReactiveFormsModule,
     SharedModule
   ],
-  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, ArticleCreateReactiveComponent]
+  declarations: [ArticleListComponent, ArticleEditComponent, ArticleCreateComponent, ArticleCreateReactiveComponent, ForbiddenTitleDirective]
 })
 export class ArticleManagementModule { }

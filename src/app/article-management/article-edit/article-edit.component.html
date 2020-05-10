@@ -16,7 +16,8 @@
         <div class="uk-margin">
           <label class="uk-form-label" for="form-horizontal-title">Title</label>
           <div class="uk-form-controls">
-            <input class="uk-input" required #title="ngModel" [ngClass]="{'uk-form-danger': title.invalid }" id="form-horizontal-title"
+            <input class="uk-input" required #title="ngModel" appForbiddenTitle
+            [ngClass]="{'uk-form-danger': title.invalid }" id="form-horizontal-title"
               name="title" type="text" [(ngModel)]="article.title" placeholder="Some text...">
           </div>
         </div>
