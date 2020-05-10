@@ -5,6 +5,7 @@ import { ArticlePage } from '../../api/article-page';
 import { ArticleInfo } from '../../api/article-info';
 import { Observable } from 'rxjs';
 import { AbstractArticleService } from './abstract.article.service';
+import { reduce, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -51,4 +52,9 @@ export class ArticleService extends AbstractArticleService {
     return this.httpClient.get('/api/v1/random-featured-article') as Observable<Article>;
   }
 
+  isNameTaken(name: string): Observable<boolean> {
+    return this.getArticles().pipe(
+      map(articleCollection => articleCollection.articles.find(article => article.title === name) !== undefined)
+    );
+  }
 }

@@ -5,7 +5,10 @@ import { ArticleInfo } from '../../api/article-info';
 import { Observable, of } from 'rxjs';
 
 export class ArticleMockService extends AbstractArticleService {
-    
+    isNameTaken(name: string): Observable<boolean> {
+        return of(false);
+    }
+
     getRandomFeaturedArticle(): Observable<Article> {
         throw new Error("Method not implemented.");
     }
@@ -16,7 +19,7 @@ export class ArticleMockService extends AbstractArticleService {
     deleteArticle(article: Article): Observable<boolean> {
         throw new Error("Method not implemented.");
     }
-    
+
     constructor(private articleCollection: ArticleCollection) {
         super();
     }
@@ -28,15 +31,15 @@ export class ArticleMockService extends AbstractArticleService {
     getCompleteArticles(): Observable<ArticleCollection> {
         throw new Error("Method not implemented.");
     }
-    
+
     getArticle(id: string): Observable<Article> {
         return of(this.findArticleInCollection(id));
     }
-    
+
     createArticle(article: Article): Observable<Article> {
         throw new Error("Method not implemented.");
     }
-    
+
     editArticle(article: Article): Observable<Article> {
         throw new Error("Method not implemented.");
     }

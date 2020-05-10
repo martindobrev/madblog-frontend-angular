@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
+import { Observable } from 'rxjs';
+import { AbstractArticleService } from './../../services/article/abstract.article.service';
+import { debounceTime, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-create-reactive',
@@ -10,7 +13,7 @@ import { AbstractFileService } from './../../services/file/abstract.file.service
 export class ArticleCreateReactiveComponent implements OnInit {
 
   articleFormGroup = new FormGroup({
-    'title': new FormControl(null, Validators.required),
+    'title': new FormControl(null, Validators.required, this.validateNameAsync.bind(this)),
     'subtitle': new FormControl(null, Validators.required),
     'content': new FormControl(null, Validators.required),
     'background-image': new FormControl(null),
@@ -18,7 +21,7 @@ export class ArticleCreateReactiveComponent implements OnInit {
     'featured': new FormControl(false)
   });
 
-  constructor(private fileService: AbstractFileService) { }
+  constructor(private fileService: AbstractFileService, private articleService: AbstractArticleService) { }
 
   ngOnInit(): void {
   }
@@ -31,4 +34,22 @@ export class ArticleCreateReactiveComponent implements OnInit {
   onSubmit() {
     console.log('save the article here...');
   }
+
+
+  validateNameAsync({value}: AbstractControl): Observable<ValidationErrors | null> {
+    console.log('checking name ' + value);
+    return this.articleService.isNameTaken(value)
+      .pipe(
+        debounceTime(500),
+        map((nameExists: boolean) => {
+          if (nameExists) {
+              return {
+                  isExists: true
+              };
+          }
+          return null;
+        })
+    );
+  }
+
 }
