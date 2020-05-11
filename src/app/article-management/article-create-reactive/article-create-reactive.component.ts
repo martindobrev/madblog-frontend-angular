@@ -13,7 +13,7 @@ import { debounceTime, map, distinctUntilChanged, switchMap, first } from 'rxjs/
 export class ArticleCreateReactiveComponent implements OnInit {
 
   articleFormGroup = new FormGroup({
-    'title': new FormControl(null, Validators.required, this.validateNameAsync.bind(this)),
+    'title': new FormControl(null, Validators.required, this.validateNameAsync),
     'subtitle': new FormControl(null, Validators.required),
     'content': new FormControl(null, Validators.required),
     'background-image': new FormControl(null),
@@ -37,7 +37,7 @@ export class ArticleCreateReactiveComponent implements OnInit {
     console.log('save the article here...');
   }
 
-
+  @traceCaller
   validateNameAsync(control: AbstractControl): Observable<ValidationErrors | null> {
     return control.valueChanges.pipe(
       debounceTime(500),
@@ -54,4 +54,13 @@ export class ArticleCreateReactiveComponent implements OnInit {
       first()
     );
   }
+}
+
+export function traceCaller(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  descriptor.value = function (...args: any[]) {
+    const result = originalMethod.apply(this, args);
+    console.log('Calling async validator, "this" is: ', this);
+    return result;
+  };
 }
