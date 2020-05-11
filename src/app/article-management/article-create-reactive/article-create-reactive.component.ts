@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, OnInit, forwardRef } from '@angular/core';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractFileService } from './../../services/file/abstract.file.service';
 import { Observable } from 'rxjs';
 import { AbstractArticleService } from './../../services/article/abstract.article.service';
 import { debounceTime, map, distinctUntilChanged, switchMap, first } from 'rxjs/operators';
+import { FileSelectorComponent } from './../../shared/file-selector/file-selector.component';
 
 @Component({
   selector: 'app-article-create-reactive',
   templateUrl: './article-create-reactive.component.html',
-  styleUrls: ['./article-create-reactive.component.css']
+  styleUrls: ['./article-create-reactive.component.css'],
 })
 export class ArticleCreateReactiveComponent implements OnInit {
 
   articleFormGroup = new FormGroup({
-    'title': new FormControl(null, Validators.required, this.validateNameAsync),
+    'title': new FormControl(null, Validators.required, this.validateNameAsync.bind(this)),
     'subtitle': new FormControl(null, Validators.required),
     'content': new FormControl(null, Validators.required),
     'background-image': new FormControl(null),
@@ -26,11 +27,6 @@ export class ArticleCreateReactiveComponent implements OnInit {
   constructor(private fileService: AbstractFileService, private articleService: AbstractArticleService) { }
 
   ngOnInit(): void {
-  }
-
-
-  openFileManager() {
-    this.fileService.showFileManager('BACKGROUND');
   }
 
   onSubmit() {

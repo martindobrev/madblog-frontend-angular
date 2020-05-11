@@ -27,9 +27,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     UsersComponent,
     ModalComponent,
     ModalDirective,
-    DashboardComponent, 
-    GlobalStatsComponent, 
-    FileManagerComponent, 
+    DashboardComponent,
+    GlobalStatsComponent,
+    FileManagerComponent,
     FileUploadComponent, SettingsComponent
   ],
   exports: [

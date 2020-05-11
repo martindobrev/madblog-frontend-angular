@@ -1,0 +1,9 @@
+<div class="uk-form-controls">
+
+    <div *ngIf="fileId">
+        <img src="/api/v1/files/{{fileId}}?size=100" />
+    </div>
+
+    <button class="uk-button uk-button-default uk-button-small" (click)="openFileManager()"
+        type="button">select</button>
+</div>

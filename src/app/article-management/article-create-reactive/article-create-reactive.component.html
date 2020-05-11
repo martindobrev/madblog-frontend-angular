@@ -30,7 +30,8 @@
 
         <div class="uk-margin">
             <label class="uk-form-label" for="form-horizontal-image">Background image</label>
-            <div class="uk-form-controls">
+            <!-- 
+                 <div class="uk-form-controls">
 
                 <div *ngIf="articleFormGroup.get('background-image').value">
                     <img src="/api/v1/files/{{articleFormGroup.get('background-image')}}?size=100" />
@@ -39,6 +40,10 @@
                 <button class="uk-button uk-button-default uk-button-small" (click)="openFileManager()"
                     type="button">select</button>
             </div>
+
+            -->
+            <app-file-selector formControlName="background-image"></app-file-selector>
+           
         </div>
 
         <div class="uk-margin">
