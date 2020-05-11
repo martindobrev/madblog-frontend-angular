@@ -50,6 +50,10 @@ export class ArticleCreateReactiveComponent implements OnInit {
       first()
     );
   }
+
+  onImageChange(value) {
+    console.log('BACKGROUND IMAGE CHANGED TO: ', value);
+  }
 }
 
 export function traceCaller(target: any, propertyKey: string, descriptor: PropertyDescriptor) {

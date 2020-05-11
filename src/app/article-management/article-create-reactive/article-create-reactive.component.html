@@ -42,7 +42,7 @@
             </div>
 
             -->
-            <app-file-selector formControlName="background-image"></app-file-selector>
+            <app-file-selector (ngModelChange)="onImageChange($event)" formControlName="background-image"></app-file-selector>
            
         </div>
 

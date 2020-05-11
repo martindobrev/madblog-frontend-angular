@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 })
 export class FileSelectorComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
-
   fileId: string;
   disabled = false;
   private _onChange: Function;
@@ -22,23 +21,19 @@ export class FileSelectorComponent implements OnInit, OnDestroy, ControlValueAcc
 
   private fileManagerString = 'FILE_SELECT';
 
-  get value(): string {
-    return this.fileId || '';
-  }
-
-  onChange = (newValue: string) => {};
-  onTouched = () => {};
-
   set value(value: string) {
     this.fileId = value;
     this.onChange(value);
   }
 
+  onChange = (newValue: string) => {};
+  onTouched = () => {};
+
 
   constructor(private fileService: AbstractFileService) { }
 
   writeValue(obj: any): void {
-    this.value = obj;
+    //this.value = obj;
   }
 
   registerOnChange(fn: any): void {
