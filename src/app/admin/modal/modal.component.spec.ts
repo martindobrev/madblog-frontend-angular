@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ModalComponent } from './modal.component';
 import { ModalDirective } from './modal.directive';
@@ -15,7 +15,7 @@ describe('ModalComponent', () => {
   })
   class MarkdownEditorStub {}
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ModalComponent, ModalDirective, MarkdownEditorStub ],
       providers: [

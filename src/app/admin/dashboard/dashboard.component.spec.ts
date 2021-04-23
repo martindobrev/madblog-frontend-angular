@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule, ActivatedRoute, Router, UrlSegment, ActivatedRouteSnapshot } from '@angular/router';
@@ -40,7 +40,7 @@ describe('DashboardComponent', () => {
   const routerMock = jasmine.createSpyObj('Router', ['navigateByUrl']);
   //routerMock.
   
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DashboardComponent, StubModalComponent, RouterOutletStubComponent ],
       imports: [TestingModule],

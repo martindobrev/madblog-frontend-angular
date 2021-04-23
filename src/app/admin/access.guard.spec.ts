@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject, waitForAsync } from '@angular/core/testing';
 
 import { AccessGuard } from './access.guard';
 import { AbstractKeycloakService } from '../services/keycloak/abstract.keycloak.service';

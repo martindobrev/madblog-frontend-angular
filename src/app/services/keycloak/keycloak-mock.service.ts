@@ -15,7 +15,7 @@ export class KeycloakMockService extends AbstractKeycloakService {
         console.log(`Initiating Keycloak Mock Service`);
         return new Promise((resolve, reject) => {
             console.log(`Resolving promise...`);
-            resolve();
+            resolve(null);
         });
     }
 

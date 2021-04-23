@@ -42,7 +42,7 @@ export class KeycloakService extends AbstractKeycloakService {
           console.log('KEYCLOAK-AUTH IS:', this.keycloakAuth);
           this.profile.next(this.keycloakAuth.tokenParsed);
           console.log('PROFILE IS:', this.keycloakAuth.tokenParsed);
-          resolve();
+          resolve(null);
         })
         .error(() => {
           // resolve();

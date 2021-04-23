@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ArticleViewComponent } from './article-view.component';
 
@@ -19,7 +19,7 @@ describe('ArticleViewComponent', () => {
     })
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ArticleViewComponent ],
       imports: [ RouterTestingModule ],
