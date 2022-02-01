@@ -4,6 +4,6 @@ export const environment = {
   keycloakConfig: {
     'url': 'http://localhost:8080/auth',
     'realm': 'Demo',
-    'clientId': 'angular-nginx-localhost'
+    'clientId': 'angular'
   }
 };
